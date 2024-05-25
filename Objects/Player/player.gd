@@ -59,10 +59,13 @@ func _physics_process(delta):
 		position.z += cos(target_rotation.y) * SPEED
 		mesh.rotation.y = target_rotation.y - PI
 		y_change = -1
+		
 	
+	var normalize : float = 1
+	if y_change != 0: normalize = 0.5
 	if input_dir.x < 0: # Left
-		position.x += sin(target_rotation.y - PI/2) * SPEED
-		position.z += cos(target_rotation.y - PI/2) * SPEED
+		position.x += sin(target_rotation.y - PI/2) * SPEED * normalize
+		position.z += cos(target_rotation.y - PI/2) * SPEED * normalize
 		if y_change == 1:
 			mesh.rotation.y = target_rotation.y + PI/4
 		elif y_change == -1:
@@ -71,8 +74,9 @@ func _physics_process(delta):
 			mesh.rotation.y = target_rotation.y + PI/2
 
 	if input_dir.x > 0: # Right
-		position.x += sin(target_rotation.y + PI/2) * SPEED
-		position.z += cos(target_rotation.y + PI/2) * SPEED
+		
+		position.x += sin(target_rotation.y + PI/2) * SPEED * normalize
+		position.z += cos(target_rotation.y + PI/2) * SPEED * normalize
 		mesh.rotation.y = target_rotation.y - PI/2
 		if y_change == 1:
 			mesh.rotation.y = target_rotation.y - PI/4
