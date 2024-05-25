@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://bdabh11ntrni6"]
+
+[ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
+[ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g13v"]
+albedo_texture = ExtResource("1_dwgu7")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_onc3i"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_l7s5f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lnyy"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsnia"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_1kfxo")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_3g13v")
+mesh = SubResource("CapsuleMesh_onc3i")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.142443, 0.59032, -0.394647)
+mesh = SubResource("SphereMesh_l7s5f")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_8lnyy")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -0.184001, 0.59295, -0.417275)
+mesh = SubResource("SphereMesh_l7s5f")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_8lnyy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_qsnia")
+
+[node name="CameraBoom" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraBoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.754318, 1.37849, 3.14968)
+
+[node name="RollTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
