@@ -55,6 +55,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.378, 3.15)
 transform = Transform3D(3, 0, 0, 0, -8.74228e-08, -3, 0, 2, -1.31134e-07, 0, 0, 1.15025)
 hit_from_inside = true
 
+[node name="ZoomFreezeTimer" type="Timer" parent="CameraBoom/Camera3D/RayCast3D"]
+wait_time = 0.25
+
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -89,3 +92,4 @@ text = "! ! !"
 
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
+[connection signal="timeout" from="CameraBoom/Camera3D/RayCast3D/ZoomFreezeTimer" to="CameraBoom" method="_on_zoom_freeze_timer_timeout"]

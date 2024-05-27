@@ -48,8 +48,8 @@ func _input(event) -> void:
 
 func speed_governor() -> float:
 	var speed : float = SPEED_DICT["walk"]
-	if not running and stamina < 100: stamina += 0.1
-	
+	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.1
+	if rolling: return SPEED_DICT["roll"]
 	if run_cooldown: return speed
 	if running and not rolling and is_on_floor():
 		if stamina >= 1:
@@ -59,8 +59,6 @@ func speed_governor() -> float:
 			running = false
 			run_cooldown = true
 			($RunTimer as Timer).start()
-	if rolling:
-		speed = SPEED_DICT["roll"]
 	return speed
 
 
