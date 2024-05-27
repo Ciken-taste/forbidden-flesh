@@ -1,0 +1,2 @@
+27.5.2024
+- Yritä korjata parempi systeemi zoomin abuselle

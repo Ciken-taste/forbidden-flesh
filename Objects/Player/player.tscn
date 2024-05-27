@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=9 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
+[ext_resource type="Script" path="res://Objects/Player/CameraBoom.gd" id="3_hddlf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g13v"]
 albedo_texture = ExtResource("1_dwgu7")
@@ -16,7 +17,14 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsnia"]
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 0
 script = ExtResource("1_1kfxo")
+
+[node name="RollTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="RunTimer" type="Timer" parent="."]
+wait_time = 5.0
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3g13v")
@@ -38,11 +46,46 @@ surface_material_override/0 = SubResource("StandardMaterial3D_8lnyy")
 shape = SubResource("CapsuleShape3D_qsnia")
 
 [node name="CameraBoom" type="Node3D" parent="."]
+script = ExtResource("3_hddlf")
 
 [node name="Camera3D" type="Camera3D" parent="CameraBoom"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.754318, 1.37849, 3.14968)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.378, 3.15)
 
-[node name="RollTimer" type="Timer" parent="."]
-wait_time = 0.5
+[node name="RayCast3D" type="RayCast3D" parent="CameraBoom/Camera3D"]
+transform = Transform3D(3, 0, 0, 0, -8.74228e-08, -3, 0, 2, -1.31134e-07, 0, 0, 1.15025)
+hit_from_inside = true
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="HUD"]
+layout_mode = 0
+offset_right = 207.0
+offset_bottom = 29.0
+color = Color(0, 0, 0, 1)
+
+[node name="StaminaBar" type="ProgressBar" parent="HUD"]
+self_modulate = Color(0, 0.72549, 1, 1)
+layout_mode = 0
+offset_right = 206.0
+offset_bottom = 27.0
+step = 1.0
+value = 100.0
+rounded = true
+
+[node name="Exhausted" type="Label" parent="HUD/StaminaBar"]
+visible = false
+modulate = Color(1, 0, 0, 1)
+top_level = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 1.0
+offset_right = 65.0
+offset_bottom = 26.0
+text = "! ! !"
 
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
+[connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]

@@ -22,10 +22,10 @@ glow_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkuyg"]
 albedo_texture = ExtResource("1_5r7vb")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_de2ow"]
+[sub_resource type="BoxMesh" id="BoxMesh_vl7ut"]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q23bb"]
-data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_sfnde"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lfqm"]
 albedo_texture = ExtResource("3_0g6i2")
@@ -51,14 +51,14 @@ shadow_enabled = true
 environment = SubResource("Environment_4p0bq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0)
+transform = Transform3D(50, 0, 0, 0, 0.447244, 0, 0, 0, 50, 0, -0.217157, 0)
 material_override = SubResource("StandardMaterial3D_bkuyg")
-mesh = SubResource("PlaneMesh_de2ow")
+mesh = SubResource("BoxMesh_vl7ut")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_q23bb")
+shape = SubResource("ConcavePolygonShape3D_sfnde")
 
 [node name="Player" parent="." instance=ExtResource("2_7hl60")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05058, 0)
