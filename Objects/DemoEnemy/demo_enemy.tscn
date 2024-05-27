@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://gc2qaq7otxk0"]
+
+[ext_resource type="Script" path="res://Objects/DemoEnemy/demo_enemy.gd" id="1_acy52"]
+[ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="2_dbidk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3dbnq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l2pnk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bg2kf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xvfpe"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8wpe"]
+albedo_texture = ExtResource("2_dbidk")
+
+[sub_resource type="BoxMesh" id="BoxMesh_lwpmn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7mr8j"]
+size = Vector3(0.277832, 0.151062, 0.856812)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f1yag"]
+size = Vector3(2.38513, 1, 1.41748)
+
+[node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_acy52")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_3dbnq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_l2pnk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_bg2kf")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.0982682, 0.5, 0.556391)
+mesh = SubResource("BoxMesh_l2pnk")
+surface_material_override/0 = SubResource("StandardMaterial3D_xvfpe")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.111525, 0.5, 0.556391)
+mesh = SubResource("BoxMesh_l2pnk")
+surface_material_override/0 = SubResource("StandardMaterial3D_xvfpe")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Sword" type="Node3D" parent="."]
+transform = Transform3D(0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, 0.173648, 0, 0.622419, 0.470478)
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Sword"]
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0.138793, 0.513916)
+material_override = SubResource("StandardMaterial3D_p8wpe")
+mesh = SubResource("BoxMesh_lwpmn")
+skeleton = NodePath("../..")
+
+[node name="DamageArea" type="Area3D" parent="Sword" groups=["EnemySword"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sword/DamageArea"]
+transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155944, 0.128514, 0.659639)
+shape = SubResource("BoxShape3D_7mr8j")
+
+[node name="AttackArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.110046, 0.506561, 1.18915)
+shape = SubResource("BoxShape3D_f1yag")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]

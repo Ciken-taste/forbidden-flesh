@@ -22,9 +22,15 @@ var roll_cooldown : bool = false
 var running : bool = false
 var run_cooldown : bool = false
 
+var dead : bool = false
+
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
 
+@onready var sword := $Mesh/Sword as Node3D
+var attacking : bool = false
+
+@onready var health_bar := $HUD/HealthBar as ProgressBar
 @onready var stamina_bar := $HUD/StaminaBar as ProgressBar
 @onready var exhausting_alert := $HUD/StaminaBar/Exhausted as Label
 
@@ -32,6 +38,10 @@ var run_cooldown : bool = false
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _input(event) -> void:
+	if event.is_action_pressed("attack"):
+		attacking = true
+	if event.is_action_released("attack"):
+		attacking = false
 	if event.is_action_pressed("run"):
 		running = true
 	if event.is_action_released("run"):
@@ -43,7 +53,11 @@ func _input(event) -> void:
 		
 		# Roll timer ajoittaa roll movementin. 
 		($RollTimer as Timer).start()
-	
+
+
+func attack():
+	if attacking: sword.rotation.y += PI/9
+	else: sword.rotation.y = PI/2
 
 
 func speed_governor() -> float:
@@ -80,10 +94,26 @@ func roll_handler() -> void:
 
 
 func _physics_process(delta) -> void:
+
+	velocity.x = 0
+	velocity.z = 0
+	
 	if run_cooldown: exhausting_alert.show()
 	else: exhausting_alert.hide()
 	
+	health_bar.value = health
 	stamina_bar.value = stamina
+	
+	
+	if health <= 0:
+		if not dead:
+			dead = true
+			mesh.hide()
+			var dead_player = preload("res://Objects/Player/dead_player.tscn").instantiate()
+			add_child(dead_player)
+		return
+	
+	attack()
 	# Governor kattoo että käveleekö, rollaa vai juokseeko pelaaja
 	var speed : float = speed_governor()
 	
@@ -151,3 +181,7 @@ func _on_roll_timer_timeout() -> void:
 
 func _on_run_timer_timeout():
 	run_cooldown = false
+
+
+func _on_area_3d_area_entered(area):
+	if area.is_in_group("EnemySword") and not rolling: health -= 10
