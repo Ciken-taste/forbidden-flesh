@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://gc2qaq7otxk0"]
+[gd_scene load_steps=13 format=3 uid="uid://gc2qaq7otxk0"]
 
 [ext_resource type="Script" path="res://Objects/DemoEnemy/demo_enemy.gd" id="1_acy52"]
 [ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="2_dbidk"]
@@ -28,6 +28,9 @@ size = Vector3(0.277832, 0.151062, 0.856812)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f1yag"]
 size = Vector3(1.5997, 1, 0.93518)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nkveg"]
+size = Vector3(1.59863, 1, 2.8736)
 
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
 script = ExtResource("1_acy52")
@@ -81,9 +84,17 @@ shape = SubResource("BoxShape3D_7mr8j")
 
 [node name="AttackArea" type="Area3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
+[node name="NormalArea" type="CollisionShape3D" parent="AttackArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222009, 0.506561, 0.948)
 shape = SubResource("BoxShape3D_f1yag")
 
+[node name="LungeArea" type="CollisionShape3D" parent="AttackArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0344079, 0.506561, 1.8848)
+shape = SubResource("BoxShape3D_nkveg")
+
+[node name="LungeTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="timeout" from="LungeTimer" to="." method="_on_lunge_timer_timeout"]

@@ -107,7 +107,7 @@ func death() -> void:
 
 func _physics_process(delta) -> void:
 	if inside_sword and not rolling and health > 0:
-		health -= 2
+		health -= 5
 	velocity.x = 0
 	velocity.z = 0
 	if dead: return
