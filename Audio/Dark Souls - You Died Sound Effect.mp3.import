@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cjf2sx62ssc58"
+path="res://.godot/imported/Dark Souls - You Died Sound Effect.mp3-12ad7a4dda40c0c3ea39cab8886751f6.mp3str"
+
+[deps]
+
+source_file="res://Audio/Dark Souls - You Died Sound Effect.mp3"
+dest_files=["res://.godot/imported/Dark Souls - You Died Sound Effect.mp3-12ad7a4dda40c0c3ea39cab8886751f6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

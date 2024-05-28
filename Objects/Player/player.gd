@@ -18,11 +18,15 @@ var health : int = 100
 var rolling : bool = false
 var roll_cooldown : bool = false
 
+var inside_sword : bool = false
+
 # Run cooldown pistää pelaajan kävelee ku stamina loppuu
 var running : bool = false
 var run_cooldown : bool = false
 
 var dead : bool = false
+
+@onready var death_timer := $DeathTimer as Timer
 
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
@@ -93,11 +97,21 @@ func roll_handler() -> void:
 		target_rotation = cam_boom.rotation
 
 
-func _physics_process(delta) -> void:
+func death() -> void:
+	if health <= 0:
+		death_timer.start()
+		dead = true
+		mesh.hide()
+		var dead_player = preload("res://Objects/Player/dead_player.tscn").instantiate()
+		add_child(dead_player)
 
+func _physics_process(delta) -> void:
+	if inside_sword and not rolling and health > 0:
+		health -= 2
 	velocity.x = 0
 	velocity.z = 0
-	
+	if dead: return
+	death()
 	if run_cooldown: exhausting_alert.show()
 	else: exhausting_alert.hide()
 	
@@ -105,14 +119,7 @@ func _physics_process(delta) -> void:
 	stamina_bar.value = stamina
 	
 	
-	if health <= 0:
-		if not dead:
-			dead = true
-			mesh.hide()
-			var dead_player = preload("res://Objects/Player/dead_player.tscn").instantiate()
-			add_child(dead_player)
-		return
-	
+
 	attack()
 	# Governor kattoo että käveleekö, rollaa vai juokseeko pelaaja
 	var speed : float = speed_governor()
@@ -178,10 +185,26 @@ func _on_roll_timer_timeout() -> void:
 	else:
 		roll_cooldown = false
 
+# Used in respawning
+func remove_player(): queue_free()
 
 func _on_run_timer_timeout():
 	run_cooldown = false
 
 
 func _on_area_3d_area_entered(area):
-	if area.is_in_group("EnemySword") and not rolling: health -= 10
+	if area.is_in_group("EnemySword"): inside_sword = true
+
+func _on_area_3d_area_exited(area):
+	if area.is_in_group("EnemySword"): inside_sword = false
+
+
+func _on_death_timer_timeout():
+	if death_timer.wait_time == 2:
+		death_timer.wait_time = 0.05
+		($HUD/Death/AudioStreamPlayer as AudioStreamPlayer).play()
+	elif ($HUD/Death as ColorRect).modulate.a < 0.9:
+		($HUD/Death as ColorRect).modulate.a += 0.01
+	death_timer.start()
+
+

@@ -4,6 +4,7 @@ extends CharacterBody3D
 @onready var nav := $NavigationAgent3D as NavigationAgent3D
 @onready var sword := $Sword as Node3D
 
+var swinging : bool = false
 var attacking : bool = false
 
 const SPEED : float = 2.0
@@ -11,11 +12,12 @@ const SPEED : float = 2.0
 var health : int = 10
 
 func attack():
-	if sword.rotation.y <= (80 * PI) / 180 and attacking: # 80 deg
-		sword.rotation.y += PI/128
+	if sword.rotation.y <= (80 * PI) / 180 and swinging: # 80 deg
+		sword.rotation.y += PI/32
 	else:
-		attacking = false
-		if sword.rotation.y >= -(80 * PI) / 180: sword.rotation.y -= PI/128
+		swinging = false
+		if sword.rotation.y >= -(80 * PI) / 180: sword.rotation.y -= PI/64
+		else: attacking = false
 		
 
 func _physics_process(_delta):
@@ -45,4 +47,6 @@ func _on_area_3d_area_entered(area):
 
 
 func _on_attack_area_area_entered(area):
-	if area.is_in_group("Player"): attacking = true
+	if area.is_in_group("Player"): 
+		attacking = true
+		swinging = true

@@ -24,7 +24,7 @@ albedo_texture = ExtResource("2_dbidk")
 size = Vector3(0.277832, 0.151062, 0.856812)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f1yag"]
-size = Vector3(2.38513, 1, 1.41748)
+size = Vector3(1.5997, 1, 0.93518)
 
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
 script = ExtResource("1_acy52")
@@ -73,7 +73,7 @@ shape = SubResource("BoxShape3D_7mr8j")
 [node name="AttackArea" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.110046, 0.506561, 1.18915)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222009, 0.506561, 0.948)
 shape = SubResource("BoxShape3D_f1yag")
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
