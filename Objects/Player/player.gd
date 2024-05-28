@@ -54,7 +54,7 @@ func _input(event) -> void:
 	if event.is_action_pressed("roll") and not rolling and not roll_cooldown and is_on_floor() and stamina >= 10 and input_dir:
 		stamina -= 10
 		rolling = true
-		
+		($Mesh/Sword/DamageArea as Area3D).monitorable = false
 		# Roll timer ajoittaa roll movementin. 
 		($RollTimer as Timer).start()
 
@@ -179,6 +179,7 @@ func _physics_process(delta) -> void:
 
 func _on_roll_timer_timeout() -> void:
 	if rolling:
+		($Mesh/Sword/DamageArea as Area3D).monitorable = true
 		rolling = false
 		roll_cooldown = true
 		($RollTimer as Timer).start()

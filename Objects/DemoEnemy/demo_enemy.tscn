@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://gc2qaq7otxk0"]
+[gd_scene load_steps=12 format=3 uid="uid://gc2qaq7otxk0"]
 
 [ext_resource type="Script" path="res://Objects/DemoEnemy/demo_enemy.gd" id="1_acy52"]
 [ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="2_dbidk"]
@@ -6,6 +6,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_3dbnq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_l2pnk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghs2f"]
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bg2kf"]
 
@@ -38,6 +41,12 @@ shape = SubResource("BoxShape3D_3dbnq")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_l2pnk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0)
+transparency = 1.0
+mesh = SubResource("BoxMesh_l2pnk")
+surface_material_override/0 = SubResource("StandardMaterial3D_ghs2f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

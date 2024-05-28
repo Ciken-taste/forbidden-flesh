@@ -43,6 +43,7 @@ func seek_player(target_location):
 func _on_area_3d_area_entered(area):
 	if area.is_in_group("PlayerSword"): 
 		health -= 1
+		($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
 		if health <= 0: queue_free()
 
 
