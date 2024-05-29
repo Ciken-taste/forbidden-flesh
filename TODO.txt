@@ -1,2 +1,3 @@
-27.5.2024
-- Yritä korjata parempi systeemi zoomin abuselle
+29.5.2024
+- Emeny pacification
+- Invinc frameja

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="2_dbidk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3dbnq"]
+size = Vector3(1, 2.46301, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_l2pnk"]
 
@@ -11,6 +12,7 @@
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bg2kf"]
+size = Vector3(1, 2.46338, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xvfpe"]
 albedo_color = Color(1, 0, 0, 1)
@@ -35,14 +37,21 @@ size = Vector3(1.59863, 1, 2.8736)
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
 script = ExtResource("1_acy52")
 
+[node name="PacificationTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[node name="LungeTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23151, 0)
 shape = SubResource("BoxShape3D_3dbnq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 2.69725, 0, 0, 0, 1, 0, 1.10621, 0)
 mesh = SubResource("BoxMesh_l2pnk")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
@@ -52,7 +61,7 @@ mesh = SubResource("BoxMesh_l2pnk")
 surface_material_override/0 = SubResource("StandardMaterial3D_ghs2f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23169, 0)
 shape = SubResource("BoxShape3D_bg2kf")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
@@ -66,6 +75,8 @@ mesh = SubResource("BoxMesh_l2pnk")
 surface_material_override/0 = SubResource("StandardMaterial3D_xvfpe")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
 
 [node name="Sword" type="Node3D" parent="."]
 transform = Transform3D(0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, 0.173648, 0, 0.622419, 0.470478)
@@ -92,9 +103,7 @@ shape = SubResource("BoxShape3D_f1yag")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0344079, 0.506561, 1.8848)
 shape = SubResource("BoxShape3D_nkveg")
 
-[node name="LungeTimer" type="Timer" parent="."]
-wait_time = 0.1
-
+[connection signal="timeout" from="PacificationTimer" to="." method="_on_pacification_timer_timeout"]
+[connection signal="timeout" from="LungeTimer" to="." method="_on_lunge_timer_timeout"]
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
-[connection signal="timeout" from="LungeTimer" to="." method="_on_lunge_timer_timeout"]

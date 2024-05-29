@@ -6,7 +6,7 @@ const JUMP_VELOCITY : float = 5.5
 
 
 # Speed dict toimii muistina. Jos haluat muuttaa pelaajan nopeutta, muuta tästä vaan!
-const SPEED_DICT : Dictionary = {"walk": 0.1, "roll": 0.2, "run": 0.3}
+const SPEED_DICT : Dictionary = {"walk": 0.05, "roll": 0.1, "run": 0.15}
 
 var target_rotation : Vector3 = Vector3.ZERO
 var input_dir : Vector2 = Vector2.ZERO
@@ -24,9 +24,12 @@ var inside_sword : bool = false
 var running : bool = false
 var run_cooldown : bool = false
 
+var invincible : bool = false
 var dead : bool = false
 
 @onready var death_timer := $DeathTimer as Timer
+@onready var blood_splatter := $Mesh/GPUParticles3D as GPUParticles3D
+var splat_ready : bool = true
 
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
@@ -67,9 +70,10 @@ func attack():
 func speed_governor() -> float:
 	var speed : float = SPEED_DICT["walk"]
 	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.1
-	if rolling: return SPEED_DICT["roll"]
+	if rolling and not running: 
+		return SPEED_DICT["roll"]
 	if run_cooldown: return speed
-	if running and not rolling and is_on_floor():
+	if running and is_on_floor():
 		if stamina >= 1:
 			speed = SPEED_DICT["run"]
 			stamina -= 0.25
@@ -106,8 +110,13 @@ func death() -> void:
 		add_child(dead_player)
 
 func _physics_process(delta) -> void:
-	if inside_sword and not rolling and health > 0:
-		health -= 5
+	if inside_sword and not rolling and health > 0 and not invincible:
+		invincible = true
+		if splat_ready: 
+			splat_ready = false
+			blood_splatter.emitting = true
+		($InvincibilityTimer as Timer).start()
+		health -= 15
 	velocity.x = 0
 	velocity.z = 0
 	if dead: return
@@ -195,6 +204,7 @@ func _on_run_timer_timeout():
 
 func _on_area_3d_area_entered(area):
 	if area.is_in_group("EnemySword"): inside_sword = true
+	elif area.is_in_group("InstaDeath"): health = 0
 
 func _on_area_3d_area_exited(area):
 	if area.is_in_group("EnemySword"): inside_sword = false
@@ -209,3 +219,12 @@ func _on_death_timer_timeout():
 	death_timer.start()
 
 
+
+
+func _on_invincibility_timer_timeout():
+	invincible = false
+	($InvincibilityTimer as Timer).stop()
+
+
+func _on_gpu_particles_3d_finished():
+	splat_ready = true

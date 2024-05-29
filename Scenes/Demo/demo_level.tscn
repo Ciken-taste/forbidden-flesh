@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b42f80hf6678h"]
+[gd_scene load_steps=40 format=3 uid="uid://b42f80hf6678h"]
 
 [ext_resource type="Texture2D" uid="uid://c6qc360etuiia" path="res://addons/godot-prototype-texture/PNG/checker_blue_512x512.png" id="1_5r7vb"]
 [ext_resource type="Script" path="res://Scenes/Demo/demo_level.gd" id="1_lg0hh"]
@@ -26,8 +26,8 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_sxny5"]
-vertices = PackedVector3Array(-3, 0.330519, -9.75, -0.75, 0.330519, -10.75, -0.75, 0.330519, -24.5, -3.75, 0.330519, -8.5, -3, 0.330519, -9.75, -0.75, 0.330519, -24.5, -24.5, 0.330519, -24.5, -24.5, 0.330519, -8.5, -0.75, 0.330519, -24.5, -0.75, 0.330519, -10.75, 0.5, 0.330519, -10, -0.75, 0.330519, -24.5, 0.5, 0.330519, -10, 1.5, 0.330519, -8.25, 24.5, 0.330519, -8.25, 24.5, 0.330519, -24.5, 33.25, 0.330519, 1, 31.5, 0.330519, 1.25, 31.5, 0.330519, 24.5, 80.75, 0.330519, 24.5, 31.5, 0.330519, -24.5, 31.5, 0.330519, -1, 33.25, 0.330519, -0.75, 80.75, 0.330519, -24.5, 33.25, 0.330519, -0.75, 33.25, 0.330519, 1, 80.75, 0.330519, 24.5, 80.75, 0.330519, -24.5, -2.5, 3.33052, -8.75, -1.5, 3.33052, -6.5, 0.5, 3.33052, -7.75, -0.75, 3.33052, -9.75, -2.25, 0.330519, -8.5, -1.5, 0.330519, -7.25, -0.25, 0.330519, -7.75, -0.75, 0.330519, -9.25, -1, 0.330519, -4.5, -1.25, 0.330519, -5.5, -2.5, 0.330519, -6, -24.5, 0.330519, -8.5, -24.5, 0.330519, 24.5, 0, 0.330519, 24.5, -2.5, 0.330519, -6, -3.75, 0.330519, -8.5, -24.5, 0.330519, -8.5, 0, 0.330519, 24.5, 0, 0.330519, -4.5, -1, 0.330519, -4.5, 1.5, 0.330519, -5, 24.5, 0.330519, -5, 24.5, 0.330519, -8.25, 1.5, 0.330519, -8.25, -0.25, 1.83052, -6, -0.25, 1.83052, -5.5, 0.25, 1.83052, -5.5, 0.25, 1.83052, -6.25, 24.5, 0.330519, -5, 1.5, 0.330519, -5, 1.25, 0.330519, -4.5, 0, 0.330519, 24.5, 24.5, 0.330519, 24.5, 1.25, 0.330519, -4.5, 0, 0.330519, -4.5, 0, 0.330519, 24.5, 33, 3.08052, -4.5, 33, 3.08052, 4.5, 36.75, 3.08052, 4.5, 36.75, 3.08052, -4.5)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 7), PackedInt32Array(5, 7, 6), PackedInt32Array(10, 9, 8), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 14), PackedInt32Array(14, 11, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(31, 30, 28), PackedInt32Array(28, 30, 29), PackedInt32Array(33, 32, 34), PackedInt32Array(34, 32, 35), PackedInt32Array(37, 36, 38), PackedInt32Array(38, 36, 39), PackedInt32Array(39, 36, 41), PackedInt32Array(39, 41, 40), PackedInt32Array(44, 43, 42), PackedInt32Array(47, 46, 45), PackedInt32Array(51, 50, 48), PackedInt32Array(48, 50, 49), PackedInt32Array(53, 52, 54), PackedInt32Array(54, 52, 55), PackedInt32Array(57, 56, 58), PackedInt32Array(58, 56, 60), PackedInt32Array(58, 60, 59), PackedInt32Array(63, 62, 61), PackedInt32Array(67, 66, 64), PackedInt32Array(64, 66, 65)]
+vertices = PackedVector3Array(-3, 0.330519, -9.75, -0.75, 0.330519, -10.75, -0.75, 0.330519, -24.5, -3.75, 0.330519, -8.5, -3, 0.330519, -9.75, -0.75, 0.330519, -24.5, -24.5, 0.330519, -24.5, -24.5, 0.330519, -8.5, -0.75, 0.330519, -24.5, -0.75, 0.330519, -10.75, 0.5, 0.330519, -10, -0.75, 0.330519, -24.5, 0.5, 0.330519, -10, 1.5, 0.330519, -8.25, 24.5, 0.330519, -8.25, 24.5, 0.330519, -24.5, 31.5, 0.330519, -24.5, 31.5, 0.330519, -5, 33.25, 0.330519, -4.75, 80.75, 0.330519, -24.5, 33.25, 0.330519, 4.75, 31.5, 0.330519, 5, 31.5, 0.330519, 24.5, 80.75, 0.330519, 24.5, 33.25, 0.330519, -4.75, 33.25, 0.330519, 4.75, 80.75, 0.330519, 24.5, 80.75, 0.330519, -24.5, -2.5, 3.33052, -8.75, -1.5, 3.33052, -6.5, 0.5, 3.33052, -7.75, -0.75, 3.33052, -9.75, -2.25, 0.330519, -8.5, -1.5, 0.330519, -7.25, -0.25, 0.330519, -7.75, -0.75, 0.330519, -9.25, -1, 0.330519, -4.5, -1.25, 0.330519, -5.5, -2.5, 0.330519, -6, -24.5, 0.330519, -8.5, -24.5, 0.330519, 24.5, 0, 0.330519, 24.5, -2.5, 0.330519, -6, -3.75, 0.330519, -8.5, -24.5, 0.330519, -8.5, 0, 0.330519, 24.5, 0, 0.330519, -4.5, -1, 0.330519, -4.5, 1.5, 0.330519, -5, 24.5, 0.330519, -5, 24.5, 0.330519, -8.25, 1.5, 0.330519, -8.25, -0.25, 1.83052, -6, -0.25, 1.83052, -5.5, 0.25, 1.83052, -5.5, 0.25, 1.83052, -6.25, 24.5, 0.330519, -5, 1.5, 0.330519, -5, 1.25, 0.330519, -4.5, 0, 0.330519, 24.5, 24.5, 0.330519, 24.5, 1.25, 0.330519, -4.5, 0, 0.330519, -4.5, 0, 0.330519, 24.5, 33, 3.08052, -4.5, 33, 3.08052, 4.5, 36.75, 3.08052, 4.5, 36.75, 3.08052, -4.5)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 7), PackedInt32Array(5, 7, 6), PackedInt32Array(10, 9, 8), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 14), PackedInt32Array(14, 11, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(24, 27, 25), PackedInt32Array(25, 27, 26), PackedInt32Array(31, 30, 28), PackedInt32Array(28, 30, 29), PackedInt32Array(33, 32, 34), PackedInt32Array(34, 32, 35), PackedInt32Array(37, 36, 38), PackedInt32Array(38, 36, 39), PackedInt32Array(39, 36, 41), PackedInt32Array(39, 41, 40), PackedInt32Array(44, 43, 42), PackedInt32Array(47, 46, 45), PackedInt32Array(51, 50, 48), PackedInt32Array(48, 50, 49), PackedInt32Array(53, 52, 54), PackedInt32Array(54, 52, 55), PackedInt32Array(57, 56, 58), PackedInt32Array(58, 56, 60), PackedInt32Array(58, 60, 59), PackedInt32Array(63, 62, 61), PackedInt32Array(67, 66, 64), PackedInt32Array(64, 66, 65)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkuyg"]
 albedo_texture = ExtResource("1_5r7vb")
@@ -95,6 +95,9 @@ text = "DEATHS
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s7l5g"]
 albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bogle"]
+size = Vector3(237.16, 1, 192.294)
 
 [node name="DemoLevel" type="Node3D"]
 script = ExtResource("1_lg0hh")
@@ -227,6 +230,12 @@ text = "0"
 [node name="Deaths" type="Label3D" parent="KDScreen"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162214, 0.938316)
 text = "0"
+
+[node name="InstaKillArea" type="Area3D" parent="." groups=["InstaDeath"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InstaKillArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.8798, -42.3586, -9.53399)
+shape = SubResource("BoxShape3D_bogle")
 
 [connection signal="area_entered" from="EnemySpawner" to="EnemySpawner" method="_on_area_entered"]
 [connection signal="area_exited" from="EnemySpawner" to="EnemySpawner" method="_on_area_exited"]

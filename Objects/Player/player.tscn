@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=20 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
@@ -10,6 +10,24 @@
 albedo_texture = ExtResource("1_dwgu7")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_onc3i"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2bww2"]
+lifetime_randomness = 1.0
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+turbulence_enabled = true
+turbulence_noise_scale = 1.605
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gkb74"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_m6ex1"]
+material = SubResource("StandardMaterial3D_gkb74")
+radius = 0.05
+height = 0.05
 
 [sub_resource type="SphereMesh" id="SphereMesh_l7s5f"]
 
@@ -377,6 +395,9 @@ outline_color = Color(0.797016, 0, 0.256316, 1)
 collision_layer = 0
 script = ExtResource("1_1kfxo")
 
+[node name="InvincibilityTimer" type="Timer" parent="."]
+wait_time = 0.5
+
 [node name="RollTimer" type="Timer" parent="."]
 wait_time = 0.5
 
@@ -389,6 +410,17 @@ wait_time = 5.0
 [node name="Mesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3g13v")
 mesh = SubResource("CapsuleMesh_onc3i")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0412087, 0.466226, 0)
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_2bww2")
+draw_pass_1 = SubResource("SphereMesh_m6ex1")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.142443, 0.59032, -0.394647)
@@ -403,7 +435,7 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_8lnyy")
 
 [node name="Sword" type="Node3D" parent="Mesh"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.01925, -0.570809)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.260502, -0.570809)
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Mesh/Sword"]
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0.138793, 0.513916)
@@ -509,9 +541,11 @@ text = "CTRL + R to respawn"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_678fu")
 
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
+[connection signal="finished" from="Mesh/GPUParticles3D" to="." method="_on_gpu_particles_3d_finished"]
 [connection signal="timeout" from="CameraBoom/Camera3D/RayCast3D/ZoomFreezeTimer" to="CameraBoom" method="_on_zoom_freeze_timer_timeout"]
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
