@@ -11,7 +11,7 @@ var lunging : bool = false
 var swinging : bool = false
 var attacking : bool = false
 
-const SPEED : float = 2.0
+var speed : float = 2.0 + randf_range(0, 1.5)
 
 var health : int = 10
 
@@ -40,10 +40,10 @@ func _physics_process(_delta):
 		if lunging and not boost_applied and able_to_lunge: 
 			($LungeTimer as Timer).start()
 			boost_applied = true
-			new_velocity = (next_location - current_location).normalized() * SPEED * 15
+			new_velocity = (next_location - current_location).normalized() * speed * 15
 
 		elif not lunging or not able_to_lunge:
-			new_velocity = (next_location - current_location).normalized() * SPEED
+			new_velocity = (next_location - current_location).normalized() * speed
 			look_at(next_location)
 			rotation.y += PI
 		velocity = new_velocity
