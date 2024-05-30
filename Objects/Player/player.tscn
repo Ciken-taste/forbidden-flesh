@@ -395,6 +395,9 @@ outline_color = Color(0.797016, 0, 0.256316, 1)
 collision_layer = 0
 script = ExtResource("1_1kfxo")
 
+[node name="SwingTimer" type="Timer" parent="."]
+wait_time = 0.185
+
 [node name="InvincibilityTimer" type="Timer" parent="."]
 wait_time = 0.5
 
@@ -467,80 +470,93 @@ wait_time = 0.25
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="ColorRect" type="ColorRect" parent="HUD"]
-layout_mode = 0
-offset_right = 207.0
-offset_bottom = 56.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.179688
+anchor_bottom = 0.0864198
 color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="StaminaBar" type="ProgressBar" parent="HUD"]
 self_modulate = Color(0, 0.72549, 1, 1)
 layout_mode = 0
-offset_right = 206.0
-offset_bottom = 27.0
+anchor_right = 0.178819
+anchor_bottom = 0.0416667
 step = 1.0
 value = 100.0
 rounded = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Exhausted" type="Label" parent="HUD/StaminaBar"]
-visible = false
 modulate = Color(1, 0, 0, 1)
 top_level = true
-layout_mode = 0
-offset_left = 8.0
-offset_top = 1.0
-offset_right = 65.0
-offset_bottom = 26.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00694444
+anchor_top = 0.00308642
+anchor_right = 0.0277778
+anchor_bottom = 0.0385802
 text = "! ! !"
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthBar" type="ProgressBar" parent="HUD"]
 self_modulate = Color(1, 0, 0, 1)
 layout_mode = 0
-offset_top = 28.0
-offset_right = 206.0
-offset_bottom = 55.0
+anchor_top = 0.0432099
+anchor_right = 0.178819
+anchor_bottom = 0.0848765
 step = 1.0
 value = 100.0
 rounded = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Death" type="ColorRect" parent="HUD"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_top = 177.0
-offset_right = 1157.0
-offset_bottom = 375.0
+anchor_top = 0.273148
+anchor_right = 1.00434
+anchor_bottom = 0.578704
 color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/Death"]
 layout_mode = 0
-offset_right = 1163.0
-offset_bottom = 197.0
+anchor_right = 1.00519
+anchor_bottom = 0.99495
 text = "YOU DIED"
 label_settings = SubResource("LabelSettings_cg26s")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="HUD/Death"]
 stream = ExtResource("5_nof5b")
 
 [node name="Label2" type="Label" parent="HUD/Death"]
 layout_mode = 0
-offset_left = 310.0
-offset_top = 151.0
-offset_right = 472.0
-offset_bottom = 188.0
+anchor_left = 0.267934
+anchor_top = 0.762626
+anchor_right = 0.407952
+anchor_bottom = 0.949495
 text = "CTRL + R to respawn"
+metadata/_edit_use_anchors_ = true
 
 [node name="Area3D" type="Area3D" parent="." groups=["Player"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_678fu")
 
+[connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

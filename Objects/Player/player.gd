@@ -36,6 +36,8 @@ var splat_ready : bool = true
 
 @onready var sword := $Mesh/Sword as Node3D
 var attacking : bool = false
+var sword_dir : int = 1
+@onready var swing_timer := $SwingTimer as Timer
 
 @onready var health_bar := $HUD/HealthBar as ProgressBar
 @onready var stamina_bar := $HUD/StaminaBar as ProgressBar
@@ -47,8 +49,11 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _input(event) -> void:
 	if event.is_action_pressed("attack"):
 		attacking = true
+		swing_timer.start()
 	if event.is_action_released("attack"):
 		attacking = false
+		sword_dir = 1
+		swing_timer.stop()
 	if event.is_action_pressed("run"):
 		running = true
 	if event.is_action_released("run"):
@@ -63,7 +68,7 @@ func _input(event) -> void:
 
 
 func attack():
-	if attacking: sword.rotation.y += PI/9
+	if attacking: sword.rotation.y += PI/9 * sword_dir
 	else: sword.rotation.y = PI/2
 
 
@@ -228,3 +233,7 @@ func _on_invincibility_timer_timeout():
 
 func _on_gpu_particles_3d_finished():
 	splat_ready = true
+
+
+func _on_swing_timer_timeout():
+	sword_dir *= -1

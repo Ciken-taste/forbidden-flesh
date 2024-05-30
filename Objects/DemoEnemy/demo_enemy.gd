@@ -62,6 +62,9 @@ func _physics_process(_delta):
 			rotation.y += PI
 			rotation.z = 0
 		velocity = new_velocity
+		if pacified:
+			look_at(player_pos)
+			rotation.y += PI
 		if not is_on_floor(): velocity.y -= gravity
 		move_and_slide()
 
@@ -82,6 +85,9 @@ func _on_area_3d_area_entered(area):
 
 func _on_attack_area_area_entered(area):
 	if area.is_in_group("Player"): 
+		if pacified:
+			pacified = false
+			nav.target_position = player_pos
 		if able_to_lunge: lunging = true
 		else:
 			attacking = true
@@ -100,7 +106,9 @@ func _on_lunge_timer_timeout():
 func _on_pacification_timer_timeout():
 	if randi_range(10 - health, 100) > 50: 
 		pacified = true
-		pacification_timer.wait_time = 5
+		var time : int = 5
+		time += 10 - health + randi_range(0, 5)
+		pacification_timer.start(time)
 	else: 
 		pacified = false
-		pacification_timer.wait_time = 15
+		pacification_timer.start(15)
