@@ -37,6 +37,9 @@ size = Vector3(1.59863, 1, 2.8736)
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
 script = ExtResource("1_acy52")
 
+[node name="InvincibilityTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="PacificationTimer" type="Timer" parent="."]
 wait_time = 15.0
 autostart = true
@@ -76,7 +79,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_xvfpe")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="Sword" type="Node3D" parent="."]
 transform = Transform3D(0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, 0.173648, 0, 0.622419, 0.470478)
@@ -103,7 +105,9 @@ shape = SubResource("BoxShape3D_f1yag")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0344079, 0.506561, 1.8848)
 shape = SubResource("BoxShape3D_nkveg")
 
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="PacificationTimer" to="." method="_on_pacification_timer_timeout"]
 [connection signal="timeout" from="LungeTimer" to="." method="_on_lunge_timer_timeout"]
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]

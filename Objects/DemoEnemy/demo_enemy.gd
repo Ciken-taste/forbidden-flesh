@@ -22,6 +22,9 @@ var pacified : bool = false
 var speed : float = 2.0 + randf_range(0, 1.5)
 
 var health : int = 10
+@onready var invincibility_timer := $InvincibilityTimer as Timer
+var inside_sword : bool = false
+var invincible : bool = false
 
 var new_velocity : Vector3 = Vector3.ZERO
 
@@ -41,8 +44,12 @@ func attack():
 		
 
 func _physics_process(_delta):
-
-	
+	if inside_sword and not invincible:
+		health -= 1 + randi_range(0, 1)
+		($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
+		invincible = true
+		invincibility_timer.start()
+	death()
 	attack()
 	
 	if not attacking: 
@@ -74,14 +81,17 @@ func seek_player(target_location):
 
 func _on_area_3d_area_entered(area):
 	if area.is_in_group("PlayerSword"): 
-		health -= 1 + randi_range(0, 1)
-		($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
-		
+		inside_sword = true
 	elif area.is_in_group("InstaDeath"): health = 0
+
+func _on_area_3d_area_exited(area):
+	if area.is_in_group("PlayerSword"): 
+		inside_sword = false
+
+func death():
 	if health <= 0: 
 		get_parent().get_tree().call_group("KD", "kill_confirmed")
 		queue_free()
-
 
 func _on_attack_area_area_entered(area):
 	if area.is_in_group("Player"): 
@@ -92,8 +102,6 @@ func _on_attack_area_area_entered(area):
 		else:
 			attacking = true
 			swinging = true
-
-
 
 func _on_lunge_timer_timeout():
 	lunge_timer.stop()
@@ -106,9 +114,19 @@ func _on_lunge_timer_timeout():
 func _on_pacification_timer_timeout():
 	if randi_range(10 - health, 100) > 50: 
 		pacified = true
-		var time : int = 5
+		var time : int = 1
 		time += 10 - health + randi_range(0, 5)
 		pacification_timer.start(time)
 	else: 
 		pacified = false
 		pacification_timer.start(15)
+
+
+func _on_invincibility_timer_timeout():
+	invincible = false
+	if not inside_sword: 
+		invincibility_timer.stop()
+		return
+	
+
+
