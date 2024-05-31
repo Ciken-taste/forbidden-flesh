@@ -35,6 +35,7 @@ var splat_ready : bool = true
 @onready var mesh := $Mesh as MeshInstance3D
 
 @onready var sword := $Mesh/Sword as Node3D
+@onready var sword_area := $Mesh/Sword/DamageArea as Area3D
 var attacking : bool = false
 var sword_dir : int = 1
 @onready var swing_timer := $SwingTimer as Timer
@@ -64,7 +65,7 @@ func _input(event) -> void:
 	if event.is_action_pressed("roll") and not rolling and not roll_cooldown and is_on_floor() and stamina >= 10 and input_dir:
 		stamina -= 10
 		rolling = true
-		($Mesh/Sword/DamageArea as Area3D).monitorable = false
+		sword_area.monitorable = false
 		# Roll timer ajoittaa roll movementin. 
 		($RollTimer as Timer).start()
 
@@ -124,6 +125,8 @@ func _physics_process(delta) -> void:
 			blood_splatter.emitting = true
 		($InvincibilityTimer as Timer).start()
 		health -= 15
+	if not attacking: sword_area.monitorable = false
+	else: sword_area.monitorable = true
 	velocity.x = 0
 	velocity.z = 0
 	if dead: return

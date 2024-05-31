@@ -76,7 +76,7 @@ func _physics_process(_delta) -> void:
 			look_at(player_pos)
 			rotation.y += PI
 		if not is_on_floor(): velocity.y -= gravity
-
+		rotation.x = 0
 		move_and_slide()
 
 func seek_player(target_location) -> void:
