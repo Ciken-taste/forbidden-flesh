@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://8x4r5s547ly4"]
+[gd_scene load_steps=4 format=3 uid="uid://8x4r5s547ly4"]
 
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_6t8m5"]
 
@@ -7,16 +7,9 @@ albedo_texture = ExtResource("1_6t8m5")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qcdxi"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dueer"]
-radius = 0.428677
-height = 1.7913
-
 [node name="DeadPlayer" type="RigidBody3D"]
 
 [node name="SoftBody3D" type="SoftBody3D" parent="."]
 material_override = SubResource("StandardMaterial3D_d2qme")
 mesh = SubResource("CapsuleMesh_qcdxi")
 parent_collision_ignore = NodePath("..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_dueer")

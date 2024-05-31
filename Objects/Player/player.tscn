@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=21 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
 [ext_resource type="Script" path="res://Objects/Player/CameraBoom.gd" id="3_hddlf"]
 [ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="4_ew5tb"]
 [ext_resource type="AudioStream" uid="uid://cjf2sx62ssc58" path="res://Audio/Dark Souls - You Died Sound Effect.mp3" id="5_nof5b"]
+[ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g13v"]
 albedo_texture = ExtResource("1_dwgu7")
@@ -21,11 +22,11 @@ emission_ring_inner_radius = 0.0
 turbulence_enabled = true
 turbulence_noise_scale = 1.605
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gkb74"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbglv"]
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_m6ex1"]
-material = SubResource("StandardMaterial3D_gkb74")
+material = SubResource("StandardMaterial3D_tbglv")
 radius = 0.05
 height = 0.05
 
@@ -458,6 +459,9 @@ shape = SubResource("CapsuleShape3D_qsnia")
 [node name="CameraBoom" type="Node3D" parent="."]
 script = ExtResource("3_hddlf")
 
+[node name="LockOnTimer" type="Timer" parent="CameraBoom"]
+one_shot = true
+
 [node name="Camera3D" type="Camera3D" parent="CameraBoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.378, 3.15)
 
@@ -467,6 +471,10 @@ hit_from_inside = true
 
 [node name="ZoomFreezeTimer" type="Timer" parent="CameraBoom/Camera3D/RayCast3D"]
 wait_time = 0.25
+
+[node name="EnemyLockOnRay" type="RayCast3D" parent="CameraBoom/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -2.18557e-06, -1, 0, 50, -4.37114e-08, 0, 0, 0)
+collision_mask = 8
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
@@ -551,6 +559,21 @@ anchor_bottom = 0.949495
 text = "CTRL + R to respawn"
 metadata/_edit_use_anchors_ = true
 
+[node name="LockOn" type="Control" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/LockOn"]
+position = Vector2(0, 18)
+texture = ExtResource("6_5rymu")
+
 [node name="Area3D" type="Area3D" parent="." groups=["Player"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
@@ -562,6 +585,8 @@ shape = SubResource("CapsuleShape3D_678fu")
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
 [connection signal="finished" from="Mesh/GPUParticles3D" to="." method="_on_gpu_particles_3d_finished"]
+[connection signal="timeout" from="CameraBoom/LockOnTimer" to="CameraBoom" method="_on_lock_on_timer_timeout"]
 [connection signal="timeout" from="CameraBoom/Camera3D/RayCast3D/ZoomFreezeTimer" to="CameraBoom" method="_on_zoom_freeze_timer_timeout"]
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_entered" from="Area3D" to="CameraBoom" method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]

@@ -2,10 +2,10 @@ extends Node3D
 
 @onready var player := $Player as CharacterBody3D
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	get_tree().call_group("enemies", "seek_player", player.global_transform.origin)
 
-func _input(event):
+func _input(event) -> void:
 	if event.is_action_pressed("respawn"):
 		get_tree().call_group("KD", "death_confirmed")
 		get_tree().call_group("player", "remove_player")

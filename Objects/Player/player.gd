@@ -47,6 +47,8 @@ var sword_dir : int = 1
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _input(event) -> void:
+	if event.is_action_pressed("lock_on"): ($HUD/LockOn as Control).show()
+	if event.is_action_released("lock_on"): ($HUD/LockOn as Control).hide()
 	if event.is_action_pressed("attack"):
 		attacking = true
 		swing_timer.start()
@@ -67,7 +69,7 @@ func _input(event) -> void:
 		($RollTimer as Timer).start()
 
 
-func attack():
+func attack() -> void:
 	if attacking: sword.rotation.y += PI/9 * sword_dir
 	else: sword.rotation.y = PI/2
 
@@ -201,21 +203,21 @@ func _on_roll_timer_timeout() -> void:
 		roll_cooldown = false
 
 # Used in respawning
-func remove_player(): queue_free()
+func remove_player() -> void: queue_free()
 
-func _on_run_timer_timeout():
+func _on_run_timer_timeout() -> void:
 	run_cooldown = false
 
 
-func _on_area_3d_area_entered(area):
+func _on_area_3d_area_entered(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = true
 	elif area.is_in_group("InstaDeath"): health = 0
 
-func _on_area_3d_area_exited(area):
+func _on_area_3d_area_exited(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = false
 
 
-func _on_death_timer_timeout():
+func _on_death_timer_timeout() -> void:
 	if death_timer.wait_time == 2:
 		death_timer.wait_time = 0.05
 		($HUD/Death/AudioStreamPlayer as AudioStreamPlayer).play()
@@ -237,3 +239,4 @@ func _on_gpu_particles_3d_finished():
 
 func _on_swing_timer_timeout():
 	sword_dir *= -1
+

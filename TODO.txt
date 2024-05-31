@@ -1,1 +1,4 @@
 29.5.2024
+- Hyökkäys anim
+- Zoom areat
+- enemy lock

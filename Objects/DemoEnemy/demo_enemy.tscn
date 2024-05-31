@@ -1,7 +1,25 @@
-[gd_scene load_steps=13 format=3 uid="uid://gc2qaq7otxk0"]
+[gd_scene load_steps=16 format=3 uid="uid://gc2qaq7otxk0"]
 
 [ext_resource type="Script" path="res://Objects/DemoEnemy/demo_enemy.gd" id="1_acy52"]
 [ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="2_dbidk"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l1adl"]
+lifetime_randomness = 1.0
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+turbulence_enabled = true
+turbulence_noise_scale = 1.605
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_755im"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_f8mb6"]
+material = SubResource("StandardMaterial3D_755im")
+radius = 0.05
+height = 0.05
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3dbnq"]
 size = Vector3(1, 2.46301, 1)
@@ -35,7 +53,19 @@ size = Vector3(1.5997, 1, 0.93518)
 size = Vector3(1.59863, 1, 2.8736)
 
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
+collision_layer = 9
 script = ExtResource("1_acy52")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0412087, 0.466226, 0)
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_l1adl")
+draw_pass_1 = SubResource("SphereMesh_f8mb6")
 
 [node name="InvincibilityTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -105,6 +135,7 @@ shape = SubResource("BoxShape3D_f1yag")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0344079, 0.506561, 1.8848)
 shape = SubResource("BoxShape3D_nkveg")
 
+[connection signal="finished" from="GPUParticles3D" to="." method="_on_gpu_particles_3d_finished"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="PacificationTimer" to="." method="_on_pacification_timer_timeout"]
 [connection signal="timeout" from="LungeTimer" to="." method="_on_lunge_timer_timeout"]

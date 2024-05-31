@@ -3,7 +3,7 @@ extends Area3D
 var spawning : bool = false
 var cooldown : bool = false
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	if not spawning or cooldown: return
 	($SpawnTimer as Timer).start()
 	cooldown = true
@@ -13,13 +13,13 @@ func _physics_process(_delta):
 	add_child(enemy)
 
 
-func _on_area_entered(area):
+func _on_area_entered(area) -> void:
 	if area.is_in_group("Player"): spawning = true
 		
 
-func _on_area_exited(area):
+func _on_area_exited(area) -> void:
 	if area.is_in_group("Player"): spawning = false
 
 
-func _on_spawn_timer_timeout():
+func _on_spawn_timer_timeout() -> void:
 	cooldown = false
