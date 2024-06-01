@@ -77,7 +77,7 @@ func attack() -> void:
 
 func speed_governor() -> float:
 	var speed : float = SPEED_DICT["walk"]
-	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.05
+	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.1
 	if rolling and not running: 
 		return SPEED_DICT["roll"]
 	if run_cooldown: return speed

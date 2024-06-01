@@ -1,22 +1,83 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjhuh0ey6ier4"]
+[gd_scene load_steps=7 format=3 uid="uid://cjhuh0ey6ier4"]
 
 [ext_resource type="Script" path="res://Scenes/Main Menu/main_menu.gd" id="1_r610o"]
+[ext_resource type="Texture2D" uid="uid://j732uk4te5r6" path="res://Textures/start.png" id="2_lam65"]
+[ext_resource type="Texture2D" uid="uid://ci8hj6tqrt223" path="res://Textures/controls.png" id="3_ubydb"]
+[ext_resource type="Texture2D" uid="uid://cgfrc1ty4h0df" path="res://Textures/settings.png" id="4_sgy7m"]
+[ext_resource type="Texture2D" uid="uid://ytjk55sbjxo4" path="res://Textures/quit.png" id="5_sesyb"]
 
-[node name="MainMenu" type="Node2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_qrg7s"]
+font_size = 91
+font_color = Color(1, 0, 0, 1)
+outline_size = 20
+outline_color = Color(0.494245, 1.40181e-06, 2.40654e-07, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_r610o")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 449.0
-offset_top = 50.0
-offset_right = 543.0
-offset_bottom = 73.0
-text = "DARK FLESH"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.147569
+anchor_right = 0.852431
+anchor_bottom = 0.192901
+grow_horizontal = 2
+text = "FORBIDDEN FLESH"
+label_settings = SubResource("LabelSettings_qrg7s")
+metadata/_edit_use_anchors_ = true
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.396701
+anchor_top = 0.175154
+anchor_right = 0.598958
+anchor_bottom = 0.335648
+offset_top = 23.5
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "START"
+icon = ExtResource("2_lam65")
+metadata/_edit_use_anchors_ = true
+
+[node name="Controls" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.396701
+anchor_top = 0.354938
+anchor_right = 0.598958
+anchor_bottom = 0.515432
+text = "CONTROLS
+"
+icon = ExtResource("3_ubydb")
+metadata/_edit_use_anchors_ = true
+
+[node name="Settings" type="Button" parent="."]
+layout_mode = 0
+anchor_left = 0.396701
+anchor_top = 0.535494
+anchor_right = 0.598958
+anchor_bottom = 0.695988
+text = "SETTINGS
+"
+icon = ExtResource("4_sgy7m")
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="."]
-offset_left = -92.0
-offset_top = 180.0
-offset_right = 1375.0
-offset_bottom = 308.0
-text = "START"
+layout_mode = 0
+anchor_left = 0.396701
+anchor_top = 0.714506
+anchor_right = 0.598958
+anchor_bottom = 0.875
+text = "QUIT"
+icon = ExtResource("5_sesyb")
+metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Start" to="." method="_on_button_pressed"]

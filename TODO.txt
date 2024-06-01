@@ -1,2 +1,6 @@
 29.5.2024
 - Hyökkäys anim
+
+1.6.2024
+- Yritä korjata error messaget?
+- Tee main menu loppuu

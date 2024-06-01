@@ -19,7 +19,7 @@ func _process(_delta) -> void:
 		locked_on_enemy = lock_ray.get_collider()
 	if is_instance_valid(locked_on_enemy): 
 		look_at(locked_on_enemy.position)
-	else:
+	elif locked_on_enemy != null:
 		locked_on_enemy = null
 		locking_on = false
 	
