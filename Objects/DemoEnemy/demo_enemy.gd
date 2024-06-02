@@ -69,7 +69,7 @@ func _physics_process(_delta) -> void:
 			new_velocity = (next_location - current_location).normalized() * speed * 15
 		elif not lunging or not able_to_lunge:
 			new_velocity = (next_location - current_location).normalized() * speed
-			look_at(next_location)
+			look_at(next_location, Vector3.UP)
 			rotation.y += PI
 		velocity = new_velocity
 		if pacified:
@@ -96,9 +96,8 @@ func death() -> void:
 	if health <= 0: 
 		get_parent().get_tree().call_group("KD", "kill_confirmed")
 		var ragdoll = preload("res://Objects/DemoEnemy/dead_demo_enemy.tscn").instantiate()
-		ragdoll.global_transform.origin = global_transform.origin
-		
 		add_sibling(ragdoll)
+		ragdoll.global_transform.origin = global_transform.origin
 		queue_free()
 
 func _on_attack_area_area_entered(area) -> void:
