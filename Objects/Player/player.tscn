@@ -1,9 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=19 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
 [ext_resource type="Script" path="res://Objects/Player/CameraBoom.gd" id="3_hddlf"]
-[ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="4_ew5tb"]
+[ext_resource type="PackedScene" uid="uid://bhyftt8s5ayel" path="res://Objects/sword_mesh.tscn" id="3_v2a7k"]
 [ext_resource type="AudioStream" uid="uid://cjf2sx62ssc58" path="res://Audio/Dark Souls - You Died Sound Effect.mp3" id="5_nof5b"]
 [ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
 
@@ -35,13 +35,8 @@ height = 0.05
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lnyy"]
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_euah8"]
-albedo_texture = ExtResource("4_ew5tb")
-
-[sub_resource type="BoxMesh" id="BoxMesh_ir7a7"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_ojwn3"]
-size = Vector3(0.277832, 0.151062, 0.37384)
+size = Vector3(0.277832, 0.151062, 1.01723)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsnia"]
 
@@ -396,9 +391,6 @@ outline_color = Color(0.797016, 0, 0.256316, 1)
 collision_layer = 0
 script = ExtResource("1_1kfxo")
 
-[node name="SwingTimer" type="Timer" parent="."]
-wait_time = 0.185
-
 [node name="InvincibilityTimer" type="Timer" parent="."]
 wait_time = 0.5
 
@@ -441,17 +433,14 @@ surface_material_override/0 = SubResource("StandardMaterial3D_8lnyy")
 [node name="Sword" type="Node3D" parent="Mesh"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.260502, -0.570809)
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Mesh/Sword"]
-transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0.138793, 0.513916)
-material_override = SubResource("StandardMaterial3D_euah8")
-mesh = SubResource("BoxMesh_ir7a7")
-skeleton = NodePath("../../..")
-
 [node name="DamageArea" type="Area3D" parent="Mesh/Sword" groups=["PlayerSword"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Sword/DamageArea"]
-transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155945, 0.128514, 0.901128)
+transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155945, 0.128514, 1.07208)
 shape = SubResource("BoxShape3D_ojwn3")
+
+[node name="SwordMesh" parent="Mesh/Sword" instance=ExtResource("3_v2a7k")]
+transform = Transform3D(1.91069e-16, 4.37114e-09, 0.1, 0.1, -4.37114e-09, 0, 4.37114e-09, 0.1, -4.37114e-09, 0, 0.128446, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_qsnia")
@@ -579,7 +568,6 @@ texture = ExtResource("6_5rymu")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_678fu")
 
-[connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

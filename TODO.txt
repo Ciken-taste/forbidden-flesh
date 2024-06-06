@@ -5,3 +5,7 @@
 - Yritä korjata error messaget?
 	2.6.2024 - Merkittävä osa erroreista korjattu
 - Tee main menu loppuu
+
+
+7.6.2024
+- TODO: Uusi ja parempi hyökkäys systeemi.

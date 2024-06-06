@@ -10,6 +10,7 @@ const SPEED_DICT : Dictionary = {"walk": 0.05, "roll": 0.1, "run": 0.15}
 
 var target_rotation : Vector3 = Vector3.ZERO
 var input_dir : Vector2 = Vector2.ZERO
+var movement_disabled : bool = false
 
 var stamina : float = 100
 var health : int = 100
@@ -36,9 +37,7 @@ var splat_ready : bool = true
 
 @onready var sword := $Mesh/Sword as Node3D
 @onready var sword_area := $Mesh/Sword/DamageArea as Area3D
-var attacking : bool = false
-var sword_dir : int = 1
-@onready var swing_timer := $SwingTimer as Timer
+
 
 @onready var health_bar := $HUD/HealthBar as ProgressBar
 @onready var stamina_bar := $HUD/StaminaBar as ProgressBar
@@ -50,13 +49,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _input(event) -> void:
 	if event.is_action_pressed("lock_on"): ($HUD/LockOn as Control).show()
 	if event.is_action_released("lock_on"): ($HUD/LockOn as Control).hide()
-	if event.is_action_pressed("attack"):
-		attacking = true
-		swing_timer.start()
-	if event.is_action_released("attack"):
-		attacking = false
-		sword_dir = 1
-		swing_timer.stop()
 	if event.is_action_pressed("run"):
 		running = true
 	if event.is_action_released("run"):
@@ -71,9 +63,7 @@ func _input(event) -> void:
 
 
 func attack() -> void:
-	if attacking: sword.rotation.y += PI/9 * sword_dir
-	else: sword.rotation.y = PI/2
-
+	pass
 
 func speed_governor() -> float:
 	var speed : float = SPEED_DICT["walk"]
@@ -98,7 +88,7 @@ func roll_handler() -> void:
 		# Tässä ajassa pelaajan pitää pyöriä 2PI verran.
 		mesh.rotation.x += PI/15
 	
-	else:
+	elif not movement_disabled:
 		# Nolla rollauksen, just in case
 		mesh.rotation.x = 0
 		# Ottaa vastaan wasd inputit
@@ -125,7 +115,6 @@ func _physics_process(delta) -> void:
 			blood_splatter.emitting = true
 		($InvincibilityTimer as Timer).start()
 		health -= 15
-	if not attacking: sword_area.monitorable = false
 	else: sword_area.monitorable = true
 	velocity.x = 0
 	velocity.z = 0
@@ -238,8 +227,3 @@ func _on_invincibility_timer_timeout():
 
 func _on_gpu_particles_3d_finished():
 	splat_ready = true
-
-
-func _on_swing_timer_timeout():
-	sword_dir *= -1
-
