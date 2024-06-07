@@ -38,8 +38,6 @@ var splat_ready : bool = true
 
 # Sword vars, Sword areoita on 2 jotta hitreg toimis paremmin
 @onready var sword := $Mesh/Sword as Node3D
-@onready var sword_area := $Mesh/Sword/DamageArea as Area3D
-@onready var sword_area2 := $Mesh/Sword/DamageArea2 as Area3D
 @onready var sword_audio := $SwordAudio as AudioStreamPlayer3D
 
 # Sword animation vars
@@ -58,12 +56,13 @@ var sword_dir : int = 1
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+@onready var global_vars : Object = get_node("/root/global")
+
 func _input(event) -> void:
 	if event.is_action_pressed("attack") and not attacking and stamina >= 5:
+		global_vars.player_attack = true
 		sword_audio.play(0.3)
 		stamina -= 5
-		sword_area.monitorable = true
-		sword_area2.monitorable = true
 		attacking = true
 		lunging = true
 		swing_timer.start()
@@ -78,8 +77,6 @@ func _input(event) -> void:
 	if event.is_action_pressed("roll") and not rolling and not roll_cooldown and is_on_floor() and stamina >= 10 and input_dir:
 		stamina -= 10
 		rolling = true
-		sword_area.monitorable = false
-		sword_area2.monitorable = false
 		# Roll timer ajoittaa roll movementin. 
 		($RollTimer as Timer).start()
 		roll_audio.play()
@@ -133,9 +130,6 @@ func death() -> void:
 		add_child(dead_player)
 
 func _physics_process(delta) -> void:
-	if dead or not attacking:
-		sword_area.monitorable = false
-		sword_area2.monitorable = false
 	# Blood splat and invincibility frames
 	if inside_sword and not rolling and health > 0 and not invincible:
 		invincible = true
@@ -259,8 +253,7 @@ func _on_gpu_particles_3d_finished():
 
 
 func _on_swing_timer_timeout():
-	sword_area.monitorable = false
-	sword_area2.monitorable = false
+	global_vars.player_attack = false
 	lunging = false
 	sword_dir = -1
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=22 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
@@ -39,10 +39,7 @@ height = 0.05
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ojwn3"]
-size = Vector3(0.277832, 0.151062, 0.457834)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_logm4"]
-size = Vector3(0.367615, 0.169571, 0.739197)
+size = Vector3(0.277832, 0.151062, 1.5286)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsnia"]
 
@@ -453,16 +450,8 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Sword/DamageArea"]
-transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155944, 0.128514, 0.310352)
+transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155946, 0.128514, 0.845746)
 shape = SubResource("BoxShape3D_ojwn3")
-
-[node name="DamageArea2" type="Area3D" parent="Mesh/Sword" groups=["PlayerSword"]]
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Sword/DamageArea2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0328674, 0.138893, 1.15408)
-shape = SubResource("BoxShape3D_logm4")
 
 [node name="SwordMesh" parent="Mesh/Sword" instance=ExtResource("3_v2a7k")]
 transform = Transform3D(1.91069e-16, 4.37114e-09, 0.1, 0.1, -4.37114e-09, 0, 4.37114e-09, 0.1, -4.37114e-09, 0, 0.128446, 0)

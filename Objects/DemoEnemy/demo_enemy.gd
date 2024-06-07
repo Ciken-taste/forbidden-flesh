@@ -33,6 +33,8 @@ var new_velocity : Vector3 = Vector3.ZERO
 
 var player_pos : Vector3 = Vector3.ZERO
 
+@onready var global_vars : Object = get_node("/root/global")
+
 func _ready() -> void:
 	pacification_timer.start(5 + randi_range(0, 10))
 	if able_to_lunge: ($AttackArea/NormalArea as CollisionShape3D).queue_free()
@@ -49,7 +51,7 @@ func attack() -> void:
 			attacking = false
 
 func _physics_process(_delta) -> void:
-	if inside_sword and not invincible:
+	if inside_sword and not invincible and global_vars.player_attack:
 		if splat_ready: 
 			splat_ready = false
 			($GPUParticles3D as GPUParticles3D).emitting = true
