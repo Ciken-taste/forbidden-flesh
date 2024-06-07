@@ -34,6 +34,7 @@ var new_velocity : Vector3 = Vector3.ZERO
 var player_pos : Vector3 = Vector3.ZERO
 
 func _ready() -> void:
+	pacification_timer.start(5 + randi_range(0, 10))
 	if able_to_lunge: ($AttackArea/NormalArea as CollisionShape3D).queue_free()
 	else: ($AttackArea/LungeArea as CollisionShape3D).queue_free()
 

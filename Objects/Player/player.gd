@@ -36,9 +36,10 @@ var splat_ready : bool = true
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
 
-# Sword vars
+# Sword vars, Sword areoita on 2 jotta hitreg toimis paremmin
 @onready var sword := $Mesh/Sword as Node3D
 @onready var sword_area := $Mesh/Sword/DamageArea as Area3D
+@onready var sword_area2 := $Mesh/Sword/DamageArea2 as Area3D
 @onready var sword_audio := $SwordAudio as AudioStreamPlayer3D
 
 # Sword animation vars
@@ -62,6 +63,7 @@ func _input(event) -> void:
 		sword_audio.play(0.3)
 		stamina -= 5
 		sword_area.monitorable = true
+		sword_area2.monitorable = true
 		attacking = true
 		lunging = true
 		swing_timer.start()
@@ -77,6 +79,7 @@ func _input(event) -> void:
 		stamina -= 10
 		rolling = true
 		sword_area.monitorable = false
+		sword_area2.monitorable = false
 		# Roll timer ajoittaa roll movementin. 
 		($RollTimer as Timer).start()
 		roll_audio.play()
@@ -89,7 +92,7 @@ func attack() -> void:
 func speed_governor() -> float:
 	var speed : float = SPEED_DICT["walk"]
 	if lunging: return SPEED_DICT["attack"]
-	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.1
+	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.15
 	if rolling and not running: 
 		return SPEED_DICT["roll"]
 	if run_cooldown: return speed
@@ -130,6 +133,9 @@ func death() -> void:
 		add_child(dead_player)
 
 func _physics_process(delta) -> void:
+	if dead or not attacking:
+		sword_area.monitorable = false
+		sword_area2.monitorable = false
 	# Blood splat and invincibility frames
 	if inside_sword and not rolling and health > 0 and not invincible:
 		invincible = true
@@ -254,6 +260,7 @@ func _on_gpu_particles_3d_finished():
 
 func _on_swing_timer_timeout():
 	sword_area.monitorable = false
+	sword_area2.monitorable = false
 	lunging = false
 	sword_dir = -1
 
