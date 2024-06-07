@@ -51,6 +51,7 @@ func attack() -> void:
 			attacking = false
 
 func _physics_process(_delta) -> void:
+	player_pos = global_vars.player_position
 	if inside_sword and not invincible and global_vars.player_attack:
 		if splat_ready: 
 			splat_ready = false
@@ -85,10 +86,6 @@ func _physics_process(_delta) -> void:
 		if not is_on_floor(): velocity.y -= gravity
 		rotation.x = 0
 		move_and_slide()
-
-func seek_player(target_location) -> void:
-	player_pos = target_location  
-
 
 func _on_area_3d_area_entered(area) -> void:
 	if area.is_in_group("PlayerSword"): 

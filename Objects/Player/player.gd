@@ -130,6 +130,7 @@ func death() -> void:
 		add_child(dead_player)
 
 func _physics_process(delta) -> void:
+	global_vars.player_position = global_transform.origin
 	# Blood splat and invincibility frames
 	if inside_sword and not rolling and health > 0 and not invincible:
 		invincible = true
