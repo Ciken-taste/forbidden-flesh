@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1htrdea2q2hr"]
+[gd_scene load_steps=8 format=3 uid="uid://d1htrdea2q2hr"]
 
 [ext_resource type="Script" path="res://Objects/DemoEnemy/dead_demo_enemy.gd" id="1_wbae5"]
+[ext_resource type="AudioStream" uid="uid://b0fl8g2ytoy2d" path="res://Audio/sword_hit.ogg" id="2_8ogd4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_1otby"]
 
@@ -56,5 +57,9 @@ randomness = 1.0
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_gyg4l")
 draw_pass_1 = SubResource("SphereMesh_krge2")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_8ogd4")
+autoplay = true
 
 [connection signal="finished" from="GPUParticles3D" to="." method="_on_gpu_particles_3d_finished"]

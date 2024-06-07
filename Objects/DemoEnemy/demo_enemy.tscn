@@ -1,7 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://gc2qaq7otxk0"]
 
 [ext_resource type="Script" path="res://Objects/DemoEnemy/demo_enemy.gd" id="1_acy52"]
-[ext_resource type="Texture2D" uid="uid://bt7bprp6tdrep" path="res://addons/godot-prototype-texture/PNG/checker_black_512x512.png" id="2_dbidk"]
+[ext_resource type="PackedScene" uid="uid://bhyftt8s5ayel" path="res://Objects/sword_mesh.tscn" id="2_7jlju"]
+[ext_resource type="AudioStream" uid="uid://b0fl8g2ytoy2d" path="res://Audio/sword_hit.ogg" id="2_dgbxj"]
+[ext_resource type="AudioStream" uid="uid://1voej4k6knag" path="res://Audio/enemy_miss.ogg" id="3_i4gsc"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l1adl"]
 lifetime_randomness = 1.0
@@ -38,11 +40,6 @@ emission_enabled = true
 emission = Color(1, 0, 0, 1)
 emission_energy_multiplier = 16.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8wpe"]
-albedo_texture = ExtResource("2_dbidk")
-
-[sub_resource type="BoxMesh" id="BoxMesh_lwpmn"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mr8j"]
 size = Vector3(0.277832, 0.151062, 0.856812)
 
@@ -55,6 +52,12 @@ size = Vector3(1.59863, 1, 2.8736)
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
 collision_layer = 9
 script = ExtResource("1_acy52")
+
+[node name="HitAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_dgbxj")
+
+[node name="SwingAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_i4gsc")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0412087, 0.466226, 0)
@@ -113,17 +116,14 @@ avoidance_enabled = true
 [node name="Sword" type="Node3D" parent="."]
 transform = Transform3D(0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, 0.173648, 0, 0.622419, 0.470478)
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Sword"]
-transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0.138793, 0.513916)
-material_override = SubResource("StandardMaterial3D_p8wpe")
-mesh = SubResource("BoxMesh_lwpmn")
-skeleton = NodePath("../..")
-
 [node name="DamageArea" type="Area3D" parent="Sword" groups=["EnemySword"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sword/DamageArea"]
 transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155944, 0.128514, 0.659639)
 shape = SubResource("BoxShape3D_7mr8j")
+
+[node name="SwordMesh" parent="Sword" instance=ExtResource("2_7jlju")]
+transform = Transform3D(0.000523587, -0.000401857, -0.0749971, -0.0749982, -3.26976e-09, -0.000523594, 2.80218e-06, 0.0749989, -0.000401854, 0.0203936, 0.111017, 0.00359593)
 
 [node name="AttackArea" type="Area3D" parent="."]
 

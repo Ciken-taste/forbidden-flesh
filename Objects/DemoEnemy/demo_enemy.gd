@@ -6,6 +6,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var nav := $NavigationAgent3D as NavigationAgent3D
 @onready var sword := $Sword as Node3D
+@onready var hit_audio := $HitAudio as AudioStreamPlayer3D
+@onready var swing_audio := $SwingAudio as AudioStreamPlayer3D
 
 @onready var lunge_timer := $LungeTimer as Timer
 @onready var pacification_timer := $PacificationTimer as Timer
@@ -22,7 +24,7 @@ var pacified : bool = false
 var speed : float = 2.0 + randf_range(0, 1.5)
 
 var splat_ready : bool = true
-var health : int = 10
+var health : int = 7
 @onready var invincibility_timer := $InvincibilityTimer as Timer
 var inside_sword : bool = false
 var invincible : bool = false
@@ -38,6 +40,7 @@ func _ready() -> void:
 func attack() -> void:
 	if sword.rotation.y <= (80 * PI) / 180 and swinging: # 80 deg
 		sword.rotation.y += PI/32
+		
 	else:
 		swinging = false
 		if sword.rotation.y >= -(80 * PI) / 180: sword.rotation.y -= PI/64
@@ -50,6 +53,7 @@ func _physics_process(_delta) -> void:
 			splat_ready = false
 			($GPUParticles3D as GPUParticles3D).emitting = true
 		health -= 1 + randi_range(0, 1)
+		hit_audio.play()
 		($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
 		invincible = true
 		invincibility_timer.start()
@@ -111,6 +115,7 @@ func _on_attack_area_area_entered(area) -> void:
 			swinging = true
 
 func _on_lunge_timer_timeout() -> void:
+	swing_audio.play(0.3)
 	lunge_timer.stop()
 	boost_applied = false
 	lunging = false
@@ -131,9 +136,6 @@ func _on_pacification_timer_timeout() -> void:
 
 func _on_invincibility_timer_timeout() -> void:
 	invincible = false
-	if not inside_sword: 
-		invincibility_timer.stop()
-		return
 
 func _on_gpu_particles_3d_finished() -> void:
 	splat_ready = true

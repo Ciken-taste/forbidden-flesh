@@ -6,11 +6,10 @@ const JUMP_VELOCITY : float = 5.5
 
 
 # Speed dict toimii muistina. Jos haluat muuttaa pelaajan nopeutta, muuta tästä vaan!
-const SPEED_DICT : Dictionary = {"walk": 0.05, "roll": 0.1, "run": 0.15}
+const SPEED_DICT : Dictionary = {"walk": 0.05, "roll": 0.1, "run": 0.15, "attack": 0.2}
 
 var target_rotation : Vector3 = Vector3.ZERO
 var input_dir : Vector2 = Vector2.ZERO
-var movement_disabled : bool = false
 
 var stamina : float = 100
 var health : int = 100
@@ -28,15 +27,27 @@ var run_cooldown : bool = false
 var invincible : bool = false
 var dead : bool = false
 
+@onready var hit_audio := $HitAudio as AudioStreamPlayer3D
 @onready var death_timer := $DeathTimer as Timer
 @onready var blood_splatter := $Mesh/GPUParticles3D as GPUParticles3D
 var splat_ready : bool = true
 
+@onready var roll_audio := $RollAudio as AudioStreamPlayer3D
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
 
+# Sword vars
 @onready var sword := $Mesh/Sword as Node3D
 @onready var sword_area := $Mesh/Sword/DamageArea as Area3D
+@onready var sword_audio := $SwordAudio as AudioStreamPlayer3D
+
+# Sword animation vars
+@onready var swing_timer := $Mesh/Sword/SwingTimer as Timer
+@onready var return_swing_timer := $Mesh/Sword/ReturnSwingTimer as Timer
+@onready var sword_rot : float = sword.rotation.y
+var attacking : bool = false
+var lunging : bool = false
+var sword_dir : int = 1
 
 
 @onready var health_bar := $HUD/HealthBar as ProgressBar
@@ -47,26 +58,37 @@ var splat_ready : bool = true
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _input(event) -> void:
+	if event.is_action_pressed("attack") and not attacking and stamina >= 5:
+		sword_audio.play(0.3)
+		stamina -= 5
+		sword_area.monitorable = true
+		attacking = true
+		lunging = true
+		swing_timer.start()
+		return_swing_timer.start()
+	
 	if event.is_action_pressed("lock_on"): ($HUD/LockOn as Control).show()
 	if event.is_action_released("lock_on"): ($HUD/LockOn as Control).hide()
 	if event.is_action_pressed("run"):
 		running = true
 	if event.is_action_released("run"):
 		running = false
-	
 	if event.is_action_pressed("roll") and not rolling and not roll_cooldown and is_on_floor() and stamina >= 10 and input_dir:
 		stamina -= 10
 		rolling = true
 		sword_area.monitorable = false
 		# Roll timer ajoittaa roll movementin. 
 		($RollTimer as Timer).start()
+		roll_audio.play()
 
 
 func attack() -> void:
-	pass
+	const ATTACK_SPEED = PI/10
+	if attacking: sword.rotation.y += ATTACK_SPEED * sword_dir
 
 func speed_governor() -> float:
 	var speed : float = SPEED_DICT["walk"]
+	if lunging: return SPEED_DICT["attack"]
 	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.1
 	if rolling and not running: 
 		return SPEED_DICT["roll"]
@@ -88,7 +110,7 @@ func roll_handler() -> void:
 		# Tässä ajassa pelaajan pitää pyöriä 2PI verran.
 		mesh.rotation.x += PI/15
 	
-	elif not movement_disabled:
+	elif not attacking:
 		# Nolla rollauksen, just in case
 		mesh.rotation.x = 0
 		# Ottaa vastaan wasd inputit
@@ -108,6 +130,7 @@ func death() -> void:
 		add_child(dead_player)
 
 func _physics_process(delta) -> void:
+	# Blood splat and invincibility frames
 	if inside_sword and not rolling and health > 0 and not invincible:
 		invincible = true
 		if splat_ready: 
@@ -115,7 +138,7 @@ func _physics_process(delta) -> void:
 			blood_splatter.emitting = true
 		($InvincibilityTimer as Timer).start()
 		health -= 15
-	else: sword_area.monitorable = true
+		hit_audio.play()
 	velocity.x = 0
 	velocity.z = 0
 	if dead: return
@@ -227,3 +250,14 @@ func _on_invincibility_timer_timeout():
 
 func _on_gpu_particles_3d_finished():
 	splat_ready = true
+
+
+func _on_swing_timer_timeout():
+	sword_area.monitorable = false
+	lunging = false
+	sword_dir = -1
+
+func _on_return_swing_timer_timeout():
+	sword_dir = 1
+	attacking = false
+	sword.rotation.y = sword_rot

@@ -1,11 +1,8 @@
-29.5.2024
-- Hyökkäys anim
-
 1.6.2024
 - Yritä korjata error messaget?
 	2.6.2024 - Merkittävä osa erroreista korjattu
 - Tee main menu loppuu
 
-
-7.6.2024
-- TODO: Uusi ja parempi hyökkäys systeemi.
+7.6.202
+- Vihollisille parempi AI
+	Sellane että pacification perustuu siihen, että kuinka monta muuta vihollista löytyy läheltä
