@@ -50,6 +50,7 @@ size = Vector3(1.5997, 1, 0.93518)
 size = Vector3(1.59863, 1, 2.8736)
 
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
+process_mode = 1
 collision_layer = 9
 script = ExtResource("1_acy52")
 

@@ -40,7 +40,6 @@ anchor_bottom = 0.975309
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -68,7 +67,6 @@ anchor_bottom = 0.515432
 text = "CONTROLS
 "
 icon = ExtResource("3_ubydb")
-metadata/_edit_use_anchors_ = true
 
 [node name="ControlMenu" type="Control" parent="Controls"]
 visible = false
@@ -127,7 +125,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "START"
 icon = ExtResource("2_lam65")
-metadata/_edit_use_anchors_ = true
 
 [node name="Settings" type="Button" parent="."]
 modulate = Color(1, 0, 0, 1)
@@ -139,7 +136,6 @@ anchor_bottom = 0.695988
 text = "SETTINGS
 "
 icon = ExtResource("4_sgy7m")
-metadata/_edit_use_anchors_ = true
 
 [node name="SettingsMenu" type="Control" parent="Settings"]
 visible = false
@@ -187,7 +183,6 @@ anchor_right = 0.598958
 anchor_bottom = 0.875
 text = "QUIT"
 icon = ExtResource("5_sesyb")
-metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Controls" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="Controls/ControlMenu/BackControls" to="." method="_on_back_controls_pressed"]

@@ -13,8 +13,11 @@ var locking_on : bool = false
 
 @onready var lock_ray := $Camera3D/EnemyLockOnRay as RayCast3D
 
+@onready var global_vars : Object = get_node("/root/global")
+
 # Process estää seinien läpi katsomisen, ei toimi kovin hyvin...
 func _process(_delta) -> void:
+
 	if lock_ray.is_colliding() and locking_on: 
 		locked_on_enemy = lock_ray.get_collider()
 	if is_instance_valid(locked_on_enemy): 

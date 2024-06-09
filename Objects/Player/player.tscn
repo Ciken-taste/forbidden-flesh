@@ -391,6 +391,7 @@ outline_color = Color(0.797016, 0, 0.256316, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_678fu"]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
+process_mode = 1
 collision_layer = 0
 script = ExtResource("1_1kfxo")
 
