@@ -1,11 +1,18 @@
 extends Control
 
+@onready var global_vars : Object = get_node("/root/global")
+
 func _on_button_pressed() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	get_tree().change_scene_to_file("res://Scenes/Demo/demo_level.tscn")
 
 @onready var controls_menu := $Controls/ControlMenu as Control
+
+
 @onready var settings_menu := $Settings/SettingsMenu as Control
+@onready var master_volume_slider := $Settings/SettingsMenu/MasterAudio as HSlider
+@onready var mouse_sensitivity_slider := $Settings/SettingsMenu/MouseSensitivity as HSlider
+
 
 func _on_controls_pressed():
 	controls_menu.show()
@@ -21,3 +28,16 @@ func _on_back_controls_pressed():
 
 func _on_back_settings_pressed():
 	settings_menu.hide()
+
+
+func _on_master_audio_drag_ended(value_changed):
+	if not value_changed: return
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), master_volume_slider.value)
+	if master_volume_slider.value == master_volume_slider.min_value:
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -1000)
+
+
+func _on_mouse_sensitivity_drag_ended(value_changed):
+	if not value_changed: return
+	global_vars.mouse_sensitivity = mouse_sensitivity_slider.value
+	

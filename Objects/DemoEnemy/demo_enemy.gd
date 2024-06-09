@@ -63,7 +63,6 @@ func _physics_process(_delta) -> void:
 		invincibility_timer.start()
 	death()
 	attack()
-	
 	if not attacking: 
 
 		var current_location = global_transform.origin
@@ -83,8 +82,8 @@ func _physics_process(_delta) -> void:
 		if pacified:
 			look_at(player_pos)
 			rotation.y += PI
-		if not is_on_floor(): velocity.y -= gravity
 		rotation.x = 0
+		if not is_on_floor(): velocity.y -= gravity
 		move_and_slide()
 
 func _on_area_3d_area_entered(area) -> void:

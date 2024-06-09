@@ -1,6 +1,6 @@
 extends Node3D
 
-var mouse_sensitivity : float = -0.01
+var mouse_sensitivity : float = 0.01
 var saved_zoom : Vector3 = Vector3(2, 2, 2)
 const ZOOM_SENSITIVITY : Vector3 = Vector3(0.1, 0.1, 0.1)
 @onready var cam_collision := $Camera3D/RayCast3D as RayCast3D
@@ -17,7 +17,7 @@ var locking_on : bool = false
 
 # Process estää seinien läpi katsomisen, ei toimi kovin hyvin...
 func _process(_delta) -> void:
-
+	mouse_sensitivity = global_vars.mouse_sensitivity
 	if lock_ray.is_colliding() and locking_on: 
 		locked_on_enemy = lock_ray.get_collider()
 	if is_instance_valid(locked_on_enemy): 
@@ -52,8 +52,8 @@ func _input(event) -> void:
 	
 	# Ohjaa kameran liikettä
 	if event is InputEventMouseMotion:
-		rotation.y += event.relative.x * mouse_sensitivity
-		rotation.x += event.relative.y * mouse_sensitivity
+		rotation.y -= event.relative.x * mouse_sensitivity
+		rotation.x -= event.relative.y * mouse_sensitivity
 		rotation.x = clamp(rotation.x, -PI/3, PI/2)
 	
 	# Manual zoom, ei käytössä!
