@@ -2,6 +2,10 @@
 - Yritä korjata error messaget?
 	2.6.2024 - Merkittävä osa erroreista korjattu
 
-7.6.202
+7.6.2024
 - Vihollisille parempi AI
 	Sellane että pacification perustuu siihen, että kuinka monta muuta vihollista löytyy läheltä
+
+9.6.2024
+- Cutscene systeemi
+	Perustuu path3D:hin?

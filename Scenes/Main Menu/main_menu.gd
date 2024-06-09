@@ -2,6 +2,18 @@ extends Control
 
 @onready var global_vars : Object = get_node("/root/global")
 
+@onready var setting_button := $Settings as Button
+@onready var controls_button := $Controls as Button
+@onready var start_button := $Start as Button
+@onready var quit_button := $Quit as Button
+
+func handle_buttons(is_disabled : bool) -> void:
+	setting_button.disabled = is_disabled
+	controls_button.disabled = is_disabled
+	start_button.disabled = is_disabled
+	quit_button.disabled = is_disabled
+
+
 func _on_button_pressed() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	get_tree().change_scene_to_file("res://Scenes/Demo/demo_level.tscn")
@@ -15,18 +27,22 @@ func _on_button_pressed() -> void:
 
 
 func _on_controls_pressed():
+	handle_buttons(true)
 	controls_menu.show()
 
 func _on_settings_pressed():
+	handle_buttons(true)
 	settings_menu.show()
 
 func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_back_controls_pressed():
+	handle_buttons(false)
 	controls_menu.hide()
 
 func _on_back_settings_pressed():
+	handle_buttons(false)
 	settings_menu.hide()
 
 

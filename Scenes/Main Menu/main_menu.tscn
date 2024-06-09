@@ -83,6 +83,7 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Controls/ControlMenu"]
+self_modulate = Color(1, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -107,11 +108,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BackControls" type="Button" parent="Controls/ControlMenu"]
 layout_mode = 0
-offset_left = 731.0
-offset_top = 403.0
-offset_right = 796.0
-offset_bottom = 452.0
+anchor_left = 0.908076
+anchor_top = 0.872295
+anchor_right = 0.988821
+anchor_bottom = 0.978356
 text = "BACK"
+metadata/_edit_use_anchors_ = true
 
 [node name="Start" type="Button" parent="."]
 modulate = Color(1, 0, 0, 1)
@@ -140,6 +142,7 @@ text = "SETTINGS
 icon = ExtResource("4_sgy7m")
 
 [node name="SettingsMenu" type="Control" parent="Settings"]
+visible = false
 z_index = 1
 layout_mode = 1
 anchor_left = -1.21459
@@ -170,11 +173,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BackSettings" type="Button" parent="Settings/SettingsMenu"]
 layout_mode = 0
-offset_left = 731.0
-offset_top = 403.0
-offset_right = 796.0
-offset_bottom = 452.0
+anchor_left = 0.908076
+anchor_top = 0.872295
+anchor_right = 0.988821
+anchor_bottom = 0.978356
 text = "BACK"
+metadata/_edit_use_anchors_ = true
 
 [node name="MasterAudio" type="HSlider" parent="Settings/SettingsMenu"]
 layout_mode = 0
