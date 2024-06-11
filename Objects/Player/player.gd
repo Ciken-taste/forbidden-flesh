@@ -96,7 +96,7 @@ func speed_governor() -> float:
 	if running and is_on_floor():
 		if stamina >= 1:
 			speed = SPEED_DICT["run"]
-			stamina -= 0.175
+			stamina -= 0.1
 		else:
 			running = false
 			run_cooldown = true

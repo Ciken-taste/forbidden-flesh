@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba01ddgve7ky4"]
+
+[ext_resource type="Script" path="res://Scenes/Demo/cutscene.gd" id="1_nihyn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_02f4k"]
+
+[sub_resource type="Curve3D" id="Curve3D_cd84o"]
+
+[node name="Cutscene" type="Node3D"]
+script = ExtResource("1_nihyn")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.491277, 0)
+shape = SubResource("BoxShape3D_02f4k")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00203621, 1.35629, 0.230507)
+curve = SubResource("Curve3D_cd84o")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.975085, -0.00474832, 0.221755, 4.65659e-10, 0.999765, 0.0214076, -0.221805, 0.0208743, -0.974865, 0.104331, -0.279911, 0.285495)
+
+[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
