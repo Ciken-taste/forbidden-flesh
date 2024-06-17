@@ -7,6 +7,9 @@ extends Control
 @onready var start_button := $Start as Button
 @onready var quit_button := $Quit as Button
 
+func _ready():
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -10)
+
 func handle_buttons(is_disabled : bool) -> void:
 	setting_button.disabled = is_disabled
 	controls_button.disabled = is_disabled

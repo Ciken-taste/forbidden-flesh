@@ -189,6 +189,7 @@ anchor_bottom = 0.261905
 min_value = -25.0
 max_value = 10.0
 step = 0.1
+value = -10.0
 metadata/_edit_use_anchors_ = true
 
 [node name="MasterAudioLabel" type="Label" parent="Settings/SettingsMenu/MasterAudio"]

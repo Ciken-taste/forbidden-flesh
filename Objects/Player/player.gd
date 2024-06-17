@@ -6,7 +6,7 @@ const JUMP_VELOCITY : float = 5.5
 
 
 # Speed dict toimii muistina. Jos haluat muuttaa pelaajan nopeutta, muuta tästä vaan!
-const SPEED_DICT : Dictionary = {"walk": 0.05, "roll": 0.1, "run": 0.15, "attack": 0.2}
+const SPEED_DICT : Dictionary = {"walk": 200, "roll": 350, "run": 500, "attack": 650}
 
 var target_rotation : Vector3 = Vector3.ZERO
 var input_dir : Vector2 = Vector2.ZERO
@@ -204,14 +204,14 @@ func _physics_process(delta) -> void:
 	var y_change : int = 0
 	
 	if input_dir.y < 0: # Forward
-		position.x -= sin(target_rotation.y) * speed
-		position.z -= cos(target_rotation.y) * speed
+		velocity.x -= sin(target_rotation.y) * speed * delta
+		velocity.z -= cos(target_rotation.y) * speed * delta
 		mesh.rotation.y = target_rotation.y
 		y_change = 1
 
 	if input_dir.y > 0: # Back
-		position.x += sin(target_rotation.y) * speed
-		position.z += cos(target_rotation.y) * speed
+		velocity.x += sin(target_rotation.y) * speed * delta
+		velocity.z += cos(target_rotation.y) * speed * delta
 		mesh.rotation.y = target_rotation.y - PI
 		y_change = -1
 		
@@ -219,8 +219,8 @@ func _physics_process(delta) -> void:
 	var normalize : float = 1
 	if y_change != 0: normalize = 0.5
 	if input_dir.x < 0: # Left
-		position.x += sin(target_rotation.y - PI/2) * speed * normalize
-		position.z += cos(target_rotation.y - PI/2) * speed * normalize
+		velocity.x += sin(target_rotation.y - PI/2) * speed * normalize * delta
+		velocity.z += cos(target_rotation.y - PI/2) * speed * normalize * delta
 		if y_change == 1:
 			mesh.rotation.y = target_rotation.y + PI/4
 		elif y_change == -1:
@@ -230,8 +230,8 @@ func _physics_process(delta) -> void:
 
 	if input_dir.x > 0: # Right
 		
-		position.x += sin(target_rotation.y + PI/2) * speed * normalize
-		position.z += cos(target_rotation.y + PI/2) * speed * normalize
+		velocity.x += sin(target_rotation.y + PI/2) * speed * normalize * delta
+		velocity.z += cos(target_rotation.y + PI/2) * speed * normalize * delta
 		mesh.rotation.y = target_rotation.y - PI/2
 		if y_change == 1:
 			mesh.rotation.y = target_rotation.y - PI/4
@@ -239,8 +239,6 @@ func _physics_process(delta) -> void:
 			mesh.rotation.y = target_rotation.y - PI/2 - PI/4
 		else: 
 			mesh.rotation.y = target_rotation.y - PI/2
-
-	
 	move_and_slide()
 
 
