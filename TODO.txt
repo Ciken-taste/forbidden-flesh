@@ -6,6 +6,5 @@
 - Vihollisille parempi AI
 	Sellane että pacification perustuu siihen, että kuinka monta muuta vihollista löytyy läheltä
 
-9.6.2024
-- Cutscene systeemi
-	Perustuu path3D:hin?
+17.6.2024
+- Ase systeemi ja konsumables

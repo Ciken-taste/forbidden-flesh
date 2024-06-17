@@ -27,6 +27,8 @@ var run_cooldown : bool = false
 var invincible : bool = false
 var dead : bool = false
 
+var attack_disabled : bool = false
+
 @onready var hit_audio := $HitAudio as AudioStreamPlayer3D
 @onready var death_timer := $DeathTimer as Timer
 @onready var blood_splatter := $Mesh/GPUParticles3D as GPUParticles3D
@@ -36,18 +38,21 @@ var splat_ready : bool = true
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
 
-# Sword vars, Sword areoita on 2 jotta hitreg toimis paremmin
-@onready var sword := $Mesh/Sword as Node3D
+# Sword vars
 @onready var sword_audio := $SwordAudio as AudioStreamPlayer3D
+var sword
 
 # Sword animation vars
-@onready var swing_timer := $Mesh/Sword/SwingTimer as Timer
-@onready var return_swing_timer := $Mesh/Sword/ReturnSwingTimer as Timer
-@onready var sword_rot : float = sword.rotation.y
+@onready var swing_timer := $SwingTimer as Timer
+@onready var return_swing_timer := $ReturnSwingTimer as Timer
+
 var attacking : bool = false
 var lunging : bool = false
 var sword_dir : int = 1
+var sword_rot : float
 
+var melee_stamina_use : int = 5
+var weapon_movement_speed_mult : float = 1.0
 
 @onready var health_bar := $HUD/HealthBar as ProgressBar
 @onready var stamina_bar := $HUD/StaminaBar as ProgressBar
@@ -58,11 +63,41 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var global_vars : Object = get_node("/root/global")
 
+func _ready():
+	create_melee()
+
+func create_melee():
+	# Tää luo uuden miekan pelaajalle, autoloaderissa otetaan uus miekka.
+	if sword: sword.queue_free()
+	var current_melee = load(global_vars.current_melee).instantiate()
+	mesh.call_deferred("add_child", current_melee)
+	sword = current_melee
+	sword_rot = sword.rotation.y
+	# Tähän voi laittaa uusia audioita, esim hammer ääni
+	if "Sword" in str(sword): 
+		sword_audio.stream = load("res://Audio/sword_miss.ogg")
+	if "Hammer" in str(sword):
+		sword_audio.stream = load("res://Audio/hammer_miss.ogg")
+	if "Weaponless" in str(sword):
+		attack_disabled = true
+	
+	var player_weapon = global_vars.current_melee
+	var stamina_dict = global_vars.melee_stamina_dict
+	var speed_dict = global_vars.melee_speed_dict
+	# Tutkii autoloaderin damage dictistä, että kuinka paljon pelaajan ase tekee lämää
+	for dicts in stamina_dict:
+		if str(dicts) in str(player_weapon):
+			melee_stamina_use = stamina_dict[dicts]
+	for dicts in speed_dict:
+		if str(dicts) in str(player_weapon):
+			weapon_movement_speed_mult = speed_dict[dicts]
+
+
 func _input(event) -> void:
-	if event.is_action_pressed("attack") and not attacking and stamina >= 5:
+	if event.is_action_pressed("attack") and not attacking and stamina >= melee_stamina_use and not attack_disabled:
 		global_vars.player_attack = true
 		sword_audio.play(0.3)
-		stamina -= 5
+		stamina -= melee_stamina_use
 		attacking = true
 		lunging = true
 		swing_timer.start()
@@ -78,6 +113,7 @@ func _input(event) -> void:
 		stamina -= 10
 		rolling = true
 		# Roll timer ajoittaa roll movementin. 
+		sword.damage_areas = false
 		($RollTimer as Timer).start()
 		roll_audio.play()
 
@@ -88,11 +124,11 @@ func attack() -> void:
 
 func speed_governor() -> float:
 	var speed : float = SPEED_DICT["walk"]
-	if lunging: return SPEED_DICT["attack"]
+	if lunging: return SPEED_DICT["attack"] * weapon_movement_speed_mult
 	if (not running or run_cooldown or not is_on_floor()) and stamina < 100: stamina += 0.15
 	if rolling and not running: 
-		return SPEED_DICT["roll"]
-	if run_cooldown: return speed
+		return SPEED_DICT["roll"] * weapon_movement_speed_mult
+	if run_cooldown: return speed * weapon_movement_speed_mult
 	if running and is_on_floor():
 		if stamina >= 1:
 			speed = SPEED_DICT["run"]
@@ -101,7 +137,7 @@ func speed_governor() -> float:
 			running = false
 			run_cooldown = true
 			($RunTimer as Timer).start()
-	return speed
+	return speed * weapon_movement_speed_mult
 
 
 func roll_handler() -> void:
@@ -149,7 +185,6 @@ func _physics_process(delta) -> void:
 	
 	health_bar.value = health
 	stamina_bar.value = stamina
-	
 	
 
 	attack()
@@ -211,7 +246,7 @@ func _physics_process(delta) -> void:
 
 func _on_roll_timer_timeout() -> void:
 	if rolling:
-		($Mesh/Sword/DamageArea as Area3D).monitorable = true
+		sword.damage_areas = true
 		rolling = false
 		roll_cooldown = true
 		($RollTimer as Timer).start()

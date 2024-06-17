@@ -10,7 +10,7 @@ func _physics_process(_delta) -> void:
 	var enemy = preload("res://Objects/DemoEnemy/demo_enemy.tscn").instantiate()
 	var random_pos : Vector3 = Vector3(randi_range(-10, 10), 0, randi_range(-10, 10))
 	enemy.global_position = ($Marker3D as Marker3D).global_position + random_pos
-	add_child(enemy)
+	call_deferred("add_child", enemy)
 
 
 func _on_area_entered(area) -> void:

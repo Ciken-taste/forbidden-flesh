@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://uikqclpk313w"]
+
+[ext_resource type="Script" path="res://Objects/weapons/melee_script.gd" id="1_cpklb"]
+[ext_resource type="PackedScene" uid="uid://bhyftt8s5ayel" path="res://Objects/sword_mesh.tscn" id="1_uw5cl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yy6uy"]
+size = Vector3(0.277832, 0.151062, 1.5286)
+
+[node name="StockSword" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.260502, -0.570809)
+script = ExtResource("1_cpklb")
+
+[node name="DamageArea" type="Area3D" parent="." groups=["PlayerSword"]]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155946, 0.128514, 0.845746)
+shape = SubResource("BoxShape3D_yy6uy")
+
+[node name="SwordMesh" parent="." instance=ExtResource("1_uw5cl")]
+transform = Transform3D(1.91069e-16, 4.37114e-09, 0.1, 0.1, -4.37114e-09, 0, 4.37114e-09, 0.1, -4.37114e-09, 0, 0.128446, 0)

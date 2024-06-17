@@ -56,7 +56,18 @@ func _physics_process(_delta) -> void:
 		if splat_ready: 
 			splat_ready = false
 			($GPUParticles3D as GPUParticles3D).emitting = true
-		health -= 1 + randi_range(0, 1)
+		
+		var damage_dict = global_vars.melee_damage_dict
+		var player_weapon = global_vars.current_melee
+		
+		# Tutkii autoloaderin damage dictistä, että kuinka paljon pelaajan ase tekee lämää
+		for dicts in damage_dict:
+			if str(dicts) in str(player_weapon):
+				health -= damage_dict[dicts] + randi_range(0, 1)
+		
+		
+		
+		
 		hit_audio.play()
 		($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
 		invincible = true
@@ -67,9 +78,15 @@ func _physics_process(_delta) -> void:
 
 		var current_location = global_transform.origin
 		var next_location = null
+		
+		# Pacification
 		if not pacified: nav.target_position = player_pos
 		else: nav.target_position = home_pos
+		
+		
 		next_location = nav.get_next_path_position()
+		
+		
 		if lunging and not boost_applied and able_to_lunge: 
 			lunge_timer.start()
 			boost_applied = true

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvi8bagmw48di"]
+
+[ext_resource type="Script" path="res://Objects/weapons/melee_script.gd" id="1_3rcfi"]
+[ext_resource type="PackedScene" uid="uid://dqrfdc1cey7ir" path="res://Objects/hammer_mesh.tscn" id="1_njg6w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_00m6y"]
+size = Vector3(1, 0.457031, 2.46716)
+
+[node name="WarHammer" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.260502, -0.570809)
+script = ExtResource("1_3rcfi")
+
+[node name="HammerMesh" parent="." instance=ExtResource("1_njg6w")]
+transform = Transform3D(2.86603e-16, 6.55671e-09, 0.15, 0.15, -6.55671e-09, -5.36013e-22, 6.55671e-09, 0.15, -6.55671e-09, 0, 0, 0)
+
+[node name="DamageArea" type="Area3D" parent="." groups=["PlayerSword"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19209e-07, 0.00195313, 1.33442)
+shape = SubResource("BoxShape3D_00m6y")

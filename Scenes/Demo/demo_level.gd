@@ -13,7 +13,7 @@ func _input(event) -> void:
 		var new_player = preload("res://Objects/Player/player.tscn").instantiate()
 		new_player.position.y = 5
 		player = new_player
-		add_child(new_player)
+		call_deferred("add_child", new_player)
 
 
 

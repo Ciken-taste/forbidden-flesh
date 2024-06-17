@@ -1,12 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=19 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
 [ext_resource type="AudioStream" uid="uid://dx3vsfwn6dxje" path="res://Audio/roll.ogg" id="2_i7unn"]
 [ext_resource type="Script" path="res://Objects/Player/CameraBoom.gd" id="3_hddlf"]
-[ext_resource type="AudioStream" uid="uid://bg1v77hv7hok5" path="res://Audio/sword_miss.ogg" id="3_n2ej6"]
 [ext_resource type="AudioStream" uid="uid://dwoiv3fraibfi" path="res://Audio/player_hit.ogg" id="3_qotlx"]
-[ext_resource type="PackedScene" uid="uid://bhyftt8s5ayel" path="res://Objects/sword_mesh.tscn" id="3_v2a7k"]
 [ext_resource type="AudioStream" uid="uid://cjf2sx62ssc58" path="res://Audio/Dark Souls - You Died Sound Effect.mp3" id="5_nof5b"]
 [ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
 
@@ -37,9 +35,6 @@ height = 0.05
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lnyy"]
 albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ojwn3"]
-size = Vector3(0.277832, 0.151062, 1.5286)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsnia"]
 
@@ -407,6 +402,14 @@ wait_time = 2.0
 [node name="RunTimer" type="Timer" parent="."]
 wait_time = 5.0
 
+[node name="SwingTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="ReturnSwingTimer" type="Timer" parent="."]
+wait_time = 0.325
+one_shot = true
+
 [node name="RollAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_i7unn")
 
@@ -414,7 +417,6 @@ stream = ExtResource("2_i7unn")
 stream = ExtResource("3_qotlx")
 
 [node name="SwordAudio" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_n2ej6")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3g13v")
@@ -442,28 +444,6 @@ transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -0.184001, 0.59295, 
 mesh = SubResource("SphereMesh_l7s5f")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_8lnyy")
-
-[node name="Sword" type="Node3D" parent="Mesh"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.260502, -0.570809)
-
-[node name="DamageArea" type="Area3D" parent="Mesh/Sword" groups=["PlayerSword"]]
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Sword/DamageArea"]
-transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155946, 0.128514, 0.845746)
-shape = SubResource("BoxShape3D_ojwn3")
-
-[node name="SwordMesh" parent="Mesh/Sword" instance=ExtResource("3_v2a7k")]
-transform = Transform3D(1.91069e-16, 4.37114e-09, 0.1, 0.1, -4.37114e-09, 0, 4.37114e-09, 0.1, -4.37114e-09, 0, 0.128446, 0)
-
-[node name="SwingTimer" type="Timer" parent="Mesh/Sword"]
-wait_time = 0.15
-one_shot = true
-
-[node name="ReturnSwingTimer" type="Timer" parent="Mesh/Sword"]
-wait_time = 0.325
-one_shot = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_qsnia")
@@ -599,9 +579,9 @@ shape = SubResource("CapsuleShape3D_678fu")
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
+[connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
+[connection signal="timeout" from="ReturnSwingTimer" to="." method="_on_return_swing_timer_timeout"]
 [connection signal="finished" from="Mesh/GPUParticles3D" to="." method="_on_gpu_particles_3d_finished"]
-[connection signal="timeout" from="Mesh/Sword/SwingTimer" to="." method="_on_swing_timer_timeout"]
-[connection signal="timeout" from="Mesh/Sword/ReturnSwingTimer" to="." method="_on_return_swing_timer_timeout"]
 [connection signal="timeout" from="CameraBoom/LockOnTimer" to="CameraBoom" method="_on_lock_on_timer_timeout"]
 [connection signal="timeout" from="CameraBoom/Camera3D/RayCast3D/ZoomFreezeTimer" to="CameraBoom" method="_on_zoom_freeze_timer_timeout"]
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
