@@ -481,19 +481,35 @@ size_flags_vertical = 0
 [node name="ColorRect" type="ColorRect" parent="HUD"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.179688
-anchor_bottom = 0.0864198
+anchor_left = 0.0546875
+anchor_top = 0.0601852
+anchor_right = 0.403646
+anchor_bottom = 0.0987654
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect2" type="ColorRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0546875
+anchor_top = 0.111111
+anchor_right = 0.28125
+anchor_bottom = 0.149691
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="StaminaBar" type="ProgressBar" parent="HUD"]
 self_modulate = Color(0, 0.72549, 1, 1)
-layout_mode = 0
-anchor_right = 0.178819
-anchor_bottom = 0.0416667
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0520833
+anchor_top = 0.109568
+anchor_right = 0.283854
+anchor_bottom = 0.151235
 step = 1.0
 value = 100.0
 rounded = true
+show_percentage = false
 metadata/_edit_use_anchors_ = true
 
 [node name="Exhausted" type="Label" parent="HUD/StaminaBar"]
@@ -501,10 +517,10 @@ modulate = Color(1, 0, 0, 1)
 top_level = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.019
-anchor_top = 0.021
-anchor_right = 0.019
-anchor_bottom = 0.021
+anchor_left = 0.0676111
+anchor_top = 0.130568
+anchor_right = 0.0676111
+anchor_bottom = 0.130568
 offset_left = -10.888
 offset_top = -11.608
 offset_right = 11.112
@@ -514,13 +530,16 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HealthBar" type="ProgressBar" parent="HUD"]
 self_modulate = Color(1, 0, 0, 1)
-layout_mode = 0
-anchor_top = 0.0432099
-anchor_right = 0.178819
-anchor_bottom = 0.0848765
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0520833
+anchor_top = 0.058642
+anchor_right = 0.40625
+anchor_bottom = 0.100309
 step = 1.0
 value = 100.0
 rounded = true
+show_percentage = false
 metadata/_edit_use_anchors_ = true
 
 [node name="Death" type="ColorRect" parent="HUD"]

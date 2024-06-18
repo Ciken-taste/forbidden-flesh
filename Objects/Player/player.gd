@@ -34,6 +34,7 @@ var attack_disabled : bool = false
 @onready var blood_splatter := $Mesh/GPUParticles3D as GPUParticles3D
 var splat_ready : bool = true
 
+@onready var collision := $CollisionShape3D as CollisionShape3D
 @onready var roll_audio := $RollAudio as AudioStreamPlayer3D
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
@@ -110,6 +111,7 @@ func _input(event) -> void:
 	if event.is_action_released("run"):
 		running = false
 	if event.is_action_pressed("roll") and not rolling and not roll_cooldown and is_on_floor() and stamina >= 10 and input_dir:
+		collision.scale = Vector3(0.8, 0.8, 0.8)
 		stamina -= 10
 		rolling = true
 		# Roll timer ajoittaa roll movementin. 
@@ -244,6 +246,7 @@ func _physics_process(delta) -> void:
 
 func _on_roll_timer_timeout() -> void:
 	if rolling:
+		collision.scale = Vector3(1, 1, 1)
 		sword.damage_areas = true
 		rolling = false
 		roll_cooldown = true

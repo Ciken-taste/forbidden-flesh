@@ -90,10 +90,12 @@ func _physics_process(_delta) -> void:
 		if lunging and not boost_applied and able_to_lunge: 
 			lunge_timer.start()
 			boost_applied = true
-			new_velocity = (next_location - current_location).normalized() * speed * 15
+			new_velocity = (next_location - current_location).normalized() * speed * 10
 		elif not lunging or not able_to_lunge:
 			new_velocity = (next_location - current_location).normalized() * speed
-			look_at(next_location, Vector3.UP)
+			
+			# Koska look_at:tin tulos pitää olla != 0, niin lisätään 0.001, jotta aina olisi pieni offset 0:llasta.
+			look_at(next_location + Vector3(0.001, 0.001, 0.001))
 			rotation.y += PI
 		velocity = new_velocity
 		if pacified:

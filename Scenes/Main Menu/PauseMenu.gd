@@ -20,14 +20,14 @@ signal toggle_pause
 
 var currently_paused : bool = false
 
-func handle_buttons(is_disabled : bool) -> void:
+func disable_buttons(is_disabled : bool) -> void:
 	setting_button.disabled = is_disabled
 	controls_button.disabled = is_disabled
 	start_button.disabled = is_disabled
 	quit_button.disabled = is_disabled
 
 func pause_handler() -> void:
-	handle_buttons(false)
+	disable_buttons(false)
 	currently_paused = not currently_paused
 	if currently_paused: Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else: Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -35,7 +35,7 @@ func pause_handler() -> void:
 
 func _input(event) -> void:
 		if event.is_action_pressed("pause"):
-			handle_buttons(false)
+			disable_buttons(false)
 			if not settings_menu.visible and not controls_menu.visible:
 				pause_handler()
 			else:
@@ -46,20 +46,20 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _on_settings_pressed() -> void:
-	handle_buttons(true)
+	disable_buttons(true)
 	settings_menu.show()
 
 func _on_back_settings_pressed() -> void:
-	handle_buttons(false)
+	disable_buttons(false)
 	settings_menu.hide()
 
 
 func _on_controls_pressed() -> void:
-	handle_buttons(true)
+	disable_buttons(true)
 	controls_menu.show()
 
 func _on_back_controls_pressed() -> void:
-	handle_buttons(false)
+	disable_buttons(false)
 	controls_menu.hide()
 
 
