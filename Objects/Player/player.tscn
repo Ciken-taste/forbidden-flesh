@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=20 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dwoiv3fraibfi" path="res://Audio/player_hit.ogg" id="3_qotlx"]
 [ext_resource type="AudioStream" uid="uid://cjf2sx62ssc58" path="res://Audio/Dark Souls - You Died Sound Effect.mp3" id="5_nof5b"]
 [ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
+[ext_resource type="Script" path="res://Objects/Player/HealthBar.gd" id="6_no3ki"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g13v"]
 albedo_texture = ExtResource("1_dwgu7")
@@ -481,20 +482,20 @@ size_flags_vertical = 0
 [node name="ColorRect" type="ColorRect" parent="HUD"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0546875
-anchor_top = 0.0601852
-anchor_right = 0.403646
-anchor_bottom = 0.0987654
+anchor_left = 0.0512153
+anchor_top = 0.0570988
+anchor_right = 0.407118
+anchor_bottom = 0.101852
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect2" type="ColorRect" parent="HUD"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0546875
-anchor_top = 0.111111
-anchor_right = 0.28125
-anchor_bottom = 0.149691
+anchor_left = 0.0512153
+anchor_top = 0.108025
+anchor_right = 0.284722
+anchor_bottom = 0.152778
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -540,7 +541,83 @@ step = 1.0
 value = 100.0
 rounded = true
 show_percentage = false
+script = ExtResource("6_no3ki")
 metadata/_edit_use_anchors_ = true
+
+[node name="HealthChangedBar" type="ProgressBar" parent="HUD/HealthBar"]
+self_modulate = Color(1, 0, 0, 1)
+show_behind_parent = true
+layout_mode = 0
+anchor_right = 1.00245
+anchor_bottom = 0.999992
+offset_right = -3.05176e-05
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect3" type="ColorRect" parent="HUD/HealthBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.5
+offset_top = -14.5
+offset_right = 3.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="HUD/HealthBar"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+anchor_left = -0.00245098
+anchor_top = -0.0370367
+anchor_right = 0.5
+anchor_bottom = 1.03703
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="HUD/HealthBar/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.5
+offset_top = -14.5
+offset_right = 3.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="HUD/HealthBar"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = -0.0370373
+anchor_right = 1.00245
+anchor_bottom = 1.03703
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="HUD/HealthBar/ColorRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.5
+offset_top = -14.5
+offset_right = 3.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Death" type="ColorRect" parent="HUD"]
 modulate = Color(1, 1, 1, 0)
@@ -548,19 +625,28 @@ layout_mode = 0
 anchor_top = 0.273148
 anchor_right = 1.00434
 anchor_bottom = 0.578704
+offset_bottom = -3.05176e-05
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/Death"]
-layout_mode = 0
-anchor_right = 1.00519
-anchor_bottom = 0.99495
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -255.5
+offset_top = -78.0
+offset_right = 255.5
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "YOU DIED"
 label_settings = SubResource("LabelSettings_cg26s")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
-metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="HUD/Death"]
 stream = ExtResource("5_nof5b")

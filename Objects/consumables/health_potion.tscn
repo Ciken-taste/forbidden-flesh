@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuy3wobq0idqk"]
+
+[ext_resource type="PackedScene" uid="uid://7cjrd3jv1qws" path="res://Objects/potion_mesh.tscn" id="1_8h4uc"]
+[ext_resource type="Script" path="res://Objects/consumables/consumable.gd" id="1_fw6do"]
+[ext_resource type="ArrayMesh" uid="uid://dl1rqnw7w0llm" path="res://Models/potion.obj" id="2_v6wdu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_arph2"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0y2mv"]
+size = Vector3(1.10022, 1.33801, 1.25705)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_j0pub"]
+radius = 6.03298
+
+[node name="HealthPotion" type="RigidBody3D"]
+script = ExtResource("1_fw6do")
+
+[node name="PotionMesh" parent="." instance=ExtResource("1_8h4uc")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.45, 0, 0, 0, 0.35, 0, 0.08452, 0)
+mesh = ExtResource("2_v6wdu")
+surface_material_override/0 = SubResource("StandardMaterial3D_arph2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.9, 0, 0, 0, 0.7, -0.0205505, 0.608365, -0.0298752)
+shape = SubResource("BoxShape3D_0y2mv")
+
+[node name="Area3D" type="Area3D" parent="." groups=["HealthPotion"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_j0pub")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

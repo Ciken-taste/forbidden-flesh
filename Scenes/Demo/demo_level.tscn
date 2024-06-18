@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://b42f80hf6678h"]
+[gd_scene load_steps=77 format=3 uid="uid://b42f80hf6678h"]
 
 [ext_resource type="Texture2D" uid="uid://c6qc360etuiia" path="res://addons/godot-prototype-texture/PNG/checker_blue_512x512.png" id="1_5r7vb"]
 [ext_resource type="Script" path="res://Scenes/Demo/demo_level.gd" id="1_lg0hh"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://Scenes/Demo/KDScreen.gd" id="10_j1wap"]
 [ext_resource type="PackedScene" uid="uid://cyqrhyrol0vk4" path="res://Scenes/Main Menu/pause_menu.tscn" id="13_ujccl"]
 [ext_resource type="PackedScene" uid="uid://ba01ddgve7ky4" path="res://Scenes/Demo/cutscene.tscn" id="14_u4xwf"]
+[ext_resource type="PackedScene" uid="uid://cuy3wobq0idqk" path="res://Objects/consumables/health_potion.tscn" id="15_kdgdg"]
+[ext_resource type="PackedScene" uid="uid://c237y46u0i066" path="res://Scenes/Main Menu/inventory.tscn" id="16_k7w5i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t70a3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -188,6 +190,14 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bogle"]
 size = Vector3(237.16, 1, 192.294)
+
+[sub_resource type="Curve3D" id="Curve3D_ax170"]
+bake_interval = 0.01
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 10, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [node name="DemoLevel" type="Node3D"]
 process_mode = 3
@@ -541,9 +551,16 @@ wait_time = 0.01
 autostart = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("13_ujccl")]
+z_index = 2
+
+[node name="HealthPotion" parent="." instance=ExtResource("15_kdgdg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.738178, 3)
 
 [node name="Cutscene" parent="." instance=ExtResource("14_u4xwf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6591, 0.0941386, 11.1921)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1994, 1.05746, 18.3362)
+cutscene_path = SubResource("Curve3D_ax170")
+
+[node name="Inventory" parent="." instance=ExtResource("16_k7w5i")]
 
 [connection signal="area_entered" from="EnemySpawner" to="EnemySpawner" method="_on_area_entered"]
 [connection signal="area_exited" from="EnemySpawner" to="EnemySpawner" method="_on_area_exited"]

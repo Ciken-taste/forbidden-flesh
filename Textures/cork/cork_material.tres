@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://bfnt8hog1j6oc"]
+
+[ext_resource type="Texture2D" uid="uid://c2ian85vqls5m" path="res://Textures/cork/cork_color.jpg" id="1_p3ydk"]
+[ext_resource type="Texture2D" uid="uid://dir7uryh2nmqr" path="res://Textures/cork/cork_ao.jpg" id="2_h53l1"]
+[ext_resource type="Texture2D" uid="uid://b4nghb0mvwqlt" path="res://Textures/cork/cork_normal.jpg" id="3_jbe5h"]
+[ext_resource type="Texture2D" uid="uid://dvkus1wxbs7at" path="res://Textures/cork/cork_roughness.jpg" id="4_vq345"]
+
+[resource]
+albedo_texture = ExtResource("1_p3ydk")
+roughness_texture = ExtResource("4_vq345")
+normal_enabled = true
+normal_texture = ExtResource("3_jbe5h")
+ao_enabled = true
+ao_texture = ExtResource("2_h53l1")
+uv1_triplanar = true

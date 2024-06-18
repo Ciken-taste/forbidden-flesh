@@ -31,8 +31,8 @@ size = Vector3(1, 2.46301, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghs2f"]
 albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_bg2kf"]
-size = Vector3(1, 2.46338, 1)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_74sk3"]
+height = 2.90916
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xvfpe"]
 albedo_color = Color(1, 0, 0, 1)
@@ -99,7 +99,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ghs2f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23169, 0)
-shape = SubResource("BoxShape3D_bg2kf")
+shape = SubResource("CapsuleShape3D_74sk3")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.0982682, 0.5, 0.556391)

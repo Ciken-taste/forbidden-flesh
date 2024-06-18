@@ -70,7 +70,7 @@ func _ready():
 func create_melee():
 	# Tää luo uuden miekan pelaajalle, autoloaderissa otetaan uus miekka.
 	if sword: sword.queue_free()
-	var current_melee = load(global_vars.current_melee).instantiate()
+	var current_melee = load("res://" + global_vars.current_melee).instantiate()
 	mesh.call_deferred("add_child", current_melee)
 	sword = current_melee
 	sword_rot = sword.rotation.y
@@ -264,6 +264,9 @@ func _on_run_timer_timeout() -> void:
 func _on_area_3d_area_entered(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = true
 	elif area.is_in_group("InstaDeath"): health = 0
+	
+	if area.is_in_group("HealthPotion"): global_vars.inventory["Objects/consumables/health_potion"] += 1
+	if area.is_in_group("StaminaPotion"): global_vars.inventory["Objects/consumables/stamina_potion"] += 1
 
 func _on_area_3d_area_exited(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = false

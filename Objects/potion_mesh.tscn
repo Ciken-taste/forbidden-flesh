@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://7cjrd3jv1qws"]
+
+[ext_resource type="ArrayMesh" uid="uid://dl1rqnw7w0llm" path="res://Models/potion.obj" id="1_0rm2b"]
+[ext_resource type="Material" uid="uid://bfnt8hog1j6oc" path="res://Textures/cork/cork_material.tres" id="2_2bnyb"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3pmk7"]
+
+[node name="PotionMesh" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transparency = 0.61
+mesh = ExtResource("1_0rm2b")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.1, 0, 0, 0, 0.5, 0, 2.3547, 0)
+mesh = SubResource("CylinderMesh_3pmk7")
+surface_material_override/0 = ExtResource("2_2bnyb")
