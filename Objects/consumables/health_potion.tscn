@@ -13,7 +13,7 @@ emission = Color(1, 0, 0, 1)
 size = Vector3(1.10022, 1.33801, 1.25705)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_j0pub"]
-radius = 6.03298
+radius = 1.95936
 
 [node name="HealthPotion" type="RigidBody3D"]
 script = ExtResource("1_fw6do")

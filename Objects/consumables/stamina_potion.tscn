@@ -12,7 +12,7 @@ emission = Color(0, 0, 1, 1)
 size = Vector3(1.1629, 1.33704, 1.25754)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vbciu"]
-radius = 6.10395
+radius = 2.0
 
 [node name="StaminaPotion" type="RigidBody3D"]
 

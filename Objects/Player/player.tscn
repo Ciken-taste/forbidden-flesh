@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=21 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://cjf2sx62ssc58" path="res://Audio/Dark Souls - You Died Sound Effect.mp3" id="5_nof5b"]
 [ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
 [ext_resource type="Script" path="res://Objects/Player/HealthBar.gd" id="6_no3ki"]
+[ext_resource type="Script" path="res://Objects/Player/hotbar_image.gd" id="9_mpvs2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g13v"]
 albedo_texture = ExtResource("1_dwgu7")
@@ -38,6 +39,8 @@ height = 0.05
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsnia"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_678fu"]
 
 [sub_resource type="FontFile" id="FontFile_fq6vl"]
 cache/0/16/0/ascent = 0.0
@@ -384,8 +387,6 @@ font_color = Color(1, 0, 0, 1)
 outline_size = 10
 outline_color = Color(0.797016, 0, 0.256316, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_678fu"]
-
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 process_mode = 1
 collision_layer = 0
@@ -468,6 +469,11 @@ wait_time = 0.25
 [node name="EnemyLockOnRay" type="RayCast3D" parent="CameraBoom/Camera3D"]
 transform = Transform3D(10, 0, 0, 0, 0.872619, -9.99848, 0, 49.9924, 0.174524, 0, 0, 0)
 collision_mask = 8
+
+[node name="Area3D" type="Area3D" parent="." groups=["Player"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_678fu")
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
@@ -675,10 +681,156 @@ grow_vertical = 2
 position = Vector2(0, 18)
 texture = ExtResource("6_5rymu")
 
-[node name="Area3D" type="Area3D" parent="." groups=["Player"]]
+[node name="HotBar" type="Control" parent="HUD"]
+layout_mode = 1
+anchor_left = 0.015625
+anchor_top = 0.584877
+anchor_right = 0.262153
+anchor_bottom = 0.976852
+offset_top = -3.05176e-05
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("CapsuleShape3D_678fu")
+[node name="Control" type="Control" parent="HUD/HotBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.0
+offset_right = 36.0
+offset_bottom = 66.0
+grow_horizontal = 2
+script = ExtResource("9_mpvs2")
+
+[node name="Panel" type="Panel" parent="HUD/HotBar/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control2" type="Control" parent="HUD/HotBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -33.0
+offset_right = 72.0
+offset_bottom = 33.0
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="HUD/HotBar/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control3" type="Control" parent="HUD/HotBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="HUD/HotBar/Control3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control4" type="Control" parent="HUD/HotBar"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -66.0
+offset_right = 36.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="HUD/HotBar/Control4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inventory" type="Control" parent="HUD"]
+process_priority = 1
+visible = false
+layout_mode = 1
+anchor_left = 0.141
+anchor_top = 0.21
+anchor_right = 0.827
+anchor_bottom = 0.804
+offset_left = 0.567993
+offset_top = -0.0800018
+offset_right = 0.295959
+offset_bottom = 0.00799561
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="HUD/Inventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="HUD/Inventory"]
+layout_mode = 0
+anchor_left = 0.00868056
+anchor_top = 0.0138889
+anchor_right = 0.990451
+anchor_bottom = 0.983025
+color = Color(0.254931, 0, 0.00869661, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Inventory/ColorRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="HUD/Inventory/ColorRect2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel2" type="Panel" parent="HUD/Inventory/ColorRect2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel3" type="Panel" parent="HUD/Inventory/ColorRect2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel4" type="Panel" parent="HUD/Inventory/ColorRect2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel5" type="Panel" parent="HUD/Inventory/ColorRect2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
