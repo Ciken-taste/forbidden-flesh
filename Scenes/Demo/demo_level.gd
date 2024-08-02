@@ -14,7 +14,9 @@ func _input(event) -> void:
 		new_player.position.y = 5
 		player = new_player
 		call_deferred("add_child", new_player)
-
+		remove_child($ScrollContainer)
+		var inv = preload("res://Objects/Player/inventory_menu.tscn").instantiate()
+		call_deferred("add_child", inv)
 
 
 func _on_menu_fade_timer_timeout():

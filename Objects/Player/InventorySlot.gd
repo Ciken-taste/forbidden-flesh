@@ -19,20 +19,32 @@ func remove_from_inventory(item : String):
 			break
 		pos += 1
 
+func spawn_audio(audio_path : String):
+	var audio_player = preload("res://Audio/temp_audio.tscn").instantiate()
+	audio_player.audio = audio_path
+	get_parent().get_parent().call_deferred("add_child", audio_player)
+
+
 
 
 func _on_pressed():
 	if path_name.contains("res://Objects/weapons/"):
 		## EI TOIMI RANGED ASEIDEN KANSSA
+		spawn_audio("res://Audio/Sword Unsheathed Sound Effect - High Quality.mp3")
+
 		global_vars.current_melee = path_name + ".tscn"
 		global_vars.hud_update = true
 	if path_name.contains("res://Objects/consumables/"):
 		if path_name.contains("health_potion"):
 			remove_from_inventory("health_potion")
+			spawn_audio("res://Audio/Roblox Drinking Sound Effect.mp3")
+
 			global_vars.hud_update = true
 			global_vars.change_of_health = 25
 			
 		if path_name.contains("stamina_potion"):
 			remove_from_inventory("stamina_potion")
+			spawn_audio("res://Audio/Roblox Drinking Sound Effect.mp3")
+
 			global_vars.hud_update = true
 			global_vars.change_of_stamina = 45

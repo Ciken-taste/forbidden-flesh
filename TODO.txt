@@ -2,8 +2,6 @@
 - Vihollisille parempi AI
 	Sellane että pacification perustuu siihen, että kuinka monta muuta vihollista löytyy läheltä
 
-17.6.2024
-- consumables
-
-18.6.2024
-- inventory systeemia
+2.8.2024
+- Inv systeemi ja konsumables pretty much valmiina
+- Hotbar systeemi aivan vaiheissa vielä
