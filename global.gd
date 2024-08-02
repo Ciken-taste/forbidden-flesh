@@ -3,24 +3,41 @@ extends Node
 
 var mouse_sensitivity : float = 0.01
 
-# Tämän avulla viholliset ei ota lämää, jos pelaaja ei lyö
+# Tämän avulla viholliset ei ota lämää, jos pelaaja ei swingaa
 var player_attack : bool = false
 
 var player_position : Vector3 = Vector3.ZERO
 
-# INVENTORYSSÄ PATH SIIHEN SCENEEN
-var inventory : Dictionary = {
-	# ASEET
-	"res://Objects/weapons/stock_sword": 1, 
-	"res://Objects/weapons/war_hammer": 0, 
-	
-	# CONSUMABLES
-	"res://Objects/consumables/health_potion": 1,
-	"res://Objects/consumables/stamina_potion": 1,
-}
+
+# HUD upgrade. Sitä käytetään aseiden vaihossa invissä ja inventoryn päivittämiseen.
+var hud_update : bool = false
+
+# Jos esimerkiksi invetory haluaa muuttaa pelaajan HP:ta, niin tätä muttamaa
+var change_of_health : int = 0
+var change_of_stamina : int = 0
 
 
-var current_melee = "res://Objects/weapons/war_hammer.tscn"
+## INVENTORYSSÄ PATH SIIHEN SCENEEN 
+
+## TÄSSÄ KAIKKI ITEMIT
+#var inventory : Dictionary = {
+	## ASEET
+	#"res://Objects/weapons/stock_sword": 1, 
+	#"res://Objects/weapons/war_hammer": 0, 
+	#
+	## CONSUMABLES
+	#"res://Objects/consumables/health_potion": 1,
+	#"res://Objects/consumables/stamina_potion": 1,
+#}
+
+var inventory : Array = [
+	"res://Objects/weapons/stock_sword", 
+	"res://Objects/consumables/health_potion", 
+	"res://Objects/consumables/stamina_potion"
+]
+
+
+var current_melee = "res://Objects/weapons/weaponless.tscn"
 var current_ranged = "res://Objects/weapons/weaponless.tscn"
 
 # ASEIDEN STATSIT, OHJE: NIMI LAINAUSMERKEISSA, STAT JÄLKEEN "war_hammer": 5 

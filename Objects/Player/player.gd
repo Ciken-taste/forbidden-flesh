@@ -26,8 +26,11 @@ var run_cooldown : bool = false
 
 var invincible : bool = false
 var dead : bool = false
+var inventory_open : bool = false
 
 var attack_disabled : bool = false
+
+var hud_upgrade_reset_delay : int = 0
 
 @onready var hit_audio := $HitAudio as AudioStreamPlayer3D
 @onready var death_timer := $DeathTimer as Timer
@@ -70,6 +73,7 @@ func _ready():
 func create_melee():
 	# Tää luo uuden miekan pelaajalle, autoloaderissa otetaan uus miekka.
 	if sword: sword.queue_free()
+	attack_disabled = false
 	var current_melee = load(global_vars.current_melee).instantiate()
 	mesh.call_deferred("add_child", current_melee)
 	sword = current_melee
@@ -95,6 +99,9 @@ func create_melee():
 
 
 func _input(event) -> void:
+	if event.is_action_pressed("inventory") or (event.is_action_pressed("pause") and inventory_open):
+		inventory_open = not inventory_open
+	if inventory_open: return
 	if event.is_action_pressed("attack") and not attacking and stamina >= melee_stamina_use and not attack_disabled:
 		global_vars.player_attack = true
 		sword_audio.play(0.3)
@@ -168,6 +175,15 @@ func death() -> void:
 		add_child(dead_player)
 
 func _physics_process(delta) -> void:
+	
+	# HUD upgrade. Sitä käytetään aseiden vaihossa invissä ja inventoryn päivittämiseen.
+	if global_vars.hud_update:
+		create_melee()
+		hud_upgrade_reset_delay += 1
+		if hud_upgrade_reset_delay >= 5:
+			global_vars.hud_update = false
+			hud_upgrade_reset_delay = 0
+	
 	global_vars.player_position = global_transform.origin
 	# Blood splat and invincibility frames
 	if inside_sword and not rolling and health > 0 and not invincible:
@@ -181,9 +197,17 @@ func _physics_process(delta) -> void:
 	velocity.x = 0
 	velocity.z = 0
 	if dead: return
+	
 	death()
+	
 	if run_cooldown: exhausting_alert.show()
 	else: exhausting_alert.hide()
+	
+	# Jos esim vedät health pot
+	health += global_vars.change_of_health
+	global_vars.change_of_health = 0
+	stamina += global_vars.change_of_stamina
+	global_vars.change_of_stamina = 0
 	
 	health_bar.value = health
 	stamina_bar.value = stamina
@@ -196,7 +220,6 @@ func _physics_process(delta) -> void:
 	# Painovoima
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	
 	roll_handler()
 	
 	# Hyppy
@@ -265,8 +288,8 @@ func _on_area_3d_area_entered(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = true
 	elif area.is_in_group("InstaDeath"): health = 0
 	
-	if area.is_in_group("HealthPotion"): global_vars.inventory["res://Objects/consumables/health_potion"] += 1
-	if area.is_in_group("StaminaPotion"): global_vars.inventory["res://Objects/consumables/stamina_potion"] += 1
+	if area.is_in_group("HealthPotion"): global_vars.inventory.append("res://Objects/consumables/health_potion")
+	if area.is_in_group("StaminaPotion"): global_vars.inventory.append("res://Objects/consumables/stamina_potion")
 
 func _on_area_3d_area_exited(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = false

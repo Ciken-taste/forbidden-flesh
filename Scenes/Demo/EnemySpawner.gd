@@ -10,8 +10,8 @@ func _physics_process(_delta) -> void:
 	if not spawning or cooldown: return
 	spawn_timer.start()
 	cooldown = true
-	var enemy = preload("res://Objects/DemoEnemy/demo_enemy.tscn").instantiate()
 	var random_pos : Vector3 = Vector3(randi_range(-10, 10), 0, randi_range(-10, 10))
+	var enemy = preload("res://Objects/DemoEnemy/demo_enemy.tscn").instantiate()
 	call_deferred("add_child", enemy)
 	enemy.global_transform.origin = spawn_point.global_transform.origin + random_pos
 
