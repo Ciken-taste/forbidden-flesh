@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=21 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://cjf2sx62ssc58" path="res://Audio/Dark Souls - You Died Sound Effect.mp3" id="5_nof5b"]
 [ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
 [ext_resource type="Script" path="res://Objects/Player/HealthBar.gd" id="6_no3ki"]
+[ext_resource type="Script" path="res://Objects/Player/HotBar.gd" id="9_23ap3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g13v"]
 albedo_texture = ExtResource("1_dwgu7")
@@ -688,25 +689,38 @@ anchor_right = 0.262153
 anchor_bottom = 0.976852
 offset_top = -3.05176e-05
 grow_vertical = 0
+script = ExtResource("9_23ap3")
 metadata/_edit_use_anchors_ = true
 
-[node name="Control" type="Control" parent="HUD/HotBar"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -36.0
-offset_right = 36.0
-offset_bottom = 66.0
-grow_horizontal = 2
+[node name="Timer" type="Timer" parent="HUD/HotBar"]
+autostart = true
 
-[node name="Panel" type="Panel" parent="HUD/HotBar/Control"]
+[node name="Control1" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchor_left = 0.37324
+anchor_right = 0.62676
+anchor_bottom = 0.259843
+offset_right = -1.52588e-05
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="HUD/HotBar/Control1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.916667
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="HUD/HotBar/Control1"]
+layout_mode = 0
+offset_left = -10.0001
+offset_top = 17.9997
+offset_right = 29.9999
+offset_bottom = 40.9997
+text = "1"
 
 [node name="Control2" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
@@ -718,15 +732,24 @@ offset_right = 72.0
 offset_bottom = 33.0
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="HUD/HotBar/Control2"]
+[node name="Button" type="Button" parent="HUD/HotBar/Control2"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.916667
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_icon = true
+metadata/_edit_use_anchors_ = true
 
-[node name="Control3" type="Control" parent="HUD/HotBar"]
+[node name="Label" type="Label" parent="HUD/HotBar/Control2"]
+offset_left = -10.0001
+offset_top = 17.9997
+offset_right = 29.9999
+offset_bottom = 40.9997
+text = "2"
+
+[node name="Control4" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -739,15 +762,24 @@ offset_bottom = 33.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="HUD/HotBar/Control3"]
+[node name="Button" type="Button" parent="HUD/HotBar/Control4"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.916667
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_icon = true
+metadata/_edit_use_anchors_ = true
 
-[node name="Control4" type="Control" parent="HUD/HotBar"]
+[node name="Label" type="Label" parent="HUD/HotBar/Control4"]
+offset_left = -10.0001
+offset_top = 17.9997
+offset_right = 29.9999
+offset_bottom = 40.9997
+text = "4"
+
+[node name="Control3" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -760,13 +792,22 @@ offset_right = 36.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Panel" type="Panel" parent="HUD/HotBar/Control4"]
+[node name="Button" type="Button" parent="HUD/HotBar/Control3"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.916667
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="HUD/HotBar/Control3"]
+offset_left = -10.0001
+offset_top = 17.9997
+offset_right = 29.9999
+offset_bottom = 40.9997
+text = "3"
 
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
@@ -780,3 +821,4 @@ grow_vertical = 2
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_entered" from="Area3D" to="CameraBoom" method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
+[connection signal="timeout" from="HUD/HotBar/Timer" to="HUD/HotBar" method="_on_timer_timeout"]

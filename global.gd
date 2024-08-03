@@ -32,10 +32,16 @@ var change_of_stamina : int = 0
 
 var inventory : Array = [
 	"res://Objects/weapons/stock_sword", 
+	"res://Objects/weapons/war_hammer", 
 	"res://Objects/consumables/health_potion", 
 	"res://Objects/consumables/stamina_potion"
 ]
 
+## HOTBAR MUISTI
+var hotbar1 : String = "res://Objects/weapons/stock_sword"
+var hotbar2 : String = ""
+var hotbar3 : String = "res://Objects/consumables/health_potion"
+var hotbar4 : String = "res://Objects/consumables/stamina_potion"
 
 var current_melee = "res://Objects/weapons/weaponless.tscn"
 var current_ranged = "res://Objects/weapons/weaponless.tscn"

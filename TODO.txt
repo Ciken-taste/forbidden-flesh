@@ -5,3 +5,6 @@
 2.8.2024
 - Inv systeemi ja konsumables pretty much valmiina
 - Hotbar systeemi aivan vaiheissa vielä
+
+3.8.2024
+- Hotbar systeemi aluilla
