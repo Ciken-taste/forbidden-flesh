@@ -42,6 +42,8 @@ var splat_ready : bool = true
 @onready var cam_boom := $CameraBoom as Node3D
 @onready var mesh := $Mesh as MeshInstance3D
 
+@onready var aim_audio := $AimAudio as AudioStreamPlayer3D
+
 # Sword vars
 @onready var sword_audio := $SwordAudio as AudioStreamPlayer3D
 var sword
@@ -49,6 +51,12 @@ var sword
 # Sword animation vars
 @onready var swing_timer := $SwingTimer as Timer
 @onready var return_swing_timer := $ReturnSwingTimer as Timer
+
+var ranged : bool = false
+var aiming : bool = false
+@onready var aiming_beam := $CameraBoom/ProjectilePath as MeshInstance3D
+@onready var projectile_spawn := $CameraBoom/ProjectileSpawn as Marker3D
+@onready var arrow_label := $HUD/HotBar/Control2/ArrowsLabel as Label
 
 var attacking : bool = false
 var lunging : bool = false
@@ -71,13 +79,18 @@ func _ready():
 	create_melee()
 
 func create_melee():
+	arrow_label.text = "Arrows: " + str(global_vars.arrows)
 	# Tää luo uuden miekan pelaajalle, autoloaderissa otetaan uus miekka.
 	if sword: sword.queue_free()
+	ranged = false
 	attack_disabled = false
 	var current_melee = load(global_vars.current_melee).instantiate()
 	mesh.call_deferred("add_child", current_melee)
 	sword = current_melee
 	sword_rot = sword.rotation.y
+	if global_vars.current_melee.contains("ranged"):
+		ranged = true
+	
 	# Tähän voi laittaa uusia audioita, esim hammer ääni
 	if "Sword" in str(sword): 
 		sword_audio.stream = load("res://Audio/sword_miss.ogg")
@@ -85,6 +98,8 @@ func create_melee():
 		sword_audio.stream = load("res://Audio/hammer_miss.ogg")
 	if "Weaponless" in str(sword):
 		attack_disabled = true
+	if "Bow" in str(sword):
+		sword_audio.stream = load("res://Audio/bow_fire.wav")
 	
 	var player_weapon = global_vars.current_melee
 	var stamina_dict = global_vars.melee_stamina_dict
@@ -99,10 +114,10 @@ func create_melee():
 
 
 func _input(event) -> void:
-	if event.is_action_pressed("inventory") or (event.is_action_pressed("pause") and inventory_open):
+	if event.is_action_pressed("inventory") or event.is_action_pressed("change_hotbar") or (event.is_action_pressed("pause") and inventory_open):
 		inventory_open = not inventory_open
 	if inventory_open: return
-	if event.is_action_pressed("attack") and not attacking and stamina >= melee_stamina_use and not attack_disabled:
+	if event.is_action_pressed("attack") and not attacking and stamina >= melee_stamina_use and not attack_disabled and not ranged:
 		global_vars.player_attack = true
 		sword_audio.play(0.3)
 		stamina -= melee_stamina_use
@@ -110,7 +125,29 @@ func _input(event) -> void:
 		lunging = true
 		swing_timer.start()
 		return_swing_timer.start()
-	
+
+
+
+	if event.is_action_pressed("aim") and ranged:
+		aim_audio.play()
+		aiming = true
+		aiming_beam.show()
+	if event.is_action_released("aim"):
+		aiming = false
+		aiming_beam.hide()
+	if event.is_action_pressed("attack") and ranged and aiming and stamina >= melee_stamina_use and global_vars.arrows > 0:
+		global_vars.arrows -= 1
+		arrow_label.text = "Arrows: " + str(global_vars.arrows)
+		aiming = false
+		aiming_beam.hide()
+		sword_audio.play()
+		stamina -= melee_stamina_use
+		var arrow = load("res://Objects/Player/arrow.tscn").instantiate()
+		arrow.global_position = projectile_spawn.global_position
+		arrow.rotation = cam_boom.rotation
+		call_deferred("add_sibling", arrow)
+
+
 	if event.is_action_pressed("lock_on"): ($HUD/LockOn as Control).show()
 	if event.is_action_released("lock_on"): ($HUD/LockOn as Control).hide()
 	if event.is_action_pressed("run"):
@@ -122,7 +159,8 @@ func _input(event) -> void:
 		stamina -= 10
 		rolling = true
 		# Roll timer ajoittaa roll movementin. 
-		sword.damage_areas = false
+		if not ranged:
+			sword.damage_areas = false
 		($RollTimer as Timer).start()
 		roll_audio.play()
 
@@ -180,7 +218,7 @@ func _physics_process(delta) -> void:
 	if global_vars.hud_update:
 		create_melee()
 		hud_upgrade_reset_delay += 1
-		if hud_upgrade_reset_delay >= 5:
+		if hud_upgrade_reset_delay >= 3:
 			global_vars.hud_update = false
 			hud_upgrade_reset_delay = 0
 	
@@ -212,7 +250,11 @@ func _physics_process(delta) -> void:
 	health_bar.value = health
 	stamina_bar.value = stamina
 	
-
+	if ranged and aiming:
+		stamina -= 0.25
+		if stamina < melee_stamina_use:
+			aiming = false
+			aiming_beam.hide()
 	attack()
 	# Governor kattoo että käveleekö, rollaa vai juokseeko pelaaja
 	var speed : float = speed_governor()
@@ -270,7 +312,8 @@ func _physics_process(delta) -> void:
 func _on_roll_timer_timeout() -> void:
 	if rolling:
 		collision.scale = Vector3(1, 1, 1)
-		sword.damage_areas = true
+		if not ranged:
+			sword.damage_areas = true
 		rolling = false
 		roll_cooldown = true
 		($RollTimer as Timer).start()

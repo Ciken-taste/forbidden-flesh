@@ -50,28 +50,33 @@ func attack() -> void:
 		else: 
 			attacking = false
 
+
+func take_damage():
+	if splat_ready: 
+		splat_ready = false
+		($GPUParticles3D as GPUParticles3D).emitting = true
+		
+	var damage_dict = global_vars.melee_damage_dict
+	var player_weapon = global_vars.current_melee
+		
+	# Tutkii autoloaderin damage dictistä, että kuinka paljon pelaajan ase tekee lämää
+	for dicts in damage_dict:
+		if str(dicts) in str(player_weapon):
+			health -= damage_dict[dicts] + randi_range(0, 1)
+		
+		
+		
+		
+	hit_audio.play()
+	($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
+	invincible = true
+	invincibility_timer.start()
+
+
 func _physics_process(_delta) -> void:
 	player_pos = global_vars.player_position
 	if inside_sword and not invincible and global_vars.player_attack:
-		if splat_ready: 
-			splat_ready = false
-			($GPUParticles3D as GPUParticles3D).emitting = true
-		
-		var damage_dict = global_vars.melee_damage_dict
-		var player_weapon = global_vars.current_melee
-		
-		# Tutkii autoloaderin damage dictistä, että kuinka paljon pelaajan ase tekee lämää
-		for dicts in damage_dict:
-			if str(dicts) in str(player_weapon):
-				health -= damage_dict[dicts] + randi_range(0, 1)
-		
-		
-		
-		
-		hit_audio.play()
-		($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
-		invincible = true
-		invincibility_timer.start()
+		take_damage()
 	death()
 	attack()
 	if not attacking: 
@@ -108,11 +113,14 @@ func _physics_process(_delta) -> void:
 func _on_area_3d_area_entered(area) -> void:
 	if area.is_in_group("PlayerSword"): 
 		inside_sword = true
+	if area.is_in_group("Arrow"):
+		take_damage()
 	elif area.is_in_group("InstaDeath"): health = 0
 
 func _on_area_3d_area_exited(area):
 	if area.is_in_group("PlayerSword"): 
 		inside_sword = false
+
 
 func death() -> void:
 	if health <= 0: 

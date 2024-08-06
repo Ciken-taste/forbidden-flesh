@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj5t3tgx6qayq"]
+
+[ext_resource type="Script" path="res://Objects/Player/change_hotbar.gd" id="1_vrp3j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i2c0i"]
+font_size = 15
+
+[node name="ChangeHotbar" type="ScrollContainer"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.143229
+anchor_top = 0.16358
+anchor_right = 0.851563
+anchor_bottom = 0.962963
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vrp3j")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Change hotbar binds
+Press the number of the hotbar that you would like to change, then press the item you want to bind to the spot."
+label_settings = SubResource("LabelSettings_i2c0i")
+horizontal_alignment = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://b42f80hf6678h"]
+[gd_scene load_steps=82 format=3 uid="uid://b42f80hf6678h"]
 
 [ext_resource type="Texture2D" uid="uid://c6qc360etuiia" path="res://addons/godot-prototype-texture/PNG/checker_blue_512x512.png" id="1_5r7vb"]
 [ext_resource type="Script" path="res://Scenes/Demo/demo_level.gd" id="1_lg0hh"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scenes/Demo/KDScreen.gd" id="10_j1wap"]
 [ext_resource type="PackedScene" uid="uid://cyqrhyrol0vk4" path="res://Scenes/Main Menu/pause_menu.tscn" id="13_ujccl"]
 [ext_resource type="PackedScene" uid="uid://cuy3wobq0idqk" path="res://Objects/consumables/health_potion.tscn" id="15_kdgdg"]
+[ext_resource type="PackedScene" uid="uid://cj5t3tgx6qayq" path="res://Objects/Player/change_hotbar.tscn" id="16_ibqbm"]
 [ext_resource type="PackedScene" uid="uid://cup4emgvky8gr" path="res://Objects/consumables/stamina_potion.tscn" id="17_bkpxu"]
 [ext_resource type="PackedScene" uid="uid://cb3vasg4jklcp" path="res://Objects/Player/inventory_menu.tscn" id="17_mb8t1"]
 [ext_resource type="Script" path="res://Scenes/Demo/HealthPotionSpawner.gd" id="18_budq8"]
@@ -566,6 +567,8 @@ offset_left = 3.0002
 offset_top = -4.99984
 offset_right = 3.00018
 offset_bottom = -4.99976
+
+[node name="ChangeHotbar" parent="." instance=ExtResource("16_ibqbm")]
 
 [node name="StaminaPotion" parent="." instance=ExtResource("17_bkpxu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8137, 0.771829, 23.1864)

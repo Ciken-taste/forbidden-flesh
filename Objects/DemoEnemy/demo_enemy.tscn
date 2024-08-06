@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://gc2qaq7otxk0"]
 
 [ext_resource type="Script" path="res://Objects/DemoEnemy/demo_enemy.gd" id="1_acy52"]
-[ext_resource type="PackedScene" uid="uid://bhyftt8s5ayel" path="res://Objects/sword_mesh.tscn" id="2_7jlju"]
 [ext_resource type="AudioStream" uid="uid://b0fl8g2ytoy2d" path="res://Audio/sword_hit.ogg" id="2_dgbxj"]
 [ext_resource type="AudioStream" uid="uid://1voej4k6knag" path="res://Audio/enemy_miss.ogg" id="3_i4gsc"]
+[ext_resource type="PackedScene" uid="uid://bhyftt8s5ayel" path="res://Objects/weapons/meshes/sword_mesh.tscn" id="4_ptd75"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l1adl"]
 lifetime_randomness = 1.0
@@ -123,7 +123,7 @@ transform = Transform3D(0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, 0.173648, 
 transform = Transform3D(1.00002, 0, 5.21541e-07, 0, 1, 0, -5.21541e-07, 0, 1.00002, 0.0155944, 0.128514, 0.659639)
 shape = SubResource("BoxShape3D_7mr8j")
 
-[node name="SwordMesh" parent="Sword" instance=ExtResource("2_7jlju")]
+[node name="SwordMesh" parent="Sword" instance=ExtResource("4_ptd75")]
 transform = Transform3D(0.000523587, -0.000401857, -0.0749971, -0.0749982, -3.26976e-09, -0.000523594, 2.80218e-06, 0.0749989, -0.000401854, 0.0203936, 0.111017, 0.00359593)
 
 [node name="AttackArea" type="Area3D" parent="."]

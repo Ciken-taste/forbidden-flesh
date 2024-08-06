@@ -5,7 +5,8 @@ extends Button
 @onready var global_vars : Object = get_node("/root/global")
 
 func _ready():
-	icon = load(path_name + ".png")
+	if ResourceLoader.exists(path_name + ".png"):
+		icon = load(path_name + ".png")
 	var text_str = path_name.replace("res://Objects/weapons/", "")
 	text_str = text_str.replace("res://Objects/consumables/", "")
 	text_str = text_str.replace("_", " ")
@@ -28,8 +29,12 @@ func spawn_audio(audio_path : String):
 
 
 func _on_pressed():
-	if path_name.contains("res://Objects/weapons/"):
-		## EI TOIMI RANGED ASEIDEN KANSSA
+	if path_name.contains("res://Objects/weapons/ranged"):
+		spawn_audio("res://Audio/bow_equip.wav")
+
+		global_vars.current_melee = path_name + ".tscn"
+		global_vars.hud_update = true
+	elif path_name.contains("res://Objects/weapons/"):
 		spawn_audio("res://Audio/Sword Unsheathed Sound Effect - High Quality.mp3")
 
 		global_vars.current_melee = path_name + ".tscn"

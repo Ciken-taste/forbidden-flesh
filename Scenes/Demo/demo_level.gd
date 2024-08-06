@@ -17,6 +17,9 @@ func _input(event) -> void:
 		remove_child($ScrollContainer)
 		var inv = preload("res://Objects/Player/inventory_menu.tscn").instantiate()
 		call_deferred("add_child", inv)
+		remove_child($ChangeHotbar)
+		inv = preload("res://Objects/Player/change_hotbar.tscn").instantiate()
+		call_deferred("add_child", inv)
 
 
 func _on_menu_fade_timer_timeout():

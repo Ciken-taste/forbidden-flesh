@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgf8bsx38l4bc"]
+
+[ext_resource type="Script" path="res://Objects/weapons/weaponless.gd" id="1_cx6vw"]
+
+[node name="GearOfRunning" type="Node3D"]
+script = ExtResource("1_cx6vw")

@@ -13,7 +13,7 @@ func _input(event):
 		global_vars.current_melee = global_vars.hotbar1 + ".tscn"
 		global_vars.hud_update = true
 	if event.is_action_pressed("hotbar2") and global_vars.hotbar2.contains("res://Objects/weapons/ranged/"):
-		global_vars.current_ranged = global_vars.hotbar2 + ".tscn"
+		global_vars.current_melee = global_vars.hotbar2 + ".tscn"
 		global_vars.hud_update = true
 	
 	
@@ -53,10 +53,25 @@ func _input(event):
 # Tää päivittää iconit hotbaarissa.
 func _on_timer_timeout():
 	if global_vars.hotbar1.contains("res://Objects/weapons/"):
-		button1.icon = load(global_vars.hotbar1 + ".png")
+		if ResourceLoader.exists(global_vars.hotbar1 + ".png"):
+			button1.icon = load(global_vars.hotbar1 + ".png")
+		else:
+			button1.icon = load("res://Textures/missing_texture.png")
+
 	if global_vars.hotbar2.contains("res://Objects/weapons/ranged/"):
-		button2.icon = load(global_vars.hotbar2 + ".png")
+		if ResourceLoader.exists(global_vars.hotbar2 + ".png"):
+			button2.icon = load(global_vars.hotbar2 + ".png")
+		else:
+			button2.icon = load("res://Textures/missing_texture.png")
+
 	if global_vars.hotbar3.contains("res://Objects/consumables/"):
-		button3.icon = load(global_vars.hotbar3 + ".png")
+		if ResourceLoader.exists(global_vars.hotbar3 + ".png"):
+			button3.icon = load(global_vars.hotbar3 + ".png")
+		else:
+			button3.icon = load("res://Textures/missing_texture.png")
+
 	if global_vars.hotbar4.contains("res://Objects/consumables/"):
-		button4.icon = load(global_vars.hotbar4 + ".png")
+		if ResourceLoader.exists(global_vars.hotbar4 + ".png"):
+			button4.icon = load(global_vars.hotbar4 + ".png")
+		else:
+			button4.icon = load("res://Textures/missing_texture.png")

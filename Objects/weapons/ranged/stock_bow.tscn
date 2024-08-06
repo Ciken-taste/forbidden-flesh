@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbybaobs8o3jo"]
+
+[ext_resource type="PackedScene" uid="uid://d3nme3jagg8rl" path="res://Objects/weapons/meshes/bow_mesh.tscn" id="1_t1cf0"]
+
+[node name="StockBow" type="Node3D"]
+
+[node name="Node3D" parent="." instance=ExtResource("1_t1cf0")]
+transform = Transform3D(-8.11498e-08, -0.743935, -1.85649, -3.25184e-08, 1.85649, -0.743935, 2, 0, -8.74228e-08, 0.319462, -0.795941, -0.965873)

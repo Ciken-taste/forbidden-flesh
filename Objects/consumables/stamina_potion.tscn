@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cup4emgvky8gr"]
 
 [ext_resource type="Script" path="res://Objects/consumables/consumable.gd" id="1_da3v0"]
-[ext_resource type="PackedScene" uid="uid://7cjrd3jv1qws" path="res://Objects/potion_mesh.tscn" id="1_t11f5"]
+[ext_resource type="PackedScene" uid="uid://7cjrd3jv1qws" path="res://Objects/weapons/meshes/potion_mesh.tscn" id="1_t11f5"]
 [ext_resource type="ArrayMesh" uid="uid://dl1rqnw7w0llm" path="res://Models/potion.obj" id="2_8c3h6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yw6sx"]

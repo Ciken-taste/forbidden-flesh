@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=24 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
 [ext_resource type="AudioStream" uid="uid://dx3vsfwn6dxje" path="res://Audio/roll.ogg" id="2_i7unn"]
 [ext_resource type="Script" path="res://Objects/Player/CameraBoom.gd" id="3_hddlf"]
 [ext_resource type="AudioStream" uid="uid://dwoiv3fraibfi" path="res://Audio/player_hit.ogg" id="3_qotlx"]
+[ext_resource type="AudioStream" uid="uid://bv303aos3xmap" path="res://Audio/bow_aim.wav" id="4_khsef"]
 [ext_resource type="AudioStream" uid="uid://cjf2sx62ssc58" path="res://Audio/Dark Souls - You Died Sound Effect.mp3" id="5_nof5b"]
 [ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
 [ext_resource type="Script" path="res://Objects/Player/HealthBar.gd" id="6_no3ki"]
@@ -39,6 +40,14 @@ height = 0.05
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsnia"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p0x07"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qupm6"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 3.34
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_678fu"]
 
@@ -420,6 +429,9 @@ stream = ExtResource("3_qotlx")
 
 [node name="SwordAudio" type="AudioStreamPlayer3D" parent="."]
 
+[node name="AimAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_khsef")
+
 [node name="Mesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3g13v")
 mesh = SubResource("CapsuleMesh_onc3i")
@@ -469,6 +481,17 @@ wait_time = 0.25
 [node name="EnemyLockOnRay" type="RayCast3D" parent="CameraBoom/Camera3D"]
 transform = Transform3D(10, 0, 0, 0, 0.872619, -9.99848, 0, 49.9924, 0.174524, 0, 0, 0)
 collision_mask = 8
+
+[node name="ProjectilePath" type="MeshInstance3D" parent="CameraBoom"]
+transform = Transform3D(0.123757, 0, 0, 0, 0.0663199, 0, 0, 0, 30.3288, 0, 0.317072, -15.4534)
+visible = false
+transparency = 0.88
+cast_shadow = 0
+mesh = SubResource("BoxMesh_p0x07")
+surface_material_override/0 = SubResource("StandardMaterial3D_qupm6")
+
+[node name="ProjectileSpawn" type="Marker3D" parent="CameraBoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.311104, -0.93912)
 
 [node name="Area3D" type="Area3D" parent="." groups=["Player"]]
 
@@ -743,11 +766,20 @@ expand_icon = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/HotBar/Control2"]
+layout_mode = 0
 offset_left = -10.0001
 offset_top = 17.9997
 offset_right = 29.9999
 offset_bottom = 40.9997
 text = "2"
+
+[node name="ArrowsLabel" type="Label" parent="HUD/HotBar/Control2"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 60.9998
+offset_right = 50.0
+offset_bottom = 83.9998
+text = "Arrows: 50"
 
 [node name="Control4" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
@@ -773,6 +805,7 @@ expand_icon = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/HotBar/Control4"]
+layout_mode = 0
 offset_left = -10.0001
 offset_top = 17.9997
 offset_right = 29.9999
@@ -803,6 +836,7 @@ expand_icon = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/HotBar/Control3"]
+layout_mode = 0
 offset_left = -10.0001
 offset_top = 17.9997
 offset_right = 29.9999

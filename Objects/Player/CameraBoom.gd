@@ -39,7 +39,7 @@ func _process(_delta) -> void:
 		($Camera3D/RayCast3D/ZoomFreezeTimer as Timer).start()
 
 func _input(event) -> void:
-	if event.is_action_pressed("inventory") or (event.is_action_pressed("pause") and inventory_open):
+	if event.is_action_pressed("inventory") or event.is_action_pressed("change_hotbar") or (event.is_action_pressed("pause") and inventory_open):
 		inventory_open = not inventory_open
 	if inventory_open: return
 	if event.is_action_pressed("lock_on"):
