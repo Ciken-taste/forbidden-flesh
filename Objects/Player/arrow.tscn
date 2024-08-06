@@ -1,36 +1,39 @@
 [gd_scene load_steps=5 format=3 uid="uid://qjkqmbpgpb8g"]
 
 [ext_resource type="Script" path="res://Objects/Player/arrow.gd" id="1_3pxav"]
+[ext_resource type="PackedScene" uid="uid://b8tjllrkyo15" path="res://Models/arrow_mesh.tscn" id="2_vqosc"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_vsofy"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_w6k7j"]
+size = Vector3(0.0400391, 0.0630798, 2.19111)
 
-[sub_resource type="BoxMesh" id="BoxMesh_8771h"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_guioo"]
-radius = 0.36542
+[sub_resource type="SphereShape3D" id="SphereShape3D_ojdqc"]
+radius = 2.47408
 
 [node name="Arrow" type="Node3D"]
 script = ExtResource("1_3pxav")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.496, 0, 0, 0)
-mesh = SubResource("BoxMesh_vsofy")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0336984, 0.0369381, 0, -0.0369381, 0.0336984, 0, 0, 0, 0.0278236, 0, 0, 0.250487)
-mesh = SubResource("BoxMesh_8771h")
-
 [node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.00399283, -1.0013, 0, 0.890169, 0.00449131, 0, 0, 0.291072)
+transform = Transform3D(1, 0, 0, 0, 0.0080859, -1.00769, 0, 1.80269, 0.00451997, 0, 0, 0.152246)
 
 [node name="Area3D" type="Area3D" parent="." groups=["Arrow"]]
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_guioo")
+transform = Transform3D(0.993743, 0, 0, 0, 0.993743, 0, 0, 0, 0.993743, -0.000488281, 0.00340271, -0.852678)
+shape = SubResource("BoxShape3D_w6k7j")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 200.0
 autostart = true
 
+[node name="ArrowMesh" parent="." instance=ExtResource("2_vqosc")]
+
+[node name="PickUpArea" type="Area3D" parent="." groups=["LooseArrow"]]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
+shape = SubResource("SphereShape3D_ojdqc")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="PickUpArea" to="." method="_on_pick_up_area_area_entered"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://d24plswcgnfp1"]
+
+[ext_resource type="PackedScene" uid="uid://b8tjllrkyo15" path="res://Models/arrow_mesh.tscn" id="1_gu1ak"]
+[ext_resource type="Script" path="res://Objects/Player/loose_arrow.gd" id="1_i66ap"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_im0s2"]
+size = Vector3(0.195593, 0.173658, 1.8623)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iawop"]
+radius = 1.70445
+
+[node name="RigidBody3D" type="RigidBody3D"]
+script = ExtResource("1_i66ap")
+
+[node name="ArrowMesh" parent="." instance=ExtResource("1_gu1ak")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00516605, 0.0173521, -0.679199)
+shape = SubResource("BoxShape3D_im0s2")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 200.0
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="." groups=["LooseArrow"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_iawop")
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]

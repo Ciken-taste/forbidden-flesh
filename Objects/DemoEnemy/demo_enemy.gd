@@ -52,6 +52,7 @@ func attack() -> void:
 
 
 func take_damage():
+	pacified = false
 	if splat_ready: 
 		splat_ready = false
 		($GPUParticles3D as GPUParticles3D).emitting = true
@@ -63,10 +64,6 @@ func take_damage():
 	for dicts in damage_dict:
 		if str(dicts) in str(player_weapon):
 			health -= damage_dict[dicts] + randi_range(0, 1)
-		
-		
-		
-		
 	hit_audio.play()
 	($MeshInstance3D/MeshInstance3D as MeshInstance3D).transparency = health * 0.1
 	invincible = true

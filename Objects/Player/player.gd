@@ -83,6 +83,7 @@ func create_melee():
 	# Tää luo uuden miekan pelaajalle, autoloaderissa otetaan uus miekka.
 	if sword: sword.queue_free()
 	ranged = false
+
 	attack_disabled = false
 	var current_melee = load(global_vars.current_melee).instantiate()
 	mesh.call_deferred("add_child", current_melee)
@@ -131,19 +132,22 @@ func _input(event) -> void:
 	if event.is_action_pressed("aim") and ranged:
 		aim_audio.play()
 		aiming = true
+		
 		aiming_beam.show()
 	if event.is_action_released("aim"):
+		
 		aiming = false
 		aiming_beam.hide()
 	if event.is_action_pressed("attack") and ranged and aiming and stamina >= melee_stamina_use and global_vars.arrows > 0:
 		global_vars.arrows -= 1
+		
 		arrow_label.text = "Arrows: " + str(global_vars.arrows)
 		aiming = false
 		aiming_beam.hide()
 		sword_audio.play()
 		stamina -= melee_stamina_use
 		var arrow = load("res://Objects/Player/arrow.tscn").instantiate()
-		arrow.global_position = projectile_spawn.global_position
+		arrow.global_transform.origin = projectile_spawn.global_transform.origin
 		arrow.rotation = cam_boom.rotation
 		call_deferred("add_sibling", arrow)
 
@@ -245,16 +249,14 @@ func _physics_process(delta) -> void:
 	health += global_vars.change_of_health
 	global_vars.change_of_health = 0
 	stamina += global_vars.change_of_stamina
+	if global_vars.change_of_stamina: run_cooldown = false
 	global_vars.change_of_stamina = 0
 	
 	health_bar.value = health
 	stamina_bar.value = stamina
 	
-	if ranged and aiming:
-		stamina -= 0.25
-		if stamina < melee_stamina_use:
-			aiming = false
-			aiming_beam.hide()
+	
+
 	attack()
 	# Governor kattoo että käveleekö, rollaa vai juokseeko pelaaja
 	var speed : float = speed_governor()
@@ -306,6 +308,12 @@ func _physics_process(delta) -> void:
 			mesh.rotation.y = target_rotation.y - PI/2 - PI/4
 		else: 
 			mesh.rotation.y = target_rotation.y - PI/2
+	if ranged and aiming:
+		stamina -= 0.25
+		mesh.global_rotation.y = cam_boom.global_rotation.y
+		if stamina < melee_stamina_use:
+			aiming = false
+			aiming_beam.hide()
 	move_and_slide()
 
 
@@ -333,6 +341,9 @@ func _on_area_3d_area_entered(area) -> void:
 	
 	if area.is_in_group("HealthPotion"): global_vars.inventory.append("res://Objects/consumables/health_potion")
 	if area.is_in_group("StaminaPotion"): global_vars.inventory.append("res://Objects/consumables/stamina_potion")
+	if area.is_in_group("LooseArrow"): 
+		global_vars.arrows += 1
+		arrow_label.text = "Arrows: " + str(global_vars.arrows)
 
 func _on_area_3d_area_exited(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = false

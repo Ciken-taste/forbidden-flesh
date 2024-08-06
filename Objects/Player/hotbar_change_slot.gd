@@ -9,6 +9,7 @@ func _ready():
 		icon = load(path_name + ".png")
 	var text_str = path_name.replace("res://Objects/weapons/", "")
 	text_str = text_str.replace("res://Objects/consumables/", "")
+	text_str = text_str.replace("ranged/", "")
 	text_str = text_str.replace("_", " ")
 	text = text_str
 

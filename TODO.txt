@@ -2,9 +2,6 @@
 - Vihollisille parempi AI
 	Sellane että pacification perustuu siihen, että kuinka monta muuta vihollista löytyy läheltä
 
-2.8.2024
-- Inv systeemi ja konsumables pretty much valmiina
-- Hotbar systeemi aivan vaiheissa vielä
-
-3.8.2024
-- Hotbar systeemi aluilla
+7.8.2024
+- Uusia ranged aseita?
+- Oikea levu

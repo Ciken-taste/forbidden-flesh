@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://b42f80hf6678h"]
+[gd_scene load_steps=87 format=3 uid="uid://b42f80hf6678h"]
 
 [ext_resource type="Texture2D" uid="uid://c6qc360etuiia" path="res://addons/godot-prototype-texture/PNG/checker_blue_512x512.png" id="1_5r7vb"]
 [ext_resource type="Script" path="res://Scenes/Demo/demo_level.gd" id="1_lg0hh"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cb3vasg4jklcp" path="res://Objects/Player/inventory_menu.tscn" id="17_mb8t1"]
 [ext_resource type="Script" path="res://Scenes/Demo/HealthPotionSpawner.gd" id="18_budq8"]
 [ext_resource type="Script" path="res://Scenes/Demo/StaminaPotionSpawner.gd" id="19_pltwo"]
+[ext_resource type="Script" path="res://Scenes/Demo/spin_staticbody.gd" id="20_gyw4x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t70a3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -204,6 +205,17 @@ albedo_color = Color(1, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0, 0, 1)
 emission_energy_multiplier = 3.95
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fatvs"]
+friction = 0.75
+bounce = 5.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7pq01"]
+albedo_texture = ExtResource("7_hluun")
+
+[sub_resource type="BoxMesh" id="BoxMesh_iyxcj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l0ckp"]
 
 [node name="DemoLevel" type="Node3D"]
 process_mode = 3
@@ -618,6 +630,20 @@ script = ExtResource("9_vubyp")
 
 [node name="Marker3D" type="Marker3D" parent="StaminaPotionSpawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45147, 3.3483)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4095, 1.07156, -15.4336)
+physics_material_override = SubResource("PhysicsMaterial_fatvs")
+script = ExtResource("20_gyw4x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 7.81662, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_7pq01")
+mesh = SubResource("BoxMesh_iyxcj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 7.81662, 0, 0, 0)
+shape = SubResource("BoxShape3D_l0ckp")
 
 [connection signal="area_entered" from="EnemySpawner" to="EnemySpawner" method="_on_area_entered"]
 [connection signal="area_exited" from="EnemySpawner" to="EnemySpawner" method="_on_area_exited"]
