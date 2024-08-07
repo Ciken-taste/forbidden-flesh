@@ -6,7 +6,8 @@ var speed = 40
 @onready var pickup_area := $PickUpArea as Area3D
 
 func _physics_process(delta):
-	rotation.x -= 0.01
+	if not collision_ray.is_colliding() and speed != 0:
+		rotation.x -= 0.01
 	position.x -= speed * sin(rotation.y) * delta
 	position.z -= speed * cos(rotation.y) * delta
 	position.y += speed * sin(rotation.x) * delta
