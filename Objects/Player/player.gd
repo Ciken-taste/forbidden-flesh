@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
 
-
 const JUMP_VELOCITY : float = 5.5
 
 
@@ -79,6 +78,7 @@ func _ready():
 	create_melee()
 
 func create_melee():
+	
 	arrow_label.text = "Arrows: " + str(global_vars.arrows)
 	# Tää luo uuden miekan pelaajalle, autoloaderissa otetaan uus miekka.
 	if sword: sword.queue_free()
@@ -218,6 +218,9 @@ func death() -> void:
 
 func _physics_process(delta) -> void:
 	
+	if global_vars.is_inv_visible or global_vars.is_hotbar_visible:
+		inventory_open = true
+	else: inventory_open = false
 	# HUD upgrade. Sitä käytetään aseiden vaihossa invissä ja inventoryn päivittämiseen.
 	if global_vars.hud_update:
 		create_melee()

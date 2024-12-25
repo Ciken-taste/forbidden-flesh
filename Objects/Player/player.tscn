@@ -739,21 +739,20 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/HotBar/Control1"]
 layout_mode = 0
-offset_left = -10.0001
-offset_top = 17.9997
-offset_right = 29.9999
-offset_bottom = 40.9997
+anchor_left = -0.138891
+anchor_top = 0.272722
+anchor_right = 0.416667
+anchor_bottom = 0.621207
 text = "1"
+metadata/_edit_use_anchors_ = true
 
 [node name="Control2" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -33.0
-offset_right = 72.0
-offset_bottom = 33.0
+anchor_top = 0.370079
+anchor_right = 0.253521
+anchor_bottom = 0.629921
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="HUD/HotBar/Control2"]
 layout_mode = 1
@@ -767,32 +766,33 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/HotBar/Control2"]
 layout_mode = 0
-offset_left = -10.0001
-offset_top = 17.9997
-offset_right = 29.9999
-offset_bottom = 40.9997
+anchor_left = -0.13889
+anchor_top = 0.272723
+anchor_right = 0.416665
+anchor_bottom = 0.621208
 text = "2"
+metadata/_edit_use_anchors_ = true
 
 [node name="ArrowsLabel" type="Label" parent="HUD/HotBar/Control2"]
-layout_mode = 0
-offset_left = -10.0
-offset_top = 60.9998
-offset_right = 50.0
-offset_bottom = 83.9998
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0416667
+anchor_top = 1.12121
+anchor_right = 1.48611
+anchor_bottom = 1.46969
+offset_right = -22.0
 text = "Arrows: 50"
+metadata/_edit_use_anchors_ = true
 
 [node name="Control4" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
+anchor_left = 0.746479
+anchor_top = 0.370079
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -72.0
-offset_top = -33.0
-offset_bottom = 33.0
+anchor_bottom = 0.629921
 grow_horizontal = 0
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="HUD/HotBar/Control4"]
 layout_mode = 1
@@ -806,24 +806,23 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/HotBar/Control4"]
 layout_mode = 0
-offset_left = -10.0001
-offset_top = 17.9997
-offset_right = 29.9999
-offset_bottom = 40.9997
+anchor_left = -0.13889
+anchor_top = 0.272723
+anchor_right = 0.416665
+anchor_bottom = 0.621208
 text = "4"
+metadata/_edit_use_anchors_ = true
 
 [node name="Control3" type="Control" parent="HUD/HotBar"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchor_left = 0.37324
+anchor_top = 0.740157
+anchor_right = 0.62676
 anchor_bottom = 1.0
-offset_left = -36.0
-offset_top = -66.0
-offset_right = 36.0
+offset_right = -1.52588e-05
 grow_horizontal = 2
 grow_vertical = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="HUD/HotBar/Control3"]
 layout_mode = 1
@@ -837,11 +836,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/HotBar/Control3"]
 layout_mode = 0
-offset_left = -10.0001
-offset_top = 17.9997
-offset_right = 29.9999
-offset_bottom = 40.9997
+anchor_left = -0.13889
+anchor_top = 0.272723
+anchor_right = 0.416665
+anchor_bottom = 0.621208
 text = "3"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]

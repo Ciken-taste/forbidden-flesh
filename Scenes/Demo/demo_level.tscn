@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://Scenes/Demo/KDScreen.gd" id="10_j1wap"]
 [ext_resource type="PackedScene" uid="uid://cyqrhyrol0vk4" path="res://Scenes/Main Menu/pause_menu.tscn" id="13_ujccl"]
 [ext_resource type="PackedScene" uid="uid://cuy3wobq0idqk" path="res://Objects/consumables/health_potion.tscn" id="15_kdgdg"]
-[ext_resource type="PackedScene" path="res://Objects/Player/change_hotbar.tscn" id="16_ibqbm"]
+[ext_resource type="PackedScene" uid="uid://d0vy3r5br3kbn" path="res://Objects/Player/change_hotbar.tscn" id="16_ibqbm"]
 [ext_resource type="PackedScene" uid="uid://cup4emgvky8gr" path="res://Objects/consumables/stamina_potion.tscn" id="17_bkpxu"]
 [ext_resource type="PackedScene" uid="uid://cb3vasg4jklcp" path="res://Objects/Player/inventory_menu.tscn" id="17_mb8t1"]
 [ext_resource type="Script" path="res://Scenes/Demo/HealthPotionSpawner.gd" id="18_budq8"]

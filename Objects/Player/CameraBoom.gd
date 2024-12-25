@@ -17,6 +17,9 @@ var inventory_open : bool = false
 
 # Process estää seinien läpi katsomisen, ei toimi kovin hyvin...
 func _process(_delta) -> void:
+	if global_vars.is_inv_visible or global_vars.is_hotbar_visible:
+		inventory_open = true
+	else: inventory_open = false
 	mouse_sensitivity = global_vars.mouse_sensitivity
 	if lock_ray.is_colliding() and locking_on: 
 		locked_on_enemy = lock_ray.get_collider()
@@ -85,3 +88,6 @@ func _on_area_3d_area_entered(area) -> void:
 
 func _on_lock_on_timer_timeout():
 	locking_on = true
+
+func _on_player_inv_status(status: bool):
+	inventory_open = status

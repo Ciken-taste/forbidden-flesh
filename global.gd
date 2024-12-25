@@ -12,6 +12,9 @@ var player_position : Vector3 = Vector3.ZERO
 # HUD upgrade. Sitä käytetään aseiden vaihossa invissä ja inventoryn päivittämiseen.
 var hud_update : bool = false
 
+var is_inv_visible : bool = false
+var is_hotbar_visible : bool = false
+
 # Jos esimerkiksi invetory haluaa muuttaa pelaajan HP:ta, niin tätä muttamaa
 var change_of_health : int = 0
 var change_of_stamina : int = 0

@@ -58,6 +58,74 @@ grow_horizontal = 2
 text = "FORBIDDEN FLESH"
 label_settings = SubResource("LabelSettings_qrg7s")
 
+[node name="Start" type="Button" parent="."]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.396701
+anchor_top = 0.175154
+anchor_right = 0.598958
+anchor_bottom = 0.335648
+offset_top = 5.34058e-05
+offset_bottom = -6.10352e-05
+grow_horizontal = 2
+grow_vertical = 2
+text = "START"
+icon = ExtResource("2_lam65")
+
+[node name="StartMenu" type="Control" parent="Start"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchor_left = -1.21459
+anchor_top = -0.0432678
+anchor_right = 2.24034
+anchor_bottom = 4.39903
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Start/StartMenu"]
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.568973, 0.568973, 0.568973, 1)
+
+[node name="BackStart" type="Button" parent="Start/StartMenu"]
+layout_mode = 0
+anchor_left = 0.908076
+anchor_top = 0.872295
+anchor_right = 0.988821
+anchor_bottom = 0.978356
+text = "BACK"
+metadata/_edit_use_anchors_ = true
+
+[node name="Level1" type="Button" parent="Start/StartMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0583852
+anchor_top = 0.0627707
+anchor_right = 0.484473
+anchor_bottom = 0.285715
+offset_left = 1.52588e-05
+text = "Level 1"
+metadata/_edit_use_anchors_ = true
+
+[node name="DevLevel" type="Button" parent="Start/StartMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.516771
+anchor_top = 0.0649352
+anchor_right = 0.942858
+anchor_bottom = 0.287879
+offset_left = 1.52588e-05
+text = "Dev map"
+metadata/_edit_use_anchors_ = true
+
 [node name="Controls" type="Button" parent="."]
 self_modulate = Color(1, 0, 0, 1)
 layout_mode = 1
@@ -114,21 +182,6 @@ anchor_right = 0.988821
 anchor_bottom = 0.978356
 text = "BACK"
 metadata/_edit_use_anchors_ = true
-
-[node name="Start" type="Button" parent="."]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.396701
-anchor_top = 0.175154
-anchor_right = 0.598958
-anchor_bottom = 0.335648
-offset_top = 23.5
-offset_bottom = -23.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "START"
-icon = ExtResource("2_lam65")
 
 [node name="Settings" type="Button" parent="."]
 self_modulate = Color(1, 0, 0, 1)
@@ -236,9 +289,12 @@ anchor_bottom = 0.875
 text = "QUIT"
 icon = ExtResource("5_sesyb")
 
+[connection signal="pressed" from="Start" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Start/StartMenu/BackStart" to="." method="_on_back_start_pressed"]
+[connection signal="pressed" from="Start/StartMenu/Level1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="Start/StartMenu/DevLevel" to="." method="_on_dev_level_pressed"]
 [connection signal="pressed" from="Controls" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="Controls/ControlMenu/BackControls" to="." method="_on_back_controls_pressed"]
-[connection signal="pressed" from="Start" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Settings/SettingsMenu/BackSettings" to="." method="_on_back_settings_pressed"]
 [connection signal="drag_ended" from="Settings/SettingsMenu/MasterAudio" to="." method="_on_master_audio_drag_ended"]

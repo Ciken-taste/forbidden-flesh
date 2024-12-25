@@ -16,10 +16,11 @@ func handle_buttons(is_disabled : bool) -> void:
 	start_button.disabled = is_disabled
 	quit_button.disabled = is_disabled
 
+@onready var start_menu := $Start/StartMenu as Control
 
 func _on_button_pressed() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	get_tree().change_scene_to_file("res://Scenes/Demo/demo_level.tscn")
+	start_menu.show()
+	handle_buttons(true)
 
 @onready var controls_menu := $Controls/ControlMenu as Control
 
@@ -60,3 +61,17 @@ func _on_mouse_sensitivity_drag_ended(value_changed):
 	if not value_changed: return
 	global_vars.mouse_sensitivity = mouse_sensitivity_slider.value
 	
+
+
+func _on_back_start_pressed():
+	start_menu.hide()
+	handle_buttons(false)
+
+
+func _on_level_1_pressed():
+	pass # Replace with function body.
+
+
+func _on_dev_level_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	get_tree().change_scene_to_file("res://Scenes/Demo/demo_level.tscn")

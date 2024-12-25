@@ -5,6 +5,9 @@ extends ScrollContainer
 var inv_open : bool = false
 
 
+func _physics_process(_delta):
+	global_vars.is_hotbar_visible = visible
+
 func _input(event):
 	if event.is_action_pressed("change_hotbar") or (event.is_action_pressed("pause") and inv_open):
 		inv_open = not inv_open

@@ -5,6 +5,7 @@ extends ScrollContainer
 var inv_open : bool = false
 
 func _physics_process(_delta):
+	global_vars.is_inv_visible = visible
 	if global_vars.hud_update:
 		inv_open = not inv_open
 		toggle_inventory(false)
