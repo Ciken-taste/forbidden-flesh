@@ -4,9 +4,8 @@
 
 7.8.2024
 - Uusia ranged aseita?
-- Oikea levu
 
 25.12.2024
 - FINAL TODO:
 	Hommaa peli good enough kuntoo, käytännössä tarvitaan vaa 1 oikea levu.
-	Myös jonki sorttine level select.
+

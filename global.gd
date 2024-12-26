@@ -49,7 +49,7 @@ var hotbar2 : String = "res://Objects/weapons/ranged/stock_bow"
 var hotbar3 : String = "res://Objects/consumables/health_potion"
 var hotbar4 : String = "res://Objects/consumables/stamina_potion"
 
-var current_melee = "res://Objects/weapons/ranged/stock_bow.tscn"
+var current_melee = "res://Objects/weapons/stock_sword.tscn"
 var arrows : int = 50
 
 

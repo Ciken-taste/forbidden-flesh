@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bsvupsat48j6e"
+path="res://.godot/imported/cliff.obj-9e7aa7049f9ac4a56c85575c6ed73494.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cliff.obj-9e7aa7049f9ac4a56c85575c6ed73494.mesh"]
+
+source_file="res://Models/cliff.obj"
+dest_files=["res://.godot/imported/cliff.obj-9e7aa7049f9ac4a56c85575c6ed73494.mesh", "res://.godot/imported/cliff.obj-9e7aa7049f9ac4a56c85575c6ed73494.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

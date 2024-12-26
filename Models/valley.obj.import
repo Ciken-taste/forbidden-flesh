@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dbw4vjf5bor18"
+path="res://.godot/imported/valley.obj-e93961d42aab6bfc5adeee45fdb6ccad.mesh"
+
+[deps]
+
+files=["res://.godot/imported/valley.obj-e93961d42aab6bfc5adeee45fdb6ccad.mesh"]
+
+source_file="res://Models/valley.obj"
+dest_files=["res://.godot/imported/valley.obj-e93961d42aab6bfc5adeee45fdb6ccad.mesh", "res://.godot/imported/valley.obj-e93961d42aab6bfc5adeee45fdb6ccad.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

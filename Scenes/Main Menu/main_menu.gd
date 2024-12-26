@@ -69,9 +69,9 @@ func _on_back_start_pressed():
 
 
 func _on_level_1_pressed():
-	pass # Replace with function body.
-
-
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	get_tree().change_scene_to_file("res://Scenes/level_1.tscn")
+	
 func _on_dev_level_pressed():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	get_tree().change_scene_to_file("res://Scenes/Demo/demo_level.tscn")
