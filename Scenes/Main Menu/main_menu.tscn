@@ -315,8 +315,7 @@ offset_right = 0.12793
 offset_bottom = 0.255981
 grow_horizontal = 0
 grow_vertical = 0
-text = "Ciken_taste on itch.io
- 2024"
+text = "Ciken_taste on itch.io 2024"
 
 [connection signal="pressed" from="Start" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Start/StartMenu/BackStart" to="." method="_on_back_start_pressed"]

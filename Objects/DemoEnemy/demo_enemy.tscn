@@ -52,6 +52,7 @@ size = Vector3(1.59863, 1, 2.8736)
 [node name="DemoEnemy" type="CharacterBody3D" groups=["enemies"]]
 process_mode = 1
 collision_layer = 9
+wall_min_slide_angle = 1.50273
 script = ExtResource("1_acy52")
 
 [node name="HitAudio" type="AudioStreamPlayer3D" parent="."]
