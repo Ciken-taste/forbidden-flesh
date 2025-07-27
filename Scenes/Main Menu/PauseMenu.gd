@@ -27,7 +27,7 @@ func disable_buttons(is_disabled : bool) -> void:
 	quit_button.disabled = is_disabled
 
 func pause_handler() -> void:
-	disable_buttons(false)
+	disable_buttons(currently_paused)
 	currently_paused = not currently_paused
 	if currently_paused: Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else: Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -43,7 +43,7 @@ func _input(event) -> void:
 				controls_menu.hide()
 
 func _on_quit_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Main Menu/main_menu.tscn")
+	get_tree().quit()
 
 func _on_settings_pressed() -> void:
 	disable_buttons(true)

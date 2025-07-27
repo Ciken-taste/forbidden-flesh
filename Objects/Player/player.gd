@@ -121,6 +121,7 @@ func _input(event) -> void:
 	if event.is_action_pressed("attack") and not attacking and stamina >= melee_stamina_use and not attack_disabled and not ranged:
 		global_vars.player_attack = true
 		sword_audio.play(0.3)
+		sword_audio.pitch_scale = randf_range(0.7, 1.2)
 		stamina -= melee_stamina_use
 		attacking = true
 		lunging = true
@@ -158,7 +159,7 @@ func _input(event) -> void:
 		running = true
 	if event.is_action_released("run"):
 		running = false
-	if event.is_action_pressed("roll") and not rolling and not roll_cooldown and is_on_floor() and stamina >= 10 and input_dir:
+	if event.is_action_pressed("roll") and not rolling and not roll_cooldown and is_on_floor() and stamina >= 10:
 		collision.scale = Vector3(0.8, 0.8, 0.8)
 		stamina -= 10
 		rolling = true
@@ -167,6 +168,7 @@ func _input(event) -> void:
 			sword.damage_areas = false
 		($RollTimer as Timer).start()
 		roll_audio.play()
+		if not input_dir: input_dir = Vector2(0, 1)
 
 
 func attack() -> void:
@@ -239,6 +241,7 @@ func _physics_process(delta) -> void:
 		($InvincibilityTimer as Timer).start()
 		health -= 15
 		hit_audio.play()
+		hit_audio.pitch_scale = randf_range(0.7, 1.2)
 	velocity.x = 0
 	velocity.z = 0
 	if dead: return

@@ -139,6 +139,7 @@ func _on_attack_area_area_entered(area) -> void:
 
 func _on_lunge_timer_timeout() -> void:
 	swing_audio.play(0.3)
+	swing_audio.pitch_scale = randf_range(0.7, 1.2)
 	lunge_timer.stop()
 	boost_applied = false
 	lunging = false
