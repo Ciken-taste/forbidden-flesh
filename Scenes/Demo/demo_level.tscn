@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://b42f80hf6678h"]
+[gd_scene load_steps=90 format=3 uid="uid://b42f80hf6678h"]
 
 [ext_resource type="Texture2D" uid="uid://c6qc360etuiia" path="res://addons/godot-prototype-texture/PNG/checker_blue_512x512.png" id="1_5r7vb"]
 [ext_resource type="Script" path="res://Scenes/Demo/demo_level.gd" id="1_lg0hh"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Scenes/Demo/EnemySpawner.gd" id="7_aqbbn"]
 [ext_resource type="Texture2D" uid="uid://2v0qdrrokhac" path="res://addons/godot-prototype-texture/PNG/checker_lime_512x512.png" id="7_hluun"]
 [ext_resource type="Script" path="res://Scenes/Demo/Spin.gd" id="9_vubyp"]
+[ext_resource type="Script" path="res://Scenes/Demo/EnemyActivation.gd" id="9_x8edu"]
 [ext_resource type="Script" path="res://Scenes/Demo/KDScreen.gd" id="10_j1wap"]
 [ext_resource type="PackedScene" uid="uid://cyqrhyrol0vk4" path="res://Scenes/Main Menu/pause_menu.tscn" id="13_ujccl"]
 [ext_resource type="PackedScene" uid="uid://cuy3wobq0idqk" path="res://Objects/consumables/health_potion.tscn" id="15_kdgdg"]
@@ -20,6 +21,7 @@
 [ext_resource type="Script" path="res://Scenes/Demo/HealthPotionSpawner.gd" id="18_budq8"]
 [ext_resource type="Script" path="res://Scenes/Demo/StaminaPotionSpawner.gd" id="19_pltwo"]
 [ext_resource type="Script" path="res://Scenes/Demo/spin_staticbody.gd" id="20_gyw4x"]
+[ext_resource type="PackedScene" uid="uid://dsia3w8sa2y81" path="res://Objects/campfire.tscn" id="22_okipa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t70a3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -174,6 +176,10 @@ emission = Color(1, 0, 0, 1)
 emission_energy_multiplier = 16.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_daehx"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_eww0k"]
+height = 0.823749
+radius = 7.05359
 
 [sub_resource type="BoxMesh" id="BoxMesh_xc1o3"]
 
@@ -503,33 +509,40 @@ shape = SubResource("ConcavePolygonShape3D_pdkw3")
 [node name="Player" parent="." instance=ExtResource("2_7hl60")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05058, 0)
 
-[node name="DemoEnemy" parent="." instance=ExtResource("6_x00wa")]
+[node name="EnemyActivation1" type="Area3D" parent="."]
+script = ExtResource("9_x8edu")
+
+[node name="DemoEnemy" parent="EnemyActivation1" instance=ExtResource("6_x00wa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9325, 0.0315701, 0.719715)
 
-[node name="EnemySpawner" type="Area3D" parent="."]
+[node name="EnemySpawner" type="Area3D" parent="EnemyActivation1"]
 process_mode = 1
 script = ExtResource("7_aqbbn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemySpawner"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyActivation1/EnemySpawner"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 35.0414, 3.50228, 3.33335)
 shape = SubResource("BoxShape3D_qyats")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemySpawner/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyActivation1/EnemySpawner/CollisionShape3D"]
 material_override = SubResource("StandardMaterial3D_3u2lo")
 mesh = SubResource("BoxMesh_daehx")
 
-[node name="Label3D" type="Label3D" parent="EnemySpawner/CollisionShape3D"]
+[node name="Label3D" type="Label3D" parent="EnemyActivation1/EnemySpawner/CollisionShape3D"]
 transform = Transform3D(-0.999659, 0, 0.0261071, 0, 1, 0, -0.0261071, 0, -0.999659, 0, 11.3364, 0)
 text = "Spawn enemies
 "
 font_size = 357
 script = ExtResource("9_vubyp")
 
-[node name="Marker3D" type="Marker3D" parent="EnemySpawner"]
+[node name="Marker3D" type="Marker3D" parent="EnemyActivation1/EnemySpawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.8644, 1.98223, 0)
 
-[node name="SpawnTimer" type="Timer" parent="EnemySpawner"]
+[node name="SpawnTimer" type="Timer" parent="EnemyActivation1/EnemySpawner"]
 wait_time = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyActivation1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.2734, 0.902299, 0)
+shape = SubResource("CylinderShape3D_eww0k")
 
 [node name="KDScreen" type="MeshInstance3D" parent="." groups=["KD"]]
 process_mode = 1
@@ -645,9 +658,13 @@ mesh = SubResource("BoxMesh_iyxcj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 7.81662, 0, 0, 0)
 shape = SubResource("BoxShape3D_l0ckp")
 
-[connection signal="area_entered" from="EnemySpawner" to="EnemySpawner" method="_on_area_entered"]
-[connection signal="area_exited" from="EnemySpawner" to="EnemySpawner" method="_on_area_exited"]
-[connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
+[node name="Campfire" parent="." instance=ExtResource("22_okipa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.8483, 0.119494, -7.07971)
+
+[connection signal="area_entered" from="EnemyActivation1" to="EnemyActivation1" method="_on_area_entered"]
+[connection signal="area_entered" from="EnemyActivation1/EnemySpawner" to="EnemyActivation1/EnemySpawner" method="_on_area_entered"]
+[connection signal="area_exited" from="EnemyActivation1/EnemySpawner" to="EnemyActivation1/EnemySpawner" method="_on_area_exited"]
+[connection signal="timeout" from="EnemyActivation1/EnemySpawner/SpawnTimer" to="EnemyActivation1/EnemySpawner" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="MenuFadeTimer" to="." method="_on_menu_fade_timer_timeout"]
 [connection signal="toggle_pause" from="PauseMenu" to="." method="_on_pause_menu_toggle_pause"]
 [connection signal="area_entered" from="HealthPotionSpawner" to="HealthPotionSpawner" method="_on_area_entered"]

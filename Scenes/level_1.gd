@@ -2,8 +2,16 @@ extends Node3D
 
 @onready var player := $Player as CharacterBody3D
 
+@onready var p_spawn_pos := $PlayerSpawnPOS as Node3D
+
 @onready var pause_menu := $PauseMenu as Control
 var currently_paused : bool = false
+
+@export var player_checkpoint = Vector3.ZERO
+
+
+func _ready():
+	player_checkpoint = p_spawn_pos.global_position
 
 func _input(event) -> void:
 
@@ -11,7 +19,7 @@ func _input(event) -> void:
 		get_tree().call_group("KD", "death_confirmed")
 		get_tree().call_group("player", "remove_player")
 		var new_player = preload("res://Objects/Player/player.tscn").instantiate()
-		new_player.position = Vector3(21, 24, 19)
+		new_player.global_position = player_checkpoint
 		player = new_player
 		call_deferred("add_child", new_player)
 		remove_child($ScrollContainer)

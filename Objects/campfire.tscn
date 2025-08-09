@@ -1,0 +1,105 @@
+[gd_scene load_steps=11 format=3 uid="uid://dsia3w8sa2y81"]
+
+[ext_resource type="ArrayMesh" uid="uid://dmy1yci8x0lyr" path="res://Models/campfire.obj" id="1_1rxv3"]
+[ext_resource type="Script" path="res://Objects/campfire.gd" id="1_8tfok"]
+[ext_resource type="Material" uid="uid://bor2oasltl7hq" path="res://Textures/bark/bark_material.tres" id="2_4s6jm"]
+[ext_resource type="Material" uid="uid://bnjv607uq6o6j" path="res://Textures/cobblestone/cobblestone_material.tres" id="3_7oui4"]
+[ext_resource type="AudioStream" uid="uid://djt4aetytvft3" path="res://Audio/Campfire sound.mp3" id="5_5wm8k"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_oqooj"]
+radius = 1.42866
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oedke"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+spread = 0.0
+initial_velocity_min = 9.0
+initial_velocity_max = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52vou"]
+albedo_color = Color(1, 0.294118, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.443137, 0.0588235, 1)
+emission_energy_multiplier = 3.73
+
+[sub_resource type="SphereMesh" id="SphereMesh_81i37"]
+material = SubResource("StandardMaterial3D_52vou")
+radius = 0.35
+height = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_eeip3"]
+radius = 4.0094
+
+[node name="Campfire" type="StaticBody3D"]
+script = ExtResource("1_8tfok")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_1rxv3")
+surface_material_override/0 = ExtResource("2_4s6jm")
+surface_material_override/1 = ExtResource("2_4s6jm")
+surface_material_override/2 = ExtResource("2_4s6jm")
+surface_material_override/3 = ExtResource("2_4s6jm")
+surface_material_override/4 = ExtResource("2_4s6jm")
+surface_material_override/5 = ExtResource("2_4s6jm")
+surface_material_override/6 = ExtResource("2_4s6jm")
+surface_material_override/7 = ExtResource("2_4s6jm")
+surface_material_override/8 = ExtResource("2_4s6jm")
+surface_material_override/9 = ExtResource("2_4s6jm")
+surface_material_override/10 = ExtResource("2_4s6jm")
+surface_material_override/11 = ExtResource("2_4s6jm")
+surface_material_override/12 = ExtResource("2_4s6jm")
+surface_material_override/13 = ExtResource("2_4s6jm")
+surface_material_override/14 = ExtResource("2_4s6jm")
+surface_material_override/15 = ExtResource("2_4s6jm")
+surface_material_override/16 = ExtResource("3_7oui4")
+surface_material_override/17 = ExtResource("3_7oui4")
+surface_material_override/18 = ExtResource("3_7oui4")
+surface_material_override/19 = ExtResource("3_7oui4")
+surface_material_override/20 = ExtResource("3_7oui4")
+surface_material_override/21 = ExtResource("3_7oui4")
+surface_material_override/22 = ExtResource("3_7oui4")
+surface_material_override/23 = ExtResource("3_7oui4")
+surface_material_override/24 = ExtResource("3_7oui4")
+surface_material_override/25 = ExtResource("3_7oui4")
+surface_material_override/26 = ExtResource("3_7oui4")
+surface_material_override/27 = ExtResource("3_7oui4")
+surface_material_override/28 = ExtResource("3_7oui4")
+surface_material_override/29 = ExtResource("3_7oui4")
+surface_material_override/30 = ExtResource("3_7oui4")
+surface_material_override/31 = ExtResource("3_7oui4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02265, 0)
+shape = SubResource("CylinderShape3D_oqooj")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.0398528, -0.999206, 0, 0.999206, 0.0398528, 0, 0, 0, 1, 0, 0.688749, 0)
+emitting = false
+amount = 100
+speed_scale = 1.2
+process_material = SubResource("ParticleProcessMaterial_oedke")
+draw_pass_1 = SubResource("SphereMesh_81i37")
+
+[node name="Area3D" type="Area3D" parent="." groups=["Campfire"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05266, 0)
+shape = SubResource("CylinderShape3D_eeip3")
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.18461, 4.23404, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_5wm8k")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47419, 0)
+visible = false
+light_color = Color(1, 0.72549, 0, 1)
+light_energy = 5.364
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="finished" from="AudioStreamPlayer3D" to="." method="_on_audio_stream_player_3d_finished"]

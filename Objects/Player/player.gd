@@ -11,7 +11,7 @@ var target_rotation : Vector3 = Vector3.ZERO
 var input_dir : Vector2 = Vector2.ZERO
 
 var stamina : float = 100
-var health : int = 100
+var health : float = 100
 
 # Roll_cooldown estää rollin spämmimistä
 var rolling : bool = false
@@ -68,6 +68,10 @@ var weapon_movement_speed_mult : float = 1.0
 @onready var health_bar := $HUD/HealthBar as ProgressBar
 @onready var stamina_bar := $HUD/StaminaBar as ProgressBar
 @onready var exhausting_alert := $HUD/StaminaBar/Exhausted as Label
+@onready var healing_label := $HUD/Healing as Control
+
+var healing : bool = false
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -261,8 +265,12 @@ func _physics_process(delta) -> void:
 	health_bar.value = health
 	stamina_bar.value = stamina
 	
+	if healing:
+		if healing_label.modulate.a < 1: healing_label.modulate.a += 0.01
+		health += 0.05
+	if not healing and healing_label.modulate.a > 0: healing_label.modulate.a -= 0.01
 	
-
+	
 	attack()
 	# Governor kattoo että käveleekö, rollaa vai juokseeko pelaaja
 	var speed : float = speed_governor()
@@ -350,10 +358,11 @@ func _on_area_3d_area_entered(area) -> void:
 	if area.is_in_group("LooseArrow"): 
 		global_vars.arrows += 1
 		arrow_label.text = "Arrows: " + str(global_vars.arrows)
+	if area.is_in_group("Campfire"): healing = true
 
 func _on_area_3d_area_exited(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = false
-
+	if area.is_in_group("Campfire"): healing = false
 
 func _on_death_timer_timeout() -> void:
 	if death_timer.wait_time == 2:

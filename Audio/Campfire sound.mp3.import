@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://djt4aetytvft3"
+path="res://.godot/imported/Campfire sound.mp3-06b74e2f9f2dbeb5de3b02f21db8ce43.mp3str"
+
+[deps]
+
+source_file="res://Audio/Campfire sound.mp3"
+dest_files=["res://.godot/imported/Campfire sound.mp3-06b74e2f9f2dbeb5de3b02f21db8ce43.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkhyop43ubhlm"]
+
+[ext_resource type="ArrayMesh" uid="uid://dqcvg1a2nc20d" path="res://Models/castle_tower.obj" id="1_o04ry"]
+[ext_resource type="Material" uid="uid://biu4lee2ekqcf" path="res://Textures/stonetiles/stonetiles_material.tres" id="2_qc8pf"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uxqp8"]
+height = 22.0443
+radius = 3.38474
+
+[node name="CastleTower" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_o04ry")
+surface_material_override/0 = ExtResource("2_qc8pf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.0135, 0)
+shape = SubResource("CylinderShape3D_uxqp8")

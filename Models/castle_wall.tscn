@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dj484hdc51650"]
+
+[ext_resource type="ArrayMesh" uid="uid://b5xp3oeq77f13" path="res://Models/castle_wall.obj" id="1_gna8p"]
+[ext_resource type="Material" uid="uid://biu4lee2ekqcf" path="res://Textures/stonetiles/stonetiles_material.tres" id="2_3tp4t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6inrq"]
+size = Vector3(39.989, 11.854, 1.98737)
+
+[node name="CastleWall" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_gna8p")
+surface_material_override/0 = ExtResource("2_3tp4t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118103, 5.427, 0.0122986)
+shape = SubResource("BoxShape3D_6inrq")

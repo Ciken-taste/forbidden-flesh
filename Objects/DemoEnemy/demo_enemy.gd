@@ -31,9 +31,11 @@ var invincible : bool = false
 
 var new_velocity : Vector3 = Vector3.ZERO
 
-var player_pos : Vector3 = Vector3.ZERO
+var player_pos : Vector3 = global_position
 
 @onready var global_vars : Object = get_node("/root/global")
+
+var is_agro : bool = false
 
 func _ready() -> void:
 	pacification_timer.start(5 + randi_range(0, 10))
@@ -71,28 +73,31 @@ func take_damage():
 
 
 func _physics_process(_delta) -> void:
-	player_pos = global_vars.player_position
+	if get_parent().activated: is_agro = true
 	if inside_sword and not invincible and global_vars.player_attack:
 		take_damage()
+		is_agro = true
+	player_pos = global_vars.player_position
 	death()
 	attack()
 	if not attacking: 
-
 		var current_location = global_transform.origin
 		var next_location = null
 		
 		# Pacification
-		if not pacified: nav.target_position = player_pos
+		if not pacified and is_agro: nav.target_position = player_pos
 		else: nav.target_position = home_pos
 		
 		
 		next_location = nav.get_next_path_position()
 		
 		
-		if lunging and not boost_applied and able_to_lunge: 
+		if lunging and not boost_applied and able_to_lunge:
+			is_agro = true
 			lunge_timer.start()
 			boost_applied = true
 			new_velocity = (next_location - current_location).normalized() * speed * 10
+			
 		elif not lunging or not able_to_lunge:
 			new_velocity = (next_location - current_location).normalized() * speed
 			
@@ -105,6 +110,7 @@ func _physics_process(_delta) -> void:
 			rotation.y += PI
 		rotation.x = 0
 		if not is_on_floor(): velocity.y -= gravity
+
 		move_and_slide()
 
 func _on_area_3d_area_entered(area) -> void:
@@ -121,7 +127,7 @@ func _on_area_3d_area_exited(area):
 
 func death() -> void:
 	if health <= 0: 
-		get_parent().get_tree().call_group("KD", "kill_confirmed")
+		get_parent().get_parent().get_tree().call_group("KD", "kill_confirmed")
 		var ragdoll = preload("res://Objects/DemoEnemy/dead_demo_enemy.tscn").instantiate()
 		add_sibling(ragdoll)
 		ragdoll.global_transform.origin = global_transform.origin

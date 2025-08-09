@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cn4fkem2o5uis"]
+
+[ext_resource type="ArrayMesh" uid="uid://bbu7v60o1dsx6" path="res://Models/bridge.obj" id="1_cfj3o"]
+[ext_resource type="Material" uid="uid://bnjv607uq6o6j" path="res://Textures/cobblestone/cobblestone_material.tres" id="1_chswc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0pu60"]
+size = Vector3(2.06439, 0.214478, 2.02371)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_udu6u"]
+size = Vector3(2.29214, 0.273315, 2.00348)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nujf1"]
+size = Vector3(2.00226, 0.140717, 2.04254)
+
+[node name="Bridge" type="StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0624084, 0.361633, 0.0163116)
+shape = SubResource("BoxShape3D_0pu60")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.931177, -0.364568, 0, 0.364568, 0.931177, 0, 0, 0, 1, -2.00928, -0.0783108, 0.0198669)
+shape = SubResource("BoxShape3D_udu6u")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.923986, 0.382425, 0, -0.382425, 0.923986, 0, 0, 0, 1, 1.99191, 0.0190735, 0.00564575)
+shape = SubResource("BoxShape3D_nujf1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_chswc")
+mesh = ExtResource("1_cfj3o")
