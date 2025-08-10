@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dsia3w8sa2y81"]
+[gd_scene load_steps=13 format=3 uid="uid://dsia3w8sa2y81"]
 
 [ext_resource type="ArrayMesh" uid="uid://dmy1yci8x0lyr" path="res://Models/campfire.obj" id="1_1rxv3"]
 [ext_resource type="Script" path="res://Objects/campfire.gd" id="1_8tfok"]
@@ -29,6 +29,17 @@ emission_energy_multiplier = 3.73
 material = SubResource("StandardMaterial3D_52vou")
 radius = 0.35
 height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o2qq7"]
+albedo_color = Color(1, 0.423529, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 5.33
+
+[sub_resource type="SphereMesh" id="SphereMesh_kcjvu"]
+material = SubResource("StandardMaterial3D_o2qq7")
+radius = 0.3
+height = 0.4
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_eeip3"]
 radius = 4.0094
@@ -78,10 +89,18 @@ shape = SubResource("CylinderShape3D_oqooj")
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(0.0398528, -0.999206, 0, 0.999206, 0.0398528, 0, 0, 0, 1, 0, 0.688749, 0)
 emitting = false
-amount = 100
+amount = 50
 speed_scale = 1.2
 process_material = SubResource("ParticleProcessMaterial_oedke")
 draw_pass_1 = SubResource("SphereMesh_81i37")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.0398528, -0.999206, 0, 0.999206, 0.0398528, 0, 0, 0, 1, 0, 0.688749, 0)
+emitting = false
+amount = 50
+speed_scale = 1.64
+process_material = SubResource("ParticleProcessMaterial_oedke")
+draw_pass_1 = SubResource("SphereMesh_kcjvu")
 
 [node name="Area3D" type="Area3D" parent="." groups=["Campfire"]]
 

@@ -72,6 +72,10 @@ var weapon_movement_speed_mult : float = 1.0
 
 var healing : bool = false
 
+@onready var pickup_audio := $PickupAudio as AudioStreamPlayer
+@onready var pickup_label := $HUD/PickupLabel as Label
+@onready var pickup_timer := $PickupFadeTimer as Timer
+var pickup_fade_speed : float = -0.05
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -152,7 +156,7 @@ func _input(event) -> void:
 		sword_audio.play()
 		stamina -= melee_stamina_use
 		var arrow = load("res://Objects/Player/arrow.tscn").instantiate()
-		arrow.global_transform.origin = projectile_spawn.global_transform.origin
+		arrow.global_position = projectile_spawn.global_position
 		arrow.rotation = cam_boom.rotation
 		call_deferred("add_sibling", arrow)
 
@@ -222,7 +226,15 @@ func death() -> void:
 		var dead_player = preload("res://Objects/Player/dead_player.tscn").instantiate()
 		add_child(dead_player)
 
+func pickup(path_name: String) -> void:
+	pickup_timer.start()
+	pickup_label.modulate.a = 0
+	pickup_fade_speed *= -1
+	pickup_audio.play()
+	global_vars.inventory.append(path_name)
+
 func _physics_process(delta) -> void:
+	pickup_label.modulate.a += pickup_fade_speed
 	
 	if global_vars.is_inv_visible or global_vars.is_hotbar_visible:
 		inventory_open = true
@@ -249,7 +261,7 @@ func _physics_process(delta) -> void:
 	velocity.x = 0
 	velocity.z = 0
 	if dead: return
-	
+	if health > 100: health = 100
 	death()
 	
 	if run_cooldown: exhausting_alert.show()
@@ -348,13 +360,12 @@ func remove_player() -> void: queue_free()
 func _on_run_timer_timeout() -> void:
 	run_cooldown = false
 
-
 func _on_area_3d_area_entered(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = true
 	elif area.is_in_group("InstaDeath"): health = 0
 	
-	if area.is_in_group("HealthPotion"): global_vars.inventory.append("res://Objects/consumables/health_potion")
-	if area.is_in_group("StaminaPotion"): global_vars.inventory.append("res://Objects/consumables/stamina_potion")
+	if area.is_in_group("HealthPotion"): pickup("res://Objects/consumables/health_potion")
+	if area.is_in_group("StaminaPotion"): pickup("res://Objects/consumables/stamina_potion")
 	if area.is_in_group("LooseArrow"): 
 		global_vars.arrows += 1
 		arrow_label.text = "Arrows: " + str(global_vars.arrows)
@@ -393,3 +404,7 @@ func _on_return_swing_timer_timeout():
 	sword_dir = 1
 	attacking = false
 	sword.rotation.y = sword_rot
+
+
+func _on_pickup_fade_timer_timeout():
+	pickup_fade_speed *= -1

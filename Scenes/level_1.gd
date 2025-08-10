@@ -13,6 +13,7 @@ var currently_paused : bool = false
 func _ready():
 	player_checkpoint = p_spawn_pos.global_position
 
+
 func _input(event) -> void:
 
 	if event.is_action_pressed("respawn"):
@@ -28,6 +29,7 @@ func _input(event) -> void:
 		remove_child($ChangeHotbar)
 		inv = preload("res://Objects/Player/change_hotbar.tscn").instantiate()
 		call_deferred("add_child", inv)
+		
 
 
 func _on_menu_fade_timer_timeout():
@@ -35,5 +37,6 @@ func _on_menu_fade_timer_timeout():
 	elif not currently_paused and pause_menu.modulate.a > 0: pause_menu.modulate.a -= 0.025
 
 func _on_pause_menu_toggle_pause():
+	move_child(pause_menu, get_child_count())
 	currently_paused = not currently_paused
 	get_tree().paused = currently_paused

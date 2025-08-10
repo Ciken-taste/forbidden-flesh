@@ -29,6 +29,7 @@ func _on_menu_fade_timer_timeout():
 	elif not currently_paused and pause_menu.modulate.a > 0: pause_menu.modulate.a -= 0.025
 
 func _on_pause_menu_toggle_pause():
+	move_child(pause_menu, get_child_count())
 	currently_paused = not currently_paused
 	get_tree().paused = currently_paused
 

@@ -17,11 +17,15 @@ func _physics_process(delta):
 		pickup_area.monitorable = true
 		pickup_area.monitoring = true
 	if not collision_ray.is_colliding() and speed == 0:
-		var loose_arrow = load("res://Objects/Player/loose_arrow.tscn").instantiate()
-		loose_arrow.global_position = global_position
-		loose_arrow.rotation = rotation
-		call_deferred("add_sibling", loose_arrow)
+		if randf() < 0.75:
+			var loose_arrow = load("res://Objects/Player/loose_arrow.tscn").instantiate()
+			loose_arrow.global_position = global_position
+			loose_arrow.rotation = rotation
+			call_deferred("add_sibling", loose_arrow)
+		else:
+			pass
 		queue_free()
+		
 
 
 func _on_timer_timeout():
