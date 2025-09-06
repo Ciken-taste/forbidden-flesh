@@ -127,7 +127,7 @@ shape = SubResource("BoxShape3D_7mr8j")
 [node name="SwordMesh" parent="Sword" instance=ExtResource("4_ptd75")]
 transform = Transform3D(0.000523587, -0.000401857, -0.0749971, -0.0749982, -3.26976e-09, -0.000523594, 2.80218e-06, 0.0749989, -0.000401854, 0.0203936, 0.111017, 0.00359593)
 
-[node name="AttackArea" type="Area3D" parent="."]
+[node name="AttackArea" type="Area3D" parent="." groups=["EnemyAttackArea"]]
 
 [node name="NormalArea" type="CollisionShape3D" parent="AttackArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222009, 0.506561, 0.948)

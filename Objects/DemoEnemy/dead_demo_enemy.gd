@@ -1,4 +1,4 @@
-extends Node3D
+extends RigidBody3D
 
 func _ready() -> void:
 	($GPUParticles3D as GPUParticles3D).emitting = true

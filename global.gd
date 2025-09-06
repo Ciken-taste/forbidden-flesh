@@ -2,6 +2,7 @@ extends Node
 # AUTOLOADER
 
 var mouse_sensitivity : float = 0.01
+var music_volume : int = 50
 
 # Tämän avulla viholliset ei ota lämää, jos pelaaja ei swingaa
 var player_attack : bool = false

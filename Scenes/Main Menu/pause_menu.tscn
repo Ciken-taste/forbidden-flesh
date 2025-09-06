@@ -235,6 +235,29 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "Mouse Sensitivity"
 
+[node name="MusicAudio" type="HSlider" parent="Settings/SettingsMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.563976
+anchor_top = 0.281386
+anchor_right = 0.973914
+anchor_bottom = 0.43723
+min_value = 30.0
+max_value = 60.0
+value = 50.0
+metadata/_edit_use_anchors_ = true
+
+[node name="MusicAudioLabel" type="Label" parent="Settings/SettingsMenu/MusicAudio"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_right = 52.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Music Volume"
+
 [node name="Quit" type="Button" parent="."]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 1
@@ -254,4 +277,5 @@ metadata/_edit_use_anchors_ = true
 [connection signal="pressed" from="Settings/SettingsMenu/BackSettings" to="." method="_on_back_settings_pressed"]
 [connection signal="drag_ended" from="Settings/SettingsMenu/MasterAudio" to="." method="_on_master_audio_drag_ended"]
 [connection signal="drag_ended" from="Settings/SettingsMenu/MouseSensitivity" to="." method="_on_mouse_sensitivity_drag_ended"]
+[connection signal="drag_ended" from="Settings/SettingsMenu/MusicAudio" to="." method="_on_music_audio_drag_ended"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

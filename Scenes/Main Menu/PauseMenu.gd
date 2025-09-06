@@ -9,6 +9,7 @@ extends Control
 
 @onready var settings_menu := $Settings/SettingsMenu as Control
 @onready var master_volume_slider := $Settings/SettingsMenu/MasterAudio as HSlider
+@onready var music_volume_slider := $Settings/SettingsMenu/MusicAudio as HSlider
 @onready var mouse_sensitivity_slider := $Settings/SettingsMenu/MouseSensitivity as HSlider
 
 
@@ -29,9 +30,13 @@ func disable_buttons(is_disabled : bool) -> void:
 func pause_handler() -> void:
 	disable_buttons(currently_paused)
 	currently_paused = not currently_paused
+	if currently_paused: position = Vector2.ZERO
 	if currently_paused: Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else: Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	emit_signal("toggle_pause")
+
+func _physics_process(_delta):
+	if modulate.a < 0.01 and not currently_paused: position = Vector2(0, -5000)
 
 func _input(event) -> void:
 		if event.is_action_pressed("pause"):
@@ -79,3 +84,8 @@ func _on_mouse_sensitivity_drag_ended(value_changed) -> void:
 	if not value_changed: return
 	global_vars.mouse_sensitivity = mouse_sensitivity_slider.value
 	
+
+
+func _on_music_audio_drag_ended(value_changed):
+	if not value_changed: return
+	global_vars.music_volume = music_volume_slider.value

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2lbobmwrv3yg"]
+
+[ext_resource type="Script" path="res://Objects/EnemyActivation.gd" id="1_eiipl"]
+
+[node name="ActivationArea" type="Area3D"]
+script = ExtResource("1_eiipl")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

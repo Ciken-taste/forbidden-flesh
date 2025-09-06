@@ -33,8 +33,8 @@ func _input(event) -> void:
 
 
 func _on_menu_fade_timer_timeout():
-	if currently_paused and pause_menu.modulate.a < 1: pause_menu.modulate.a += 0.025
-	elif not currently_paused and pause_menu.modulate.a > 0: pause_menu.modulate.a -= 0.025
+	if currently_paused and pause_menu.modulate.a < 1: pause_menu.modulate.a += 0.01
+	elif not currently_paused and pause_menu.modulate.a > 0: pause_menu.modulate.a -= 0.01
 
 func _on_pause_menu_toggle_pause():
 	move_child(pause_menu, get_child_count())

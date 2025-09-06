@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bdabh11ntrni6"]
+[gd_scene load_steps=26 format=3 uid="uid://bdabh11ntrni6"]
 
 [ext_resource type="Script" path="res://Objects/Player/player.gd" id="1_1kfxo"]
 [ext_resource type="Texture2D" uid="uid://dbc87mcpe0xgy" path="res://addons/godot-prototype-texture/PNG/checker_pink_512x512.png" id="1_dwgu7"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cvt1ll0hg207b" path="res://Textures/lock_reticle.png" id="6_5rymu"]
 [ext_resource type="Script" path="res://Objects/Player/HealthBar.gd" id="6_no3ki"]
 [ext_resource type="Script" path="res://Objects/Player/HotBar.gd" id="9_23ap3"]
+[ext_resource type="AudioStream" uid="uid://cdyb5efm0n48h" path="res://Audio/forbiddenfleshsong.mp3" id="12_muihn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g13v"]
 albedo_texture = ExtResource("1_dwgu7")
@@ -424,6 +425,15 @@ one_shot = true
 
 [node name="PickupFadeTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="MusicFadeTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_muihn")
+volume_db = -5.0
+autoplay = true
 
 [node name="PickupAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_np5xx")
@@ -910,6 +920,8 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]
 [connection signal="timeout" from="ReturnSwingTimer" to="." method="_on_return_swing_timer_timeout"]
 [connection signal="timeout" from="PickupFadeTimer" to="." method="_on_pickup_fade_timer_timeout"]
+[connection signal="timeout" from="MusicFadeTimer" to="." method="_on_music_fade_timer_timeout"]
+[connection signal="finished" from="Music" to="." method="_on_audio_stream_player_finished"]
 [connection signal="finished" from="Mesh/GPUParticles3D" to="." method="_on_gpu_particles_3d_finished"]
 [connection signal="timeout" from="CameraBoom/LockOnTimer" to="CameraBoom" method="_on_lock_on_timer_timeout"]
 [connection signal="timeout" from="CameraBoom/Camera3D/RayCast3D/ZoomFreezeTimer" to="CameraBoom" method="_on_zoom_freeze_timer_timeout"]

@@ -27,6 +27,7 @@ func _on_button_pressed() -> void:
 
 @onready var settings_menu := $Settings/SettingsMenu as Control
 @onready var master_volume_slider := $Settings/SettingsMenu/MasterAudio as HSlider
+@onready var music_volume_slider := $Settings/SettingsMenu/MusicAudio as HSlider
 @onready var mouse_sensitivity_slider := $Settings/SettingsMenu/MouseSensitivity as HSlider
 
 
@@ -75,3 +76,8 @@ func _on_level_1_pressed():
 func _on_dev_level_pressed():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	get_tree().change_scene_to_file("res://Scenes/Demo/demo_level.tscn")
+
+
+func _on_music_audio_drag_ended(value_changed):
+	if not value_changed: return
+	global_vars.music_volume = music_volume_slider.value

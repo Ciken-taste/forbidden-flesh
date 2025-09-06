@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://23wk24031pot"
+path="res://.godot/imported/The Elder Scrolls V - Skyrim - Combat #2.mp3-81648a1c4e5516ba321b9d4bdb3b7031.mp3str"
+
+[deps]
+
+source_file="res://Audio/The Elder Scrolls V - Skyrim - Combat #2.mp3"
+dest_files=["res://.godot/imported/The Elder Scrolls V - Skyrim - Combat #2.mp3-81648a1c4e5516ba321b9d4bdb3b7031.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

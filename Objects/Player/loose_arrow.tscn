@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d24plswcgnfp1"]
 
-[ext_resource type="PackedScene" uid="uid://b8tjllrkyo15" path="res://Models/arrow_mesh.tscn" id="1_gu1ak"]
+[ext_resource type="PackedScene" uid="uid://cxiihnvl67yd4" path="res://Models/arrow_mesh.tscn" id="1_gu1ak"]
 [ext_resource type="Script" path="res://Objects/Player/loose_arrow.gd" id="1_i66ap"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_im0s2"]

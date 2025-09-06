@@ -77,6 +77,10 @@ var healing : bool = false
 @onready var pickup_timer := $PickupFadeTimer as Timer
 var pickup_fade_speed : float = -0.05
 
+@onready var music_timer := $MusicFadeTimer as Timer
+@onready var music := $Music as AudioStreamPlayer
+var aggro : bool = false
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -125,6 +129,7 @@ func create_melee():
 func _input(event) -> void:
 	if event.is_action_pressed("inventory") or event.is_action_pressed("change_hotbar") or (event.is_action_pressed("pause") and inventory_open):
 		inventory_open = not inventory_open
+		
 	if inventory_open: return
 	if event.is_action_pressed("attack") and not attacking and stamina >= melee_stamina_use and not attack_disabled and not ranged:
 		global_vars.player_attack = true
@@ -229,12 +234,16 @@ func death() -> void:
 func pickup(path_name: String) -> void:
 	pickup_timer.start()
 	pickup_label.modulate.a = 0
-	pickup_fade_speed *= -1
+	pickup_fade_speed = 0.05
 	pickup_audio.play()
 	global_vars.inventory.append(path_name)
 
 func _physics_process(delta) -> void:
+	music.volume_db = global_vars.music_volume - 50
+	if global_vars.music_volume == 30: music.volume_db = -100
+	
 	pickup_label.modulate.a += pickup_fade_speed
+	if pickup_label.modulate.a > 1: pickup_label.modulate.a = 1
 	
 	if global_vars.is_inv_visible or global_vars.is_hotbar_visible:
 		inventory_open = true
@@ -370,6 +379,12 @@ func _on_area_3d_area_entered(area) -> void:
 		global_vars.arrows += 1
 		arrow_label.text = "Arrows: " + str(global_vars.arrows)
 	if area.is_in_group("Campfire"): healing = true
+	if area.is_in_group("EnemyAttackArea"):
+		music_timer.start()
+		if not aggro:
+			music.stream = preload("res://Audio/The Elder Scrolls V - Skyrim - Combat #2.mp3")
+			aggro = true
+			music.play()
 
 func _on_area_3d_area_exited(area) -> void:
 	if area.is_in_group("EnemySword"): inside_sword = false
@@ -407,4 +422,14 @@ func _on_return_swing_timer_timeout():
 
 
 func _on_pickup_fade_timer_timeout():
-	pickup_fade_speed *= -1
+	pickup_fade_speed = -0.01
+
+
+func _on_audio_stream_player_finished():
+	music.play()
+
+
+func _on_music_fade_timer_timeout():
+	aggro = false
+	music.stream = preload("res://Audio/forbiddenfleshsong.mp3")
+	music.play()
