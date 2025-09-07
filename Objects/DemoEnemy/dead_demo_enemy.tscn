@@ -27,7 +27,6 @@ radius = 0.05
 height = 0.05
 
 [node name="DeadDemoEnemy" type="RigidBody3D"]
-angular_velocity = Vector3(1.5708, 0, 0)
 script = ExtResource("1_wbae5")
 
 [node name="SoftBody3D" type="SoftBody3D" parent="."]

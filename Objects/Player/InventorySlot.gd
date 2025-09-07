@@ -1,6 +1,7 @@
 extends Button
 
 @export var path_name : String
+@export var count : int
 
 @onready var global_vars : Object = get_node("/root/global")
 
@@ -11,7 +12,8 @@ func _ready():
 	text_str = text_str.replace("res://Objects/consumables/", "")
 	text_str = text_str.replace("ranged/", "")
 	text_str = text_str.replace("_", " ")
-	text = text_str
+	if count > 1: text_str += " " + str(count) + "x"
+	text = text_str 
 
 func remove_from_inventory(item : String):
 	var pos : int = 0
